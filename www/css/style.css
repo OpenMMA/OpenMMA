@@ -1,0 +1,16 @@
+body {
+    --bs-body-bg-rgb: 240,240,240;
+}
+
+.navbar {
+    box-shadow: 1px 1px 10px -3px rgba(0,0,0,0.75);
+}
+
+.account-dropdown {
+    border-radius: 100%;
+    width: 48px;
+}
+
+.calendar-container {
+    top: 7.5rem;
+}
