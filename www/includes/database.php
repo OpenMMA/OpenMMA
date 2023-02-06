@@ -21,7 +21,7 @@ class Database {
 
     public function __construct() {
         /* Get settings from settings file */
-        $settings = (include("settings.php"))->db;
+        $settings = (object)(include("settings.php"))->db;
 
         /* Connect to the database */
         $dsn = "mysql:host=$settings->mysql_host;dbname=$settings->mysql_db;charset=$settings->mysql_charset";
@@ -44,7 +44,7 @@ class UserDB extends Database {
      * Returns a User object if the user exists, null otherwise. */
     public function getUser(string $username): ?User {
         /* Search the database for the user */
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE LOWER(username) = LOWER(:username) LIMIT 1");
         $stmt->execute(['username' => $username]);
         $user = $stmt->fetch();
 
@@ -74,40 +74,10 @@ class UserDB extends Database {
         }
     }
 
-    /* Attempts to create a user with the given data. Returns new user object if successful, null otherwise. */
-    public function createUser(string $username, string $password_hash, string $email,
-                               string $first_name, string $last_name, int $privilege_level = 1): ?User {
-        /* Check if the username is already taken */
-        $stmt = $this->pdo->prepare("SELECT 1 FROM users WHERE username = :username");
-        $stmt->execute(['username' => $username]);
-        if ($stmt->fetchColumn()) {
-            throw new usernameAlreadyExistsException();
-            return null;
-        }
-
-        /* Check if the email is already taken */
-        $stmt = $this->pdo->prepare("SELECT 1 FROM users WHERE email = :email");
-        $stmt->execute(['email' => $email]);
-        if ($stmt->fetchColumn()) {
-            throw new emailAlreadyExistsException();
-            return null;
-        }
-
-        /* Insert the user into the database */
-        $stmt = $this->pdo->prepare("INSERT INTO users (username, password_hash, email, first_name, last_name, privilege_level)
-                                     VALUES (:username, :password_hash, :email, :first_name, :last_name, :privilege_level)");
-        $stmt->execute(['username' => $username, 'password_hash' => $password_hash, 'email' => $email,
-                        'first_name' => $first_name, 'last_name' => $last_name, 'privilege_level' => $privilege_level]);
-
-        /* Return the new user object */
-        return new User($this->pdo->lastInsertId(), $username, $password_hash,
-                        $email, $first_name, $last_name, $privilege_level);
-    }
-
     /* Updates username of the user with the given id. */
     public function updateUserUsername(int $id, string $username): void {
         /* Check if the username is already taken */
-        $stmt = $this->pdo->prepare("SELECT 1 FROM users WHERE username = :username");
+        $stmt = $this->pdo->prepare("SELECT 1 FROM users WHERE LOWER(username) = LOWER(:username)");
         $stmt->execute(['username' => $username]);
         if ($stmt->fetchColumn()) {
             throw new usernameAlreadyExistsException();
@@ -148,7 +118,7 @@ class UserDB extends Database {
 }
 
 
-class PasswordResetDB extends Database {
+class PasswordResetDB extends UserDB {
 
     /* Gets the user id for the given password reset token.
      * Returns the user id if the token exists and hasn't expired, null otherwise. */
@@ -198,18 +168,64 @@ class PasswordResetDB extends Database {
 }
 
 
-class VerifyDB extends Database {
+class RegisterDB extends UserDB {
 
+    /* Attempts to create a user with the given data. Returns new user object if successful, null otherwise. */
+    public function createUser(string $username, string $password_hash, string $email,
+                               string $first_name, string $last_name, int $privilege_level = 1): ?User {
+        /* Check if the username is already taken */
+        $stmt = $this->pdo->prepare("SELECT 1 FROM users WHERE LOWER(username) = LOWER(:username)");
+        $stmt->execute(['username' => $username]);
+        if ($stmt->fetchColumn()) {
+            throw new usernameAlreadyExistsException();
+            return null;
+        }
+
+        /* Check if the email is already taken */
+        $stmt = $this->pdo->prepare("SELECT 1 FROM users WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        if ($stmt->fetchColumn()) {
+            throw new emailAlreadyExistsException();
+            return null;
+        }
+
+        /* Insert the user into the database */
+        $stmt = $this->pdo->prepare("INSERT INTO users (username, password_hash, email, first_name, last_name, privilege_level)
+                                     VALUES (:username, :password_hash, :email, :first_name, :last_name, :privilege_level)");
+        $stmt->execute(['username' => $username, 'password_hash' => $password_hash, 'email' => $email,
+                        'first_name' => $first_name, 'last_name' => $last_name, 'privilege_level' => $privilege_level]);
+
+        /* Return the new user object */
+        return new User($this->pdo->lastInsertId(), $username, $password_hash,
+                        $email, $first_name, $last_name, $privilege_level);
+    }
+
+    /* Inserts a password reset token into the database for the given user.
+     * Returns the newly generated token. */
+    public function createVerifyToken(int $user_id): string {
+        /* Generate cryptographically random token */
+        $token = bin2hex(random_bytes(32));
+
+        /* Insert the token into the database */
+        $stmt = $this->pdo->prepare("INSERT INTO verification_tokens (token, user_id) VALUES (:token1, :user_id) ON DUPLICATE KEY UPDATE token=:token2");
+        $stmt->execute(['token1' => $token, 'token2' => $token, 'user_id' => $user_id]);
+
+        /* Return the token */
+        return $token;
+    }
+}
+
+class VerifyDB extends UserDB {
     /* Gets the user id for the given password reset token.
      * Returns the user id if the token exists and hasn't expired, null otherwise. */
-    public function getUserIdForVerifyToken(string $token): ?int {
+    public function verifyVerificationToken(string $token, string $email): ?int {
         /* Search the database for the token */
-        $stmt = $this->pdo->prepare("SELECT user_id
-                                     FROM verify_tokens
-                                     WHERE token = :token
-                                        AND created > NOW() - INTERVAL 1 HOUR
-                                     LIMIT 1");
-        $stmt->execute(['token' => $token]);
+        $stmt = $this->pdo->prepare("SELECT TOKENS.`user_id` 
+                                     FROM `verification_tokens` TOKENS 
+                                     INNER JOIN `users` USERS ON TOKENS.`user_id` = USERS.`id` 
+                                     WHERE TOKENS.`token` = :token 
+                                       AND USERS.`email` = :email");
+        $stmt->execute(['token' => $token, 'email' => $email]);
         $user_id = $stmt->fetchColumn();
 
         /* If the token exists, return the associated user id. Return null otherwise. */
@@ -220,29 +236,24 @@ class VerifyDB extends Database {
         }
     }
 
-    /* Inserts a password reset token into the database for the given user.
-     * Returns the newly generated token. */
-    public function createVerifyToken(int $user_id): string {
-        /* Generate cryptographically random password reset token */
-        $token = bin2hex(random_bytes(64));
-
-        /* Insert the token into the database */
-        $stmt = $this->pdo->prepare("INSERT INTO verify_tokens (token, user_id) VALUES (:token, :user_id)");
-        $stmt->execute(['token' => $token, 'user_id' => $user_id]);
-
-        /* Return the token */
-        return $token;
+    /* 
+     *  */
+    public function userEmailVerified(int $user_id) {
+        $stmt = $this->pdo->prepare("UPDATE users
+                                     SET verified = 1
+                                     WHERE id = :id");
+        $stmt->execute(['id' => $user_id]);
     }
-
+    
     /* Deletes the password reset tokens for a given user id from the database. */
     public function deleteVerifyTokens(int $user_id): void {
-        $stmt = $this->pdo->prepare("DELETE FROM verify_tokens WHERE user_id = :user_id");
+        $stmt = $this->pdo->prepare("DELETE FROM verification_tokens WHERE user_id = :user_id");
         $stmt->execute(['user_id' => $user_id]);
     }
 
     /* Deletes all expired password reset tokens from the database. */
     public function deleteExpiredVerifyTokens(): void {
-        $stmt = $this->pdo->prepare("DELETE FROM verify_tokens WHERE created < NOW() - INTERVAL 1 HOUR");
+        $stmt = $this->pdo->prepare("DELETE FROM verify_tokens WHERE created < NOW() - INTERVAL 1 WEEK");
         $stmt->execute();
     }
 }
