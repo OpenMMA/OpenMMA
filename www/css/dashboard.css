@@ -1,0 +1,15 @@
+.nav-tabs {
+    border-bottom: none !important;
+    border-right: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color) !important;
+    --bs-nav-tabs-link-hover-border-color: var(--bs-secondary-bg) var(--bs-border-color) var(--bs-secondary-bg) var(--bs-secondary-bg) !important;
+    --bs-nav-tabs-link-active-border-color: var(--bs-border-color) var(--bs-body-bg) var(--bs-border-color) var(--bs-border-color) !important;
+}
+.nav-link {
+    width: calc(100% + 1px);
+    text-align: right;
+}
+.nav-tabs .nav-link {
+    border-radius: var(--bs-nav-tabs-border-radius) 0 0 var(--bs-nav-tabs-border-radius) !important;
+    margin-bottom: 0 !important;
+    margin-right: calc(-1 * var(--bs-nav-tabs-border-width)) !important;
+}

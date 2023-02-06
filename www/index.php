@@ -1,13 +1,10 @@
 <?php
     // Start session if it does not exist yet
-    if (session_status() === PHP_SESSION_NONE) 
-        session_start();
+    // if (session_status() === PHP_SESSION_NONE) 
+    //     session_start();
 
     // Convert URL path to list
-    if (isset($_GET['rqd']))
-        $rqd = explode('/', isset($_GET['rqd']) ? $_GET['rqd'] : "");
-    else
-        $rqd = [];
+    $rqd = explode('/', isset($_GET['rqd']) ? $_GET['rqd'] : "");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +24,7 @@
             elseif (file_exists("templates/pages/" . $rqd[0] . ".php"))
                 include("templates/pages/" . $rqd[0] . ".php");
             else
-                include("templates/pages/404.php");
+                include("templates/pages/404.php");            
         ?>
         <?php include("templates/footer.php"); ?>
     </body>

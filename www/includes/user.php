@@ -30,9 +30,9 @@ class User {
     public static function authUser(int $privilege_level = 1): ?User {
         /* Start / resume session */
         if (session_status() === PHP_SESSION_NONE) {
-            $settings = require "settings.php";
-            ini_set('session.gc_maxlifetime', $settings->session_timeout);
-            session_set_cookie_params($settings->session_timeout);
+            $settings = (object)(include("settings.php"))->session;
+            ini_set('session.gc_maxlifetime', $settings->timeout);
+            session_set_cookie_params($settings->timeout);
             session_start();
         }
 
@@ -42,7 +42,7 @@ class User {
         } else if ($privilege_level > 0) {
             /* If the user does not have the required privilege level and should be logged in,
              * redirect to the login page */
-            header("Location: login.php?redirect=" . urlencode($_SERVER['REQUEST_URI']));
+            header("Location: login?redirect=" . urlencode($_SERVER['REQUEST_URI']));
             exit();
         } else {
             return null;

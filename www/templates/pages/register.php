@@ -1,13 +1,11 @@
 <?php
 include_once "includes/user.php";
 include_once "includes/database.php";
-
-$title = "Base account system - Register";
-include "includes/header.php";
+include_once "includes/mailer.php";
 
 /* Check if user is already logged in */
 $user = User::authUser(0);
-if (false || $user && $user->privilege_level >= 1) {
+if ($user && $user->privilege_level >= 1) {
     /* User is already logged in, redirect to the user page */
     header("Location: https://".$_SERVER['SERVER_NAME']."/account");
     exit();
@@ -43,10 +41,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         /* Create new user and log it in if no exception is thrown */
         try {
-            $db = new UserDB();
+            $db = new RegisterDB();
             $new_user = $db->createUser($username, $password_hash, $email, $first_name, $last_name);
             $_SESSION['user'] = $new_user;
-            header("Location: https://".$_SERVER['SERVER_NAME']."/account");
+
+            echo "A\n";
+            $verify_link = "https://".$_SERVER['SERVER_NAME']."/verify/".$db->createVerifyToken($new_user->id)."/".base64_encode($email);
+            echo "B\n";
+            $mailer = new Mailer();
+            echo "C\n";
+            $mailer->sendMail($email, "Email verification", "Dear $first_name $last_name,\n\nPlease verify your email address using the following link:\n$verify_link\n");
+
+            header("Location: /account");
             exit();
         } catch (usernameAlreadyExistsException $e) {
             $registerError = "Username already exists.";
@@ -56,26 +62,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-<h1>Register</h1>
-<?php echo $registerError; ?>
-<form action="/register" method="post" autocomplete="off">
-    <label for="username">Username:</label>
-    <input type="text" name="username" value="<?php echo $username; ?>" maxlength="32" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" name="password" value="<?php echo $password; ?>" required>
-    <br>
-    <label for="email">Email:</label>
-    <input type="email" name="email" value="<?php echo $email; ?>" maxlength="128" required>
-    <br>
-    <label for="first_name">First name:</label>
-    <input type="text" name="first_name" value="<?php echo $first_name; ?>" maxlength="256" required>
-    <br>
-    <label for="last_name">Last name:</label>
-    <input type="text" name="last_name" value="<?php echo $last_name; ?>" maxlength="256" required>
-    <br>
-    <input type="submit" value="Register">
-</form>
-<?php
-include "includes/footer.php";
-?>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-4 mt-3 p-4 border bg-body-secondary border-secondary-subtle rounded" style="box-shadow: 0px 0px 12px -6px rgba(0,0,0,0.75);"> 
+            <h1>Register</h1>
+            <?php if ($registerError != ""): ?>
+            <div class="alert alert-danger" role="alert"><?php echo $registerError; ?></div>
+            <?php endif; ?>
+            <form action="/register" method="post" autocomplete="off">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" maxlength="32" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" maxlength="128" required>
+                </div>
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo $first_name; ?>" maxlength="256" required>
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $last_name; ?>" maxlength="256" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
