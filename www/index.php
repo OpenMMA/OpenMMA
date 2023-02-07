@@ -1,10 +1,11 @@
 <?php
-    // Start session if it does not exist yet
-    // if (session_status() === PHP_SESSION_NONE) 
-    //     session_start();
+require_once 'vendor/autoload.php';
+// Start session if it does not exist yet
+// if (session_status() === PHP_SESSION_NONE) 
+//     session_start();
 
-    // Convert URL path to list
-    $rqd = explode('/', isset($_GET['rqd']) ? $_GET['rqd'] : "");
+// Convert URL path to list
+$rqd = explode('/', isset($_GET['rqd']) ? $_GET['rqd'] : "");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,13 +19,13 @@
     <body class="bg-body vh-100">
         <?php include("templates/header.php"); ?>
         <?php
-            // Retrieve template page based on first URL path element
-            if ($rqd[0] == "" || $rqd[0] == "#")
-                include("templates/pages/home.php");
-            elseif (file_exists("templates/pages/" . $rqd[0] . ".php"))
-                include("templates/pages/" . $rqd[0] . ".php");
-            else
-                include("templates/pages/404.php");            
+        // Retrieve template page based on first URL path element
+        if ($rqd[0] == "" || $rqd[0] == "#")
+            include("templates/pages/home.php");
+        elseif (file_exists("templates/pages/" . $rqd[0] . ".php"))
+            include("templates/pages/" . $rqd[0] . ".php");
+        else
+            include("templates/pages/404.php");            
         ?>
         <?php include("templates/footer.php"); ?>
     </body>
