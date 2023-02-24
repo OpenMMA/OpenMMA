@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('verified');
+
+
+Route::get('/event/create', [EventController::class, 'create']);
+Route::post('/event/create', [EventController::class, 'store']);
+Route::get('/event/{event:slug}/edit', [EventController::class, 'edit']);
+Route::put('/event/{event:slug}/edit', [EventController::class, 'update']);
+Route::get('/event/{event:slug}', [EventController::class, 'show']);
+Route::delete('/event/{event:slug}', [EventController::class, 'destroy']);
