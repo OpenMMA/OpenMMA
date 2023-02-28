@@ -19,6 +19,8 @@ class Event extends Model
         'end'
     ];
 
+    protected $appends = ['url'];
+
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -31,5 +33,10 @@ class Event extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function getUrlAttribute() 
+    {
+        return url("/event/{$this->slug}");
     }
 }

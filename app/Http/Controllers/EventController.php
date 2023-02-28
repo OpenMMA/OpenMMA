@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -14,7 +16,22 @@ class EventController extends Controller
      */
     public function index(): Response
     {
-        //
+        
+        return response()->view('events.calendar');
+    }
+
+    public function getevents(Request $request): JsonResponse
+    {
+        $start = Carbon::createFromTimestamp($request->input('start'));
+        $end = Carbon::createFromTimestamp($request->input('end'));
+        $events = Event::where([['start', '>=', $start], ['start', '<=', $end]])
+                       ->orWhere([['end', '>=', $start], ['end', '<=', $end]])
+                       ->get()->all();
+        return response()->json(array_map(fn($e) => array('title' => $e->title, 
+                                                          'description' => $e->description, 
+                                                          'start' => $e->start, 
+                                                          'end' => $e->end, 
+                                                          'url' => $e->url), $events));
     }
 
     /**
@@ -75,6 +92,7 @@ class EventController extends Controller
      */
     public function destroy(Event $event): RedirectResponse
     {
-        //
+        $event->delete();
+        return response()->redirectTo('/events');
     }
 }

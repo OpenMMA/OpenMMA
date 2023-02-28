@@ -1,3 +1,6 @@
+@php
+use Carbon\Carbon;
+@endphp
 @include('header')
 <div class="container">
     <div class="row">
@@ -17,8 +20,8 @@
                                          'form_fields' => [
                                             (object)array('type' => 'text', 'name' => 'title', 'required' => true, 'default' => $event->title),
                                             array(
-                                                (object)array('type' => 'date', 'name' => 'start', 'required' => true, 'label' => 'Start time', 'default' => $event->start),
-                                                (object)array('type' => 'date', 'name' => 'end', 'required' => true, 'label' => 'End time', 'default' => $event->end)
+                                                (object)array('type' => 'date', 'name' => 'start', 'required' => true, 'label' => 'Start time', 'default' => Carbon::parse($event->start)->format('Y-m-d\TH:i')),
+                                                (object)array('type' => 'date', 'name' => 'end', 'required' => true, 'label' => 'End time', 'default' => Carbon::parse($event->end)->format('Y-m-d\TH:i'))
                                             ),
                                             (object)array('type' => 'textarea', 'name' => 'description', 'required' => true, 'rows' => '5', 'label' => 'Description (short)', 'default' => $event->description),
                                             (object)array('type' => 'tinymce', 'name' => 'body', 'required' => true, 'default' => $event->body)

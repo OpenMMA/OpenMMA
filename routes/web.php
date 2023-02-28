@@ -24,6 +24,8 @@ Route::get('/dashboard', function () {
 })->middleware('verified');
 
 
+Route::get('/events', [EventController::class, 'index']);
+Route::post('/events', [EventController::class, 'getevents']);
 Route::get('/event/create', [EventController::class, 'create']);
 Route::post('/event/create', [EventController::class, 'store']);
 Route::get('/event/{event:slug}/edit', [EventController::class, 'edit']);
