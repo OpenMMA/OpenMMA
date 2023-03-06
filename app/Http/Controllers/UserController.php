@@ -28,8 +28,17 @@ class UserController extends Controller
             return response()->json(['verified' => 'already_verified']);
         $user->user_verified_at = Carbon::now();
         $user->save();
+        $user->assignRole('member.');
         Mail::to($user)->send(new AccountVerified($user));
         return response()->json(['verified' => 'verified']);
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $q = $request->input('q');
+        return response()->json(User::whereRaw('CONCAT(first_name, \' \', last_name) LIKE ?', ["%$q%"])
+                                    ->orWhere('email', 'LIKE', "%$q%")
+                                    ->get());
     }
 
     /**

@@ -11,10 +11,10 @@
         {{ Form::hidden($field->name, $field->value) }}
         @break
     @case('text')
-        {{ Form::text($field->name, $field->default ?? null, ['class' => 'form-control ' . ($field->class ?? ''), 'required' => $field->required ?? false]) }}
+        {{ Form::text($field->name, $field->default ?? null, ['class' => 'form-control ' . ($field->class ?? ''), 'required' => $field->required ?? false, 'placeholder' => $field->placeholder ?? '']) }}
         @break
     @case('email')
-        {{ Form::email($field->name, $field->default ?? null, ['class' => 'form-control ' . ($field->class ?? ''), 'required' => $field->required ?? false]) }}
+        {{ Form::email($field->name, $field->default ?? null, ['class' => 'form-control ' . ($field->class ?? ''), 'required' => $field->required ?? false, 'placeholder' => $field->placeholder ?? '']) }}
         @break
     @case('password')
         {{ Form::password($field->name, ['class' => 'form-control ' . ($field->class ?? ''), 'required' => $field->required ?? false]) }}

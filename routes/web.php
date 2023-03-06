@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -36,6 +38,7 @@ Route::prefix('event')->group(function() {
     Route::delete('/{event:slug}', [EventController::class, 'destroy']);
 });
 
+Route::get('/users/search', [UserController::class, 'search']);
 Route::prefix('user')->group(function() {
     Route::post('{user:id}/verify', [UserController::class, 'verify']);
 });
@@ -43,6 +46,11 @@ Route::prefix('user')->group(function() {
 
 Route::prefix('dashboard')->group(function() {
     Route::get('/', function() { return view('dashboard.index'); });
+
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/user/{user:id}', [UserController::class, 'show']);
+
+    Route::get('/groups', [GroupController::class, 'index']);
+    Route::post('/groups/create', [GroupController::class, 'store']);
+    Route::get('/group/{group:name}', [GroupController::class, 'show']);
 })->middleware('verified');

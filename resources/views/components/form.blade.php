@@ -3,7 +3,7 @@
         <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
     @endPushOnce
 @endif
-{{ Form::open(array('url' => $form_target)) }}
+{{ Form::open(array('url' => $form_target, 'id' => $form_name, 'class' => $form_classes ?? '')) }}
     @isset($form_method)
     @method($form_method)
     @endisset
