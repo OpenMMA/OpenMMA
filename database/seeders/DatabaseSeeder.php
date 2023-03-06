@@ -27,13 +27,16 @@ class DatabaseSeeder extends Seeder
         Group::create(['name' => 'board', 'title' => 'Board', 'color' => '#AB3ADA']);
         Permission::createPermissionsForGroup('board');
         Role::create(['name' => 'board.', 'title' => '']);
-        
+
         \App\Models\User::factory(20)->create();
         \App\Models\Event::factory(8)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        \App\Models\User::factory()->create([
+            'first_name' => 'Test',
+            'last_name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => 'rememberme',
+        ]);
     }
 }
