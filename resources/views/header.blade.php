@@ -31,7 +31,7 @@
                 </div>
                 <div class="col">
                     {{ Form::open(array('url' => '/logout')) }}
-                        {{ Form::submit('Logout', ['class' => 'btn btn-primary']); }}
+                        {{ Form::submit('Logout', ['class' => 'btn btn-primary']) }}
                     {{ Form::close() }}
                 </div>
             @endauth

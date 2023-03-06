@@ -24,7 +24,7 @@
                         If you did not receive or lost the verification email, you can request a new one:
                     </p>
                     {{ Form::open(array('url' => '/email/verification-notification')) }}
-                        {{ Form::submit('Request new verification link', ['class' => 'btn btn-primary col-6 offset-3']); }}
+                        {{ Form::submit('Request new verification link', ['class' => 'btn btn-primary col-6 offset-3']) }}
                     {{ Form::close() }}
                     @endif
                 </div>
