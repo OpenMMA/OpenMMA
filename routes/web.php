@@ -5,6 +5,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SystemSettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,4 +54,7 @@ Route::prefix('dashboard')->group(function() {
     Route::get('/groups', [GroupController::class, 'index']);
     Route::post('/groups/create', [GroupController::class, 'store']);
     Route::get('/group/{group:name}', [GroupController::class, 'show']);
+
+    Route::get('/system-settings', [SystemSettingController::class, 'index']);
+    Route::post('/system-settings', [SystemSettingController::class, 'update']);
 })->middleware('verified');

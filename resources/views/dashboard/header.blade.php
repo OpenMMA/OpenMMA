@@ -34,8 +34,8 @@
                             <li class="nav-item"><a href="/dashboard/events" class="nav-link">Events</a></li>
                             <li class="nav-item"><a href="/dashboard/insights" class="nav-link">Insights</a></li>
                             <hr>
-                            <li class="nav-item"><a href="/dashboard/settings" class="nav-link">System settings</a></li>
+                            <li class="nav-item"><a href="/dashboard/system-settings" class="nav-link">System settings</a></li>
                         </ul>
                     </div>
-                </nav>  
-                <div class="col-10 px-5 ms-auto">            
+                </nav>
+                <div class="col-10 px-5 ms-auto">
