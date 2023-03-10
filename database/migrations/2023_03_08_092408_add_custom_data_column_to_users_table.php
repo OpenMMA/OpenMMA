@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('system_settings', function (Blueprint $table) {
-            $table->id();
-            $table->text('key');
-            $table->text('value');
-            $table->enum('type', ['text', 'json', 'num', 'bool', 'image'])->default('text');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->json('custom_data')
+                  ->default('{}')
+                  ->after('password');
         });
     }
 
@@ -25,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('system_settings');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['custom_data']);
+        });
     }
 };
