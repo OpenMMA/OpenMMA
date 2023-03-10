@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html style="scroll-padding-top: 65px;">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>OpenMMA</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar sticky-top bg-dark shadow">
+            <div class="container-fluid">
+                <div class="navbar-brand">
+                    <svg class="d-inline-block" width="50" height="40" viewBox="0 0 50 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25.0001 0L50 15.0098V24.9863L25.0001 40L0 24.9863V15.0099L25.0001 0Z" fill="#A5B4FC"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 15.0098L25 0L50 15.0098V24.9863L25 40L0 24.9863V15.0098ZM25 33.631L44.6967 21.8022V18.1951L44.6957 18.1945L25 30.0197L5.30426 18.1945L5.3033 18.1951V21.8022L25 33.631ZM25 24.5046L40.1018 15.4376L36.4229 13.2298L25 20.0881L13.5771 13.2298L9.89822 15.4376L25 24.5046ZM25 14.573L31.829 10.4729L25 6.37467L18.171 10.4729L25 14.573Z" fill="#4F46E5"></path>
+                        <path d="M25.0001 0L0 15.0099V24.9863L25 40L25.0001 0Z" fill="#A5B4FC" fill-opacity="0.3"></path>
+                    </svg>
+                    <div class="d-inline-block text-white">
+                        OpenMMA
+                    </div>
+                </div>
+                <a href="https://openmma.nl/" class="btn btn-outline-light my-2"><i class="fa fa-globe me-2"></i>Nederlands</a>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <div class="text-center" style="background-image: url('https://openmma.nl/header.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+            <div style="background-color: rgba(0, 0, 0, 0.1);">
+                <div class="d-flex justify-content-center align-items-center h-100 px-3 py-5">
+                    <div class="text-white">
+                        <svg class="d-inline-block" width="75" height="60" viewBox="0 0 50 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M25.0001 0L50 15.0098V24.9863L25.0001 40L0 24.9863V15.0099L25.0001 0Z" fill="#A5B4FC"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 15.0098L25 0L50 15.0098V24.9863L25 40L0 24.9863V15.0098ZM25 33.631L44.6967 21.8022V18.1951L44.6957 18.1945L25 30.0197L5.30426 18.1945L5.3033 18.1951V21.8022L25 33.631ZM25 24.5046L40.1018 15.4376L36.4229 13.2298L25 20.0881L13.5771 13.2298L9.89822 15.4376L25 24.5046ZM25 14.573L31.829 10.4729L25 6.37467L18.171 10.4729L25 14.573Z" fill="#4F46E5"></path>
+                            <path d="M25.0001 0L0 15.0099V24.9863L25 40L25.0001 0Z" fill="#A5B4FC" fill-opacity="0.3"></path>
+                        </svg>
+                        <h1 class="mb-3">OpenMMA</h1>
+                        <h5 class="mb-4">Open source member administration system & event-calendar</h5>
+                        <a class="btn btn-outline-light btn-lg m-2" href="#faq">FAQ</a>
+                        <a class="btn btn-outline-light btn-lg m-2" href="#contact">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About / Features -->
+        <section id="about" class="py-4">
+            <div class="container">
+                <h1>Simple, open and free software for associations</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Op zoek naar een betaalbaar en toegankelijk systeem om de leden van je vereniging te managen, de administratie bij te houden en activiteiten te organiseren? OpenMMA is een open source systeem, wat betekent dat de code voor iedereen kosteloos toegankelijk is om te gebruiken en aan te passen naar wens. Het project is gestart om een toegankelijk alternatief te bieden voor de bestaande commerciële ledenadministratiesystemen.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li>
+                                <h5>User accounts</h5>
+                                <p>Members can create an account themselves, where the additional required information can be configured by the association. Before a user is admitted, new accounts can be verified. Accounts can also be imported from existing sources.</p>
+                            </li>
+                            <li>
+                                <h5>Groups & Roles</h5>
+                                <p>Leden kunnen ingedeeld worden in zelf definieerbare groepen en subgroepen, bijvoorbeeld voor verschillende commissies. Met rollen kunnen gebruikers en groepen bepaalde rechten toegewezen krijgen.</p>
+                            </li>
+                            <li>
+                                <h5>Events</h5>
+                                <p>Events kunnen worden gepubliceerd in een voor leden toegankelijke kalender, waarna leden zich eventueel ook kunnen inschrijven voor deze events.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="faq" class="py-4 bg-light">
+            <div class="container">
+                <h2>Veelgestelde vragen</h2>
+                <div id="faq-accordion" class="accordion mt-3">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-1">
+                                Waarom zou je je code ooit open source maken? Je wilt er toch geld aan verdienen?
+                            </button>
+                        </h2>
+                        <div id="faq-1" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
+                            <div class="accordion-body">
+                                Open source is ook een filosofie. Wij vinden het belangrijk dat software beschikbaar is voor iedereen,
+                                en vanuit die overtuiging willen wij een goed, toegankelijk systeem aanbieden waar iedereen aan kan bijdragen.
+                                Daarnaast zien wij het ontwikkelen van OpenMMA als een mogelijkheid om meer ervaring op te doen,
+                                en wat bij te dragen aan de samenleving.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-2">
+                                Wanneer kunnen we het systeem in gebruik nemen?
+                            </button>
+                        </h2>
+                        <div id="faq-2" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
+                            <div class="accordion-body">
+                                Ons doel is om rond het einde van maart 2023 een bruikbaar product te hebben.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-3">
+                                Kan ik met het systeem alles wat ik ook met mijn huidige systeem kan?
+                            </button>
+                        </h2>
+                        <div id="faq-3" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
+                            <div class="accordion-body">
+                                Dit hangt natuurlijk af van uw huidige systeem.
+                                De eerste versie van het systeem zal beperkte functionaliteit hebben,
+                                omdat we prioriteit geven aan het zo snel mogelijk leveren van een bruikbaar product.
+                                We zullen in de maanden daarna zo veel mogelijk andere functionaliteit gaan implementeren.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-4">
+                                Wat zijn de functionaliteiten die jullie bieden?
+                            </button>
+                        </h2>
+                        <div id="faq-4" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
+                            <div class="accordion-body">
+                                Kort samengevat wordt het met de eerste versie mogelijk om ledenaccounts te hebben
+                                (en voor nieuwe leden om zelf accounts te maken), de mogelijkheid tot het maken van
+                                groepen met rollen binnen die groepen, het plannen van events/activiteiten en een
+                                inschrijfmogelijkheid voor leden, het bijhouden van overige informatie over leden
+                                (wat voor informatie dit is kan ingesteld worden), en het importeren van accounts uit
+                                een extern systeem. Daarna zullen we overige functionaliteiten gaan implementeren,
+                                zoals het integreren van betaalmogelijkheden, custom layouts en opmaak, integratie met
+                                bijvoorbeeld Wordpress maar ook de mogelijkheid om de gehele website via OpenMMA te
+                                beheren, en nog meer! Als er verzoeken zijn voor bepaalde features willen we deze graag
+                                meenemen! Een overzicht van de geplande functionaliteiten kun je ook
+                                <a href="https://github.com/users/Eaorns/projects/3" target="_blank">op github vinden</a>.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-5">
+                                Waarom zou ik voor OpenMMA kiezen, en niet voor een ander systeem?
+                            </button>
+                        </h2>
+                        <div id="faq-5" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
+                            <div class="accordion-body">
+                                OpenMMA zal je dezelfde functionaliteit bieden als een commercieel product, maar dan gratis!
+                                Ook hoef je je niet druk te maken over 'premium'-abonnementen. Daarnaast steun je de
+                                open source filosofie en kun je het volledig aanpassen naar je eigen wensen,
+                                danwel door mensen binnen je vereniging met technische kennis, danwel met onze hulp of
+                                een andere externe partij. Voor open source projecten is de community heel belangrijk.
+                                Hoe meer gebruikers, hoe beter het systeem zal worden door de aandacht die het krijgt en
+                                de mensen die het daarmee trekt.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Contact</h2>
+                        <p>Are you interested, or do you have any questions or remarks? Let us know!</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card p-4">
+                            <div class="card-body">
+                                <h4>info@openmma.nl</h4>
+                                <p>We will respond as soon as possible.</p>
+                                <a href="mailto:info@openmma.nl" class="btn btn-dark my-2"><i class="fas fa-envelope me-2"></i>Send an email</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-secondary py-2 bg-dark">
+            &copy; OpenMMA - Supported by Entasium
+        </footer>
+    </body>
+</html>

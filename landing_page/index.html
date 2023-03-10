@@ -10,6 +10,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src='https://www.hCaptcha.com/1/api.js' async defer></script>
     </head>
     <body>
         <!-- Navbar -->
@@ -30,7 +31,7 @@
         </nav>
 
         <!-- Header -->
-        <div class="text-center" style="background-image: url('header.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+        <div class="text-center" style="background-image: url('https://openmma.nl/header.png'); background-repeat: no-repeat; background-size: cover; background-position: center;">
             <div style="background-color: rgba(0, 0, 0, 0.1);">
                 <div class="d-flex justify-content-center align-items-center h-100 px-3 py-5">
                     <div class="text-white">
@@ -48,15 +49,15 @@
             </div>
         </div>
 
-        <!-- About / Features -->
-        <section id="about" class="py-4">
+        <!-- About -->
+        <section id="about" class="pt-4 pb-5">
             <div class="container">
-                <h1>Simpele, open en gratis software voor verenigingen</h1>
+                <h1 class="text-center pb-3">Simpele, open en gratis software voor verenigingen</h1>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <p>Op zoek naar een betaalbaar en toegankelijk systeem om de leden van je vereniging te managen, de administratie bij te houden en activiteiten te organiseren? OpenMMA is een open source systeem, wat betekent dat de code voor iedereen kosteloos toegankelijk is om te gebruiken en aan te passen naar wens. Het project is gestart om een toegankelijk alternatief te bieden voor de bestaande commerciële ledenadministratiesystemen.</p>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <ul>
                             <li>
                                 <h5>Gebruikersaccounts</h5>
@@ -76,8 +77,84 @@
             </div>
         </section>
 
+        <!-- Features -->
+        <section id="features" class="pt-5 pb-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 pb-4">
+                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <h4 class="text-center pt-2">Gebruikersaccounts</h4>
+                        <p class="text-center px-5 pb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium mollis velit eget pulvinar. Morbi vel rutrum ligula. Ut pellentesque eros a diam sodales mattis. Sed vel pulvinar lectus. Nulla ut massa ut tortor accumsan laoreet id ac lectus. Pellentesque tempus ipsum non massa dapibus, non facilisis nisi vehicula. Fusce a diam mi. Cras tellus nisl, consectetur eget pulvinar venenatis, pharetra sit amet nisi. Sed nec ultricies elit. </p>
+                    </div>
+                    <div class="col-md-4 pb-4">
+                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
+                            <i class="fa-solid fa-calendar"></i>
+                        </div>
+                        <h4 class="text-center pt-2">Kalender</h4>
+                        <p class="text-center px-5 pb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium mollis velit eget pulvinar. Morbi vel rutrum ligula. Ut pellentesque eros a diam sodales mattis. Sed vel pulvinar lectus. Nulla ut massa ut tortor accumsan laoreet id ac lectus. Pellentesque tempus ipsum non massa dapibus, non facilisis nisi vehicula. Fusce a diam mi. Cras tellus nisl, consectetur eget pulvinar venenatis, pharetra sit amet nisi. Sed nec ultricies elit. </p>
+                    </div>
+                    <div class="col-md-4 pb-4">
+                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <h4 class="text-center pt-2">Groepen & Rollen</h4>
+                        <p class="text-center px-5 pb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium mollis velit eget pulvinar. Morbi vel rutrum ligula. Ut pellentesque eros a diam sodales mattis. Sed vel pulvinar lectus. Nulla ut massa ut tortor accumsan laoreet id ac lectus. Pellentesque tempus ipsum non massa dapibus, non facilisis nisi vehicula. Fusce a diam mi. Cras tellus nisl, consectetur eget pulvinar venenatis, pharetra sit amet nisi. Sed nec ultricies elit. </p>
+                    </div>
+                    <div class="col-md-4 pb-4">
+                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
+                            <i class="fa-solid fa-table"></i>
+                        </div>
+                        <h4 class="text-center pt-2">-</h4>
+                        <p class="text-center px-5 pb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium mollis velit eget pulvinar. Morbi vel rutrum ligula. Ut pellentesque eros a diam sodales mattis. Sed vel pulvinar lectus. Nulla ut massa ut tortor accumsan laoreet id ac lectus. Pellentesque tempus ipsum non massa dapibus, non facilisis nisi vehicula. Fusce a diam mi. Cras tellus nisl, consectetur eget pulvinar venenatis, pharetra sit amet nisi. Sed nec ultricies elit. </p>
+                    </div>
+                    <div class="col-md-4 pb-4">
+                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
+                            <i class="fa-solid fa-pencil"></i>
+                        </div>
+                        <h4 class="text-center pt-2">-</h4>
+                        <p class="text-center px-5 pb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium mollis velit eget pulvinar. Morbi vel rutrum ligula. Ut pellentesque eros a diam sodales mattis. Sed vel pulvinar lectus. Nulla ut massa ut tortor accumsan laoreet id ac lectus. Pellentesque tempus ipsum non massa dapibus, non facilisis nisi vehicula. Fusce a diam mi. Cras tellus nisl, consectetur eget pulvinar venenatis, pharetra sit amet nisi. Sed nec ultricies elit. </p>
+                    </div>
+                    <div class="col-md-4 pb-4">
+                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
+                            <i class="fa-solid fa-money-bill"></i>
+                        </div>
+                        <h4 class="text-center pt-2">Gratis</h4>
+                        <p class="text-center px-5 pb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium mollis velit eget pulvinar. Morbi vel rutrum ligula. Ut pellentesque eros a diam sodales mattis. Sed vel pulvinar lectus. Nulla ut massa ut tortor accumsan laoreet id ac lectus. Pellentesque tempus ipsum non massa dapibus, non facilisis nisi vehicula. Fusce a diam mi. Cras tellus nisl, consectetur eget pulvinar venenatis, pharetra sit amet nisi. Sed nec ultricies elit. </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <section id="faq" class="py-4 bg-light">
+        <!-- Open source -->
+        <section id="open-source" class="pt-4 pb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2 class="text-center">Open source?</h2>
+                        <p>
+                            Morbi enim massa, ullamcorper quis elit eget, ultrices vestibulum magna. Duis eget ultrices dolor. Duis a magna est. Praesent urna sem, varius quis iaculis id, accumsan in erat. Quisque vel urna in purus dapibus placerat sit amet facilisis sem. Nam vulputate fringilla volutpat. Praesent quis ex risus. Morbi id eleifend lacus. Nam consequat malesuada quam a facilisis. Phasellus molestie magna nec nulla vestibulum, et gravida orci ultricies. Aenean luctus, nibh id viverra pellentesque, sapien sapien convallis nulla, ac ornare tellus eros quis mi. Quisque lacus dui, ullamcorper vel blandit at, viverra ut risus.
+                        </p>
+                        <p>
+                            Nullam mattis consectetur nibh, ut egestas magna viverra quis. Duis pharetra convallis tortor. Aenean sagittis sem nisl, quis lacinia metus posuere id. Vestibulum sed augue velit. Cras pulvinar pulvinar nulla, quis accumsan nibh auctor ac. Pellentesque at ultrices velit. Donec convallis imperdiet purus auctor gravida. Donec non erat mollis, pretium diam sed, lacinia est. Integer tempus turpis elementum odio vulputate, quis aliquam turpis scelerisque. Nam eleifend massa quis nulla tempor maximus. 
+                        </p>
+                    </div>
+                    <div class="col-md-4 my-4 ps-5">
+                        <h4>Bekende open source projecten:</h4>
+                        <ul class="p-3 fs-5 text-primary-emphasis" style="list-style-type: none;">
+                            <li class="pb-4"><a target="_blank" href="#" class="text-decoration-none">Item 1</a></li>
+                            <li class="pb-4"><a target="_blank" href="#" class="text-decoration-none">Item 2</a></li>
+                            <li class="pb-4"><a target="_blank" href="#" class="text-decoration-none">Item 3</a></li>
+                            <li class="pb-4"><a target="_blank" href="#" class="text-decoration-none">Item 4</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="pt-4 pb-5 bg-light">
             <div class="container">
                 <h2>Veelgestelde vragen</h2>
                 <div id="faq-accordion" class="accordion mt-3">
@@ -167,16 +244,88 @@
             </div>
         </section>
 
+        <!-- Impressie -->
+        <section id="impression" class="pt-4 pb-5">
+            <div class="container">
+                <h2>Impressie</h2>
+                <div class="row">
+                    <p>Zodra we kunnen laten zien hoe de interface eruit gaat zien, komt dit hier te staan!</p>
+                    <p>Dit zal waarschijnlijk in de tweede helft van Maart gebeuren.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contributors -->
+        <section id="contributors" class="pt-4 pb-5 bg-light">
+            <div class="container">
+                <h2>Contributors</h2>
+                <div class="row justify-content-center">
+                    <div class="col-8 my-3 my-md-0 col-md-2 card p-1 mx-2">
+                        <div class="card-body text-center">
+                            <img src="https://entasium.nl/img/jeroen.jpg" class="rounded-circle w-100">
+                            <h5 class="pt-2 m-0 fs-4">Jeroen Tas</h5>
+                            <p class="text-body-secondary"><small>Jeroen45</small></p>
+                            <a href="https://github.com/Jeroen-45/" target="_blank" class="btn btn-light border-light-subtle"><i class="fa-brands fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                    <div class="col-8 my-3 my-md-0 col-md-2 card p-1 mx-2">
+                        <div class="card-body text-center">
+                            <img src="https://entasium.nl/img/emo.jpg" class="rounded-circle w-100">
+                            <h5 class="pt-2 m-0 fs-4">Emo Enderman</h5>
+                            <p class="text-body-secondary"><small>Eaorns</small></p>
+                            <a href="https://github.com/Eaorns/" target="_blank" class="btn btn-light border-light-subtle"><i class="fa-brands fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                    <div class="col-8 my-3 my-md-0 col-md-2 card p-1 mx-2">
+                        <div class="card-body text-center">
+                            <img src="https://entasium.nl/img/isa.jpg" class="rounded-circle w-100">
+                            <h5 class="pt-2 m-0 fs-4">Isa den Toom</h5>
+                            <p class="text-body-secondary"><small> </small></p>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </section>
+
         <!-- Contact -->
-        <section id="contact" class="py-4">
+        <section id="contact" class="pt-4 pb-5">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
                         <h2>Contact</h2>
-                        <p>Heb je interesse, of heb je nog vragen of opmerkingen? Laat het ons weten!</p>
+                        <p class="mb-0">Heb je interesse, of heb je nog vragen of opmerkingen? Laat het ons weten!</p>
+                        <form id="contact-form" action="https://openmma.nl/form.php" method="post" class="pe-5">                            
+                            <label class="form-label mt-1" for="email">Your email (required)</label>
+                            <input class="form-control" placeholder="Email address..." type="email" name="email" required>
+                            <label class="form-label mt-3" for="message">Message (required)</label>
+                            <textarea rows="5" class="form-control" placeholder="Message..." type="text" name="message" required></textarea>
+                            <div class="h-captcha mt-3" data-sitekey="8ff96ada-c23a-4b96-b686-52e6f0c4cb95"></div>
+                            <input id="submit" class="btn btn-primary mt-3" type="submit" value="Send message">
+                        </form>
+                        <script>
+                            $("#contact-form").submit(function(e) {
+                                e.preventDefault();
+                                if ($('[name=h-captcha-response]').val() == "") {
+                                    return;
+                                }
+                                $.ajax({
+                                    url: $("#contact-form").attr('action'),
+                                    type: 'POST',
+                                    data: $('#contact-form').serialize(),
+                                    success: function(data){
+                                        $("#contact-form")[0].reset();
+                                        console.log(data);
+                                        $("#contact-form #submit").removeAttr('disabled');
+                                    }
+                                });
+                                $("#contact-form #submit").attr('disabled', true);
+                                grecaptcha.reset();
+                            });
+                        </script>
                     </div>
                     <div class="col-md-6">
-                        <div class="card p-4">
+                        <div class="card p-4 mt-5">
+                            <h5>Of stuur een email:</h5>
                             <div class="card-body">
                                 <h4>info@openmma.nl</h4>
                                 <p>Wij reageren zo snel mogelijk.</p>
