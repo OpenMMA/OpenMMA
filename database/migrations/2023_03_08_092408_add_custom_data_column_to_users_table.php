@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->json('custom_data')
+                  ->default('{}')
                   ->after('password');
         });
     }

@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
               'required' => true,
             )
         ];
-        SystemSetting::create(['key' => 'site.name', 'value' => 'OpenCDX', 'type' => 'text']);
+        SystemSetting::create(['key' => 'site.name', 'value' => 'OpenMMA', 'type' => 'text']);
         SystemSetting::create(['key' => 'account.custom_fields', 'value' => json_encode($account_custom_fields), 'type' => 'json']);
     }
 }
