@@ -275,7 +275,7 @@
                 <h2>Impressie</h2>
                 <div class="row">
                     <p>Zodra we kunnen laten zien hoe de interface eruit gaat zien, komt dit hier te staan!</p>
-                    <p>Dit zal waarschijnlijk in de tweede helft van Maart gebeuren.</p>
+                    <p>Dit zal waarschijnlijk in de tweede helft van maart gebeuren.</p>
                 </div>
             </div>
         </section>
@@ -320,26 +320,74 @@
                     <p>Heb je interesse, of heb je nog vragen of opmerkingen? Laat het ons weten!</p>
                     <div class="col-md-6">
                         <form id="contact-form" action="https://openmma.nl/form.php" method="post">
-                            <label class="form-label mt-1" for="email">Email</label>
-                            <input class="form-control" type="email" name="email" required>
-                            <label class="form-label mt-3" for="message">Bericht</label>
-                            <textarea rows="5" class="form-control" type="text" name="message" required></textarea>
-                            <div class="h-captcha mt-3" data-sitekey="8ff96ada-c23a-4b96-b686-52e6f0c4cb95"></div>
-                            <input id="submit" class="btn btn-purple mt-3" type="submit" value="Versturen">
+                            <div class="mt-1">
+                                <label class="form-label" for="email">Email</label>
+                                <input class="form-control" type="email" name="email" required>
+                                <span class="form-text text-danger" id="email-error"></span>
+                            </div>
+                            <div class="mt-3">
+                                <label class="form-label" for="message">Bericht</label>
+                                <textarea rows="5" class="form-control" type="text" name="message" required></textarea>
+                                <span class="form-text text-danger" id="message-error"></span>
+                            </div>
+                            <div class="mt-3">
+                                <div class="h-captcha" data-sitekey="8ff96ada-c23a-4b96-b686-52e6f0c4cb95"></div>
+                                <span class="form-text text-danger" id="captcha-error"></span>
+                            </div>
+                            <div class="mt-2">
+                                <span class="form-text text-danger" id="submit-error"></span>
+                                <span class="form-text text-success" id="submit-success"></span>
+                            </div>
+                            <input id="submit" class="btn btn-purple mt-1" type="submit" value="Versturen">
                         </form>
                         <script>
                             $("#contact-form").submit(function(e) {
                                 e.preventDefault();
+
+                                $("#email-error").text("");
+                                $("#message-error").text("");
+                                $("#captcha-error").text("");
+                                $("#submit-error").text("");
+                                $("#submit-success").text("");
+                                
                                 if ($('[name=h-captcha-response]').val() == "") {
+                                    $("#captcha-error").text("Please complete the captcha");
                                     return;
                                 }
+                                
                                 $.ajax({
                                     url: $("#contact-form").attr('action'),
                                     type: 'POST',
                                     data: $('#contact-form').serialize(),
-                                    success: function(data){
-                                        $("#contact-form")[0].reset();
-                                        console.log(data);
+                                    success: (data) => {
+                                        try {
+                                            data = JSON.parse(data);
+                                            switch (data['status']) {
+                                                case 'missing_params':
+                                                    $("#submit-error").text("Please fill out all fields");
+                                                    break;
+                                                case 'invalid_email':
+                                                    $("#email-error").text("Please enter a valid email address");
+                                                    break;
+                                                case 'invalid_captcha':
+                                                    $("#capthca-error").text("Invalid captcha, please try again");
+                                                    break;
+                                                case 'success':
+                                                    $("#submit-success").text("Message sent!");
+                                                    $("#contact-form")[0].reset();
+                                                    break;
+                                                case 'mail_not_sent':
+                                                default:
+                                                    $("#submit-error").value("Something went wrong! Please try again later, or send an email.");
+                                            }
+                                        } catch {
+                                            console.log("CATCH");
+                                            $("#submit-error").text("Something went wrong! Please try again later, or send an email.");
+                                        }
+                                        $("#contact-form #submit").removeAttr('disabled');
+                                    },
+                                    error: () => {
+                                        $("#submit-error").value("Something went wrong! Please try again later, or send an email."); 
                                         $("#contact-form #submit").removeAttr('disabled');
                                     }
                                 });
