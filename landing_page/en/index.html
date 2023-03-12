@@ -10,6 +10,36 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src='https://www.hCaptcha.com/1/api.js' async defer></script>
+
+        <style>
+            .btn-purple {
+                --bs-btn-color: #fff;
+                --bs-btn-bg: #4f46e5;
+                --bs-btn-border-color: #4f46e5;
+                --bs-btn-hover-color: #fff;
+                --bs-btn-hover-bg: #6967ec;
+                --bs-btn-hover-border-color: #6967ec;
+                --bs-btn-focus-shadow-rgb: 66,70,73;
+                --bs-btn-active-color: #fff;
+                --bs-btn-active-bg: #6967ec;
+                --bs-btn-active-border-color: #6967ec;
+                --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                --bs-btn-disabled-color: #fff;
+                --bs-btn-disabled-bg: #4f46e5;
+                --bs-btn-disabled-border-color: #4f46e5;
+            }
+
+            .text-purple {
+                color: #4f46e5;
+            }
+
+            .fa-sq {
+                text-align: center;
+                width: 1.25em;
+                line-height: 1.25em;
+            }
+        </style>
     </head>
     <body>
         <!-- Navbar -->
@@ -40,7 +70,7 @@
                             <path d="M25.0001 0L0 15.0099V24.9863L25 40L25.0001 0Z" fill="#A5B4FC" fill-opacity="0.3"></path>
                         </svg>
                         <h1 class="mb-3">OpenMMA</h1>
-                        <h5 class="mb-4">Open source member administration system & event-calendar</h5>
+                        <h5 class="mb-4">Open source member management & event-calendar</h5>
                         <a class="btn btn-outline-light btn-lg m-2" href="#faq">FAQ</a>
                         <a class="btn btn-outline-light btn-lg m-2" href="#contact">Contact</a>
                     </div>
@@ -48,27 +78,27 @@
             </div>
         </div>
 
-        <!-- About / Features -->
-        <section id="about" class="py-4">
+        <!-- About -->
+        <section id="about" class="pt-4 pb-5">
             <div class="container">
-                <h1>Simple, open and free software for associations</h1>
+                <h1 class="text-center pb-3">Simple, open and free software for associations</h1>
                 <div class="row">
-                    <div class="col-md-6">
-                        <p>Op zoek naar een betaalbaar en toegankelijk systeem om de leden van je vereniging te managen, de administratie bij te houden en activiteiten te organiseren? OpenMMA is een open source systeem, wat betekent dat de code voor iedereen kosteloos toegankelijk is om te gebruiken en aan te passen naar wens. Het project is gestart om een toegankelijk alternatief te bieden voor de bestaande commerciële ledenadministratiesystemen.</p>
+                    <div class="col-md-5">
+                        <p>Op zoek naar een betaalbaar en toegankelijk systeem voor je leden- en activiteitenadministratie? OpenMMA (<i>member management</i> en <i>administration</i>) is een open source systeem, wat betekent dat de code voor iedereen kosteloos toegankelijk is om te gebruiken en aan te passen naar wens. Het project is gestart vanuit de filosofie dat iedereen toegang moet kunnen krijgen tot goede code, en om een toegankelijk alternatief te bieden voor de bestaande commerciële ledenadministratiesystemen. Kort gezegd: een gratis systeem dat je naar wens kunt inrichten!</p>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <ul>
                             <li>
-                                <h5>User accounts</h5>
-                                <p>Members can create an account themselves, where the additional required information can be configured by the association. Before a user is admitted, new accounts can be verified. Accounts can also be imported from existing sources.</p>
+                                <h5>Wat kost het?</h5>
+                                <p><b>Niks!</b> Om gebruik te kunnen maken van het systeem, hoef je niets te betalen. De code is namelijk te vinden op GitHub, met een uitgebreide handleiding. Voor meer informatie over de kosten, kijk bij de <a class="text-body-emphasis" href="#faq">FAQ</a>.</p>
                             </li>
                             <li>
-                                <h5>Groups & Roles</h5>
-                                <p>Leden kunnen ingedeeld worden in zelf definieerbare groepen en subgroepen, bijvoorbeeld voor verschillende commissies. Met rollen kunnen gebruikers en groepen bepaalde rechten toegewezen krijgen.</p>
+                                <h5>Wat kan ik met het systeem?</h5>
+                                <p>Een uitgebreider overzicht van de functionaliteiten staat hieronder, maar in het kort: OpenMMA heeft dezelfde functionaliteiten als andere ledenmanagementsystemen. Boekhouding hebben wij nog niet geïmplementeerd. </p>
                             </li>
                             <li>
-                                <h5>Events</h5>
-                                <p>Events kunnen worden gepubliceerd in een voor leden toegankelijke kalender, waarna leden zich eventueel ook kunnen inschrijven voor deze events.</p>
+                                <h5>Wanneer kan ik het gebruiken?</h5>
+                                <p>Momenteel zijn we nog in de fase van het ontwikkelen van het systeem, maar <b>begin april</b> willen wij graag een eerste versie hebben ontwikkeld. En het mooie is: omdat we nog in de ontwikkelfase zitten, kunnen we jullie ideeën juist goed verwerken!</p>
                             </li>
                         </ul>
                     </div>
@@ -76,15 +106,87 @@
             </div>
         </section>
 
+        <!-- Features -->
+        <section id="features" class="pt-5 pb-5 bg-light">
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-user"></i>
+                        </div>
+                        <h4 class="pt-2">Member pages</h4>
+                        <p class="px-5 pb-3">Je leden hebben een eigen pagina, waardoor ze gemakkelijk informatie zoals hun telefoonnummer kunnen aanpassen. Ook kunnen zij zich via hun eigen pagina inschrijven voor activiteiten. </p>
+                    </div>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-calendar"></i>
+                        </div>
+                        <h4 class="pt-2">Calendar</h4>
+                        <p class="px-5 pb-3">Op de activiteitenkalender kunnen leden gemakkelijk zien welke activiteiten er binnenkort gaan plaatsvinden. Ook kunnen ze zich met één druk op de knop inschrijven!</p>
+                    </div>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-users"></i>
+                        </div>
+                        <h4 class="pt-2">Groups & Roles</h4>
+                        <p class="px-5 pb-3">Je kunt je leden gemakkelijk inschrijven in commissies. Als je wilt, kun je commissies ook bepaalde rechten geven, zoals het toevoegen van activiteiten in de kalender. </p>
+                    </div>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-table"></i>
+                        </div>
+                        <h4 class="pt-2">Registration form</h4>
+                        <p class="px-5 pb-3">Nieuwe leden kunnen zich via een simpel formulier op je website inschrijven, en komen dan direct in de database terecht. Jij hoeft de inschrijving alleen te verifiëren!</p>
+                    </div>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-pencil"></i>
+                        </div>
+                        <h4 class="pt-2">Volledig naar wens in te richten</h4>
+                        <p class="px-5 pb-3">Iedere vereniging is anders. Daarom heb je met OpenMMA de mogelijkheid om het systeem aan te passen naar jullie behoeftes. Helemaal op maat gemaakt!</p>
+                    </div>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-money-bill"></i>
+                        </div>
+                        <h4 class="pt-2">Free</h4>
+                        <p class="px-5 pb-3">Betaal wat je wil, als je wil. In principe heb je gratis toegang tot de code en de handleiding, wat alles is wat je nodig hebt om het systeem in gebruik te nemen en in te richten zoals je dat wil. Maar mocht je hierbij toch hulp willen, kunnen wij dit voor je doen. Kijk bij de <a class="text-body-emphasis" href="#faq">FAQ</a> voor meer informatie. </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <section id="faq" class="py-4 bg-light">
+        <!-- Open source -->
+        <section id="open-source" class="pt-4 pb-5">
+            <div class="container">
+                <div class="row gx-5">
+                    <h2>Open source?</h2>
+                    <div class="col-md-8">
+                        <p>
+                            Nu zal je je wel afvragen waarom we de code voor OpenMMA gratis beschikbaar maken. Dit hebben we gedaan vanuit de gedachte dat code niet iets is om geld mee te verdienen, maar eerder om mensen vooruit te helpen. Met open source code kan iedereen daarnaast meekijken met hoe de code precies functioneert, en kunnen er dus geen <i>shady</i> praktijken plaatsvinden. Openheid en transparantie zijn daarbij heel belangrijk!
+                        </p>
+                        <p>
+                            Andere populaire open source projecten zijn bijvoorbeeld Wordpress (een systeem om websites mee te maken), Firefox (een browser zoals Chrome) en Android. Al deze projecten zijn ontstaan uit de gedachte dat mensen kosteloos toegang moeten kunnen hebben tot code.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Bekende open source projecten:</h4>
+                        <a target="_blank" href="https://wordpress.org/" class="btn btn-purple my-1"><i class="fa-brands fa-wordpress"></i> WordPress</a><br>
+                        <a target="_blank" href="https://www.mozilla.org/en-US/firefox/new/" class="btn btn-purple my-1"><i class="fa-brands fa-firefox"></i> Firefox</a><br>
+                        <a target="_blank" href="https://source.android.com/" class="btn btn-purple my-1"><i class="fa-brands fa-android"></i> Android</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="pt-4 pb-5 bg-light">
             <div class="container">
                 <h2>Veelgestelde vragen</h2>
                 <div id="faq-accordion" class="accordion mt-3">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-1">
-                                Waarom zou je je code ooit open source maken? Je wilt er toch geld aan verdienen?
+                                Why would you make the code open source? Wouldn't you want to make money with it?
                             </button>
                         </h2>
                         <div id="faq-1" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
@@ -99,19 +201,19 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-2">
-                                Wanneer kunnen we het systeem in gebruik nemen?
+                                When will we be able to start using the system?
                             </button>
                         </h2>
                         <div id="faq-2" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
                             <div class="accordion-body">
-                                Ons doel is om rond het einde van maart 2023 een bruikbaar product te hebben.
+                                Ons doel is om rond het begin van april 2023 een bruikbaar product te hebben.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-3">
-                                Kan ik met het systeem alles wat ik ook met mijn huidige systeem kan?
+                                Can I do the same things with OpenMMA that I can do with my current system?
                             </button>
                         </h2>
                         <div id="faq-3" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
@@ -126,7 +228,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-4">
-                                Wat zijn de functionaliteiten die jullie bieden?
+                                What are te functionalities OpenMMA offers?
                             </button>
                         </h2>
                         <div id="faq-4" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
@@ -148,7 +250,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-5">
-                                Waarom zou ik voor OpenMMA kiezen, en niet voor een ander systeem?
+                                Why would I choose OpenMMA, and not another system?
                             </button>
                         </h2>
                         <div id="faq-5" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
@@ -163,24 +265,158 @@
                             </div>
                         </div>
                     </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq-6">
+                                How much do you charge to manage the hosting for me?
+                            </button>
+                        </h2>
+                        <div id="faq-6" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
+                            <div class="accordion-body">
+                                Als je zelf niet de mogelijkheid hebt om de hosting te regelen en het systeem te installeren,
+                                bieden we het aan als service om dit voor je te regelen. Hiervoor rekenen we 5 euro per maand
+                                (ex. btw). We zorgen daarvoor verder ook dat het systeem up-to-date gehouden wordt.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impressie -->
+        <section id="impression" class="pt-4 pb-5">
+            <div class="container">
+                <h2>Impression</h2>
+                <div class="row">
+                    <p>Zodra we kunnen laten zien hoe de interface eruit gaat zien, komt dit hier te staan!</p>
+                    <p>Dit zal waarschijnlijk in de tweede helft van maart gebeuren.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contributors -->
+        <section id="contributors" class="py-4 bg-light">
+            <div class="container">
+                <h2>Contributors</h2>
+                <div class="d-flex justify-content-center align-items-stretch flex-wrap">
+                    <div class="card p-1 m-2">
+                        <div class="card-body text-center">
+                            <img src="https://entasium.nl/img/jeroen.jpg" class="rounded-circle" width="175px;">
+                            <h5 class="pt-2 m-0 fs-4">Jeroen Tas</h5>
+                            <p class="text-body-secondary"><small>Jeroen45</small></p>
+                            <a href="https://github.com/Jeroen-45/" target="_blank" class="btn btn-light border-light-subtle"><i class="fa-brands fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                    <div class="card p-1 m-2">
+                        <div class="card-body text-center">
+                            <img src="https://entasium.nl/img/emo.jpg" class="rounded-circle" width="175px;">
+                            <h5 class="pt-2 m-0 fs-4">Emo Enderman</h5>
+                            <p class="text-body-secondary"><small>Eaorns</small></p>
+                            <a href="https://github.com/Eaorns/" target="_blank" class="btn btn-light border-light-subtle"><i class="fa-brands fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                    <div class="card p-1 m-2">
+                        <div class="card-body text-center">
+                            <img src="https://entasium.nl/img/isa.jpg" class="rounded-circle" width="175px;">
+                            <h5 class="pt-2 m-0 fs-4">Isa den Toom</h5>
+                            <p class="text-body-secondary"><small> </small></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact -->
-        <section id="contact" class="py-4">
+        <section id="contact" class="pt-4 pb-5">
             <div class="container">
-                <div class="row">
+                <div class="row gx-5">
+                    <h2>Contact</h2>
+                    <p>Heb je interesse, of heb je nog vragen of opmerkingen? Laat het ons weten!</p>
                     <div class="col-md-6">
-                        <h2>Contact</h2>
-                        <p>Are you interested, or do you have any questions or remarks? Let us know!</p>
+                        <form id="contact-form" action="https://openmma.nl/form.php" method="post">
+                            <div class="mt-1">
+                                <label class="form-label" for="email">Email</label>
+                                <input class="form-control" type="email" name="email" required>
+                                <span class="form-text text-danger" id="email-error"></span>
+                            </div>
+                            <div class="mt-3">
+                                <label class="form-label" for="message">Bericht</label>
+                                <textarea rows="5" class="form-control" type="text" name="message" required></textarea>
+                                <span class="form-text text-danger" id="message-error"></span>
+                            </div>
+                            <div class="mt-3">
+                                <div class="h-captcha" data-sitekey="8ff96ada-c23a-4b96-b686-52e6f0c4cb95"></div>
+                                <span class="form-text text-danger" id="captcha-error"></span>
+                            </div>
+                            <div class="mt-2">
+                                <span class="form-text text-danger" id="submit-error"></span>
+                                <span class="form-text text-success" id="submit-success"></span>
+                            </div>
+                            <input id="submit" class="btn btn-purple mt-1" type="submit" value="Versturen">
+                        </form>
+                        <script>
+                            $("#contact-form").submit(function(e) {
+                                e.preventDefault();
+
+                                $("#email-error").text("");
+                                $("#message-error").text("");
+                                $("#captcha-error").text("");
+                                $("#submit-error").text("");
+                                $("#submit-success").text("");
+                                
+                                if ($('[name=h-captcha-response]').val() == "") {
+                                    $("#captcha-error").text("Please complete the captcha");
+                                    return;
+                                }
+                                
+                                $.ajax({
+                                    url: $("#contact-form").attr('action'),
+                                    type: 'POST',
+                                    data: $('#contact-form').serialize(),
+                                    success: (data) => {
+                                        try {
+                                            data = JSON.parse(data);
+                                            switch (data['status']) {
+                                                case 'missing_params':
+                                                    $("#submit-error").text("Please fill out all fields");
+                                                    break;
+                                                case 'invalid_email':
+                                                    $("#email-error").text("Please enter a valid email address");
+                                                    break;
+                                                case 'invalid_captcha':
+                                                    $("#capthca-error").text("Invalid captcha, please try again");
+                                                    break;
+                                                case 'success':
+                                                    $("#submit-success").text("Message sent!");
+                                                    $("#contact-form")[0].reset();
+                                                    break;
+                                                case 'mail_not_sent':
+                                                default:
+                                                    $("#submit-error").value("Something went wrong! Please try again later, or send an email.");
+                                            }
+                                        } catch {
+                                            console.log("CATCH");
+                                            $("#submit-error").text("Something went wrong! Please try again later, or send an email.");
+                                        }
+                                        $("#contact-form #submit").removeAttr('disabled');
+                                    },
+                                    error: () => {
+                                        $("#submit-error").value("Something went wrong! Please try again later, or send an email."); 
+                                        $("#contact-form #submit").removeAttr('disabled');
+                                    }
+                                });
+                                $("#contact-form #submit").attr('disabled', true);
+                                grecaptcha.reset();
+                            });
+                            </script>
                     </div>
                     <div class="col-md-6">
-                        <div class="card p-4">
+                        <div class="card p-4 mt-3">
                             <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">Je kunt ons ook mailen op:</h6>
                                 <h4>info@openmma.nl</h4>
-                                <p>We will respond as soon as possible.</p>
-                                <a href="mailto:info@openmma.nl" class="btn btn-dark my-2"><i class="fas fa-envelope me-2"></i>Send an email</a>
+                                <p>Wij reageren zo snel mogelijk.</p>
+                                <a href="mailto:info@openmma.nl" class="btn btn-dark my-2"><i class="fas fa-envelope me-2"></i>Stuur een email</a>
                             </div>
                         </div>
                     </div>
@@ -190,7 +426,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-secondary py-2 bg-dark">
-            &copy; OpenMMA - Supported by Entasium
+            &copy; OpenMMA - Ondersteund door Entasium
         </footer>
     </body>
 </html>
