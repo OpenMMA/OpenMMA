@@ -11,6 +11,35 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src='https://www.hCaptcha.com/1/api.js' async defer></script>
+
+        <style>
+            .btn-purple {
+                --bs-btn-color: #fff;
+                --bs-btn-bg: #4f46e5;
+                --bs-btn-border-color: #4f46e5;
+                --bs-btn-hover-color: #fff;
+                --bs-btn-hover-bg: #6967ec;
+                --bs-btn-hover-border-color: #6967ec;
+                --bs-btn-focus-shadow-rgb: 66,70,73;
+                --bs-btn-active-color: #fff;
+                --bs-btn-active-bg: #6967ec;
+                --bs-btn-active-border-color: #6967ec;
+                --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                --bs-btn-disabled-color: #fff;
+                --bs-btn-disabled-bg: #4f46e5;
+                --bs-btn-disabled-border-color: #4f46e5;
+            }
+
+            .text-purple {
+                color: #4f46e5;
+            }
+
+            .fa-sq {
+                text-align: center;
+                width: 1.25em;
+                line-height: 1.25em;
+            }
+        </style>
     </head>
     <body>
         <!-- Navbar -->
@@ -54,10 +83,10 @@
             <div class="container">
                 <h1 class="text-center pb-3">Simpele, open en gratis software voor verenigingen</h1>
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-5">
                         <p>Op zoek naar een betaalbaar en toegankelijk systeem voor je leden- en activiteitenadministratie? OpenMMA (<i>member management</i> en <i>administration</i>) is een open source systeem, wat betekent dat de code voor iedereen kosteloos toegankelijk is om te gebruiken en aan te passen naar wens. Het project is gestart vanuit de filosofie dat iedereen toegang moet kunnen krijgen tot goede code, en om een toegankelijk alternatief te bieden voor de bestaande commerciële ledenadministratiesystemen. Kort gezegd: een gratis systeem dat je naar wens kunt inrichten!</p>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-7">
                         <ul>
                             <li>
                                 <h5>Wat kost het?</h5>
@@ -79,49 +108,49 @@
 
         <!-- Features -->
         <section id="features" class="pt-5 pb-5 bg-light">
-            <div class="container">
+            <div class="container text-center">
                 <div class="row">
-                    <div class="col-md-4 pb-4">
-                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
-                            <i class="fa-solid fa-user"></i>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-user"></i>
                         </div>
-                        <h4 class="text-center pt-2">Memberpagina's</h4>
-                        <p class="text-center px-5 pb-3">Je leden hebben een eigen pagina, waardoor ze gemakkelijk informatie zoals hun telefoonnummer kunnen aanpassen. Ook kunnen zij zich via hun eigen pagina inschrijven voor activiteiten. </p>
+                        <h4 class="pt-2">Memberpagina's</h4>
+                        <p class="px-5 pb-3">Je leden hebben een eigen pagina, waardoor ze gemakkelijk informatie zoals hun telefoonnummer kunnen aanpassen. Ook kunnen zij zich via hun eigen pagina inschrijven voor activiteiten. </p>
                     </div>
-                    <div class="col-md-4 pb-4">
-                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
-                            <i class="fa-solid fa-calendar"></i>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-calendar"></i>
                         </div>
-                        <h4 class="text-center pt-2">Kalender</h4>
-                        <p class="text-center px-5 pb-3">Op de activiteitenkalender kunnen leden gemakkelijk zien welke activiteiten er binnenkort gaan plaatsvinden. Ook kunnen ze zich met één druk op de knop inschrijven!</p>
+                        <h4 class="pt-2">Kalender</h4>
+                        <p class="px-5 pb-3">Op de activiteitenkalender kunnen leden gemakkelijk zien welke activiteiten er binnenkort gaan plaatsvinden. Ook kunnen ze zich met één druk op de knop inschrijven!</p>
                     </div>
-                    <div class="col-md-4 pb-4">
-                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
-                            <i class="fa-solid fa-users"></i>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-users"></i>
                         </div>
-                        <h4 class="text-center pt-2">Groepen & Rollen</h4>
-                        <p class="text-center px-5 pb-3">Je kunt je leden gemakkelijk inschrijven in commissies. Als je wilt, kun je commissies ook bepaalde rechten geven, zoals het toevoegen van activiteiten in de kalender. </p>
+                        <h4 class="pt-2">Groepen & Rollen</h4>
+                        <p class="px-5 pb-3">Je kunt je leden gemakkelijk inschrijven in commissies. Als je wilt, kun je commissies ook bepaalde rechten geven, zoals het toevoegen van activiteiten in de kalender. </p>
                     </div>
-                    <div class="col-md-4 pb-4">
-                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
-                            <i class="fa-solid fa-table"></i>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-table"></i>
                         </div>
-                        <h4 class="text-center pt-2">Inschrijfformulier</h4>
-                        <p class="text-center px-5 pb-3">Nieuwe leden kunnen zich via een simpel formulier op je website inschrijven, en komen dan direct in de database terecht. Jij hoeft de inschrijving alleen te verifiëren!</p>
+                        <h4 class="pt-2">Inschrijfformulier</h4>
+                        <p class="px-5 pb-3">Nieuwe leden kunnen zich via een simpel formulier op je website inschrijven, en komen dan direct in de database terecht. Jij hoeft de inschrijving alleen te verifiëren!</p>
                     </div>
-                    <div class="col-md-4 pb-4">
-                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
-                            <i class="fa-solid fa-pencil"></i>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-pencil"></i>
                         </div>
-                        <h4 class="text-center pt-2">Volledig naar wens in te richten</h4>
-                        <p class="text-center px-5 pb-3">Iedere vereniging is anders. Daarom heb je met OpenMMA de mogelijkheid om het systeem aan te passen naar jullie behoeftes. Helemaal op maat gemaakt!</p>
+                        <h4 class="pt-2">Volledig naar wens in te richten</h4>
+                        <p class="px-5 pb-3">Iedere vereniging is anders. Daarom heb je met OpenMMA de mogelijkheid om het systeem aan te passen naar jullie behoeftes. Helemaal op maat gemaakt!</p>
                     </div>
-                    <div class="col-md-4 pb-4">
-                        <div class="text-center fs-1 fs-md-2 rounded-circle bg-light-subtle m-auto border border-light-subtle pt-4 pt-md-3" style="width: 100px; height: 100px;">
-                            <i class="fa-solid fa-money-bill"></i>
+                    <div class="col-md-6 col-lg-4 pb-4">
+                        <div class="rounded-circle m-auto bg-light-subtle border border-light-subtle" style="width: fit-content;">
+                            <i class="h1 text-purple m-4 fa-solid fa-sq fa-money-bill"></i>
                         </div>
-                        <h4 class="text-center pt-2">Gratis</h4>
-                        <p class="text-center px-5 pb-3">Betaal wat je wil, als je wil. In principe heb je gratis toegang tot de code en de handleiding, wat alles is wat je nodig hebt om het systeem in gebruik te nemen en in te richten zoals je dat wil. Maar mocht je hierbij toch hulp willen, kunnen wij dit voor je doen. Kijk bij de <a class="text-body-emphasis" href="#faq">FAQ</a> voor meer informatie. </p>
+                        <h4 class="pt-2">Gratis</h4>
+                        <p class="px-5 pb-3">Betaal wat je wil, als je wil. In principe heb je gratis toegang tot de code en de handleiding, wat alles is wat je nodig hebt om het systeem in gebruik te nemen en in te richten zoals je dat wil. Maar mocht je hierbij toch hulp willen, kunnen wij dit voor je doen. Kijk bij de <a class="text-body-emphasis" href="#faq">FAQ</a> voor meer informatie. </p>
                     </div>
                 </div>
             </div>
@@ -130,23 +159,20 @@
         <!-- Open source -->
         <section id="open-source" class="pt-4 pb-5">
             <div class="container">
-                <div class="row">
+                <div class="row gx-5">
+                    <h2>Open source?</h2>
                     <div class="col-md-8">
-                        <h2 class="text-center">Open source?</h2>
                         <p>
-                            Nu zal je je wel afvragen waarom we de code voor OpenMMA gratis beschikbaar maken. Dit hebben we gedaan vanuit de gedachte dat code niet iets is om geld mee te verdienen, maar eerder om mensen vooruit te helpen. Met open source code kan iedereen daarnaast meekijken met hoe de code precies functioneert, en kunnen er dus geen <i>shady</i> praktijken plaatsvinden. Openheid en transparantie zijn daarbij heel belangrijk! 
+                            Nu zal je je wel afvragen waarom we de code voor OpenMMA gratis beschikbaar maken. Dit hebben we gedaan vanuit de gedachte dat code niet iets is om geld mee te verdienen, maar eerder om mensen vooruit te helpen. Met open source code kan iedereen daarnaast meekijken met hoe de code precies functioneert, en kunnen er dus geen <i>shady</i> praktijken plaatsvinden. Openheid en transparantie zijn daarbij heel belangrijk!
                         </p>
                         <p>
                             Andere populaire open source projecten zijn bijvoorbeeld Wordpress (een systeem om websites mee te maken), Firefox (een browser zoals Chrome) en Android. Al deze projecten zijn ontstaan uit de gedachte dat mensen kosteloos toegang moeten kunnen hebben tot code.</p>
                     </div>
-                    <div class="col-md-4 my-4 ps-5">
+                    <div class="col-md-4">
                         <h4>Bekende open source projecten:</h4>
-                        <ul class="p-3 fs-5 text-primary-emphasis" style="list-style-type: none;">
-                            <li class="pb-4"><a target="_blank" href="#" class="text-decoration-none">Item 1</a></li>
-                            <li class="pb-4"><a target="_blank" href="#" class="text-decoration-none">Item 2</a></li>
-                            <li class="pb-4"><a target="_blank" href="#" class="text-decoration-none">Item 3</a></li>
-                            <li class="pb-4"><a target="_blank" href="#" class="text-decoration-none">Item 4</a></li>
-                        </ul>
+                        <a target="_blank" href="#" class="btn btn-purple my-1"><i class="fa-brands fa-wordpress"></i> WordPress</a><br>
+                        <a target="_blank" href="#" class="btn btn-purple my-1"><i class="fa-brands fa-firefox"></i> Firefox</a><br>
+                        <a target="_blank" href="#" class="btn btn-purple my-1"><i class="fa-brands fa-android"></i> Android</a>
                     </div>
                 </div>
             </div>
@@ -253,53 +279,53 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Contributors -->
-        <section id="contributors" class="pt-4 pb-5 bg-light">
+        <section id="contributors" class="py-4 bg-light">
             <div class="container">
                 <h2>Contributors</h2>
-                <div class="row justify-content-center">
-                    <div class="col-8 my-3 my-md-0 col-md-2 card p-1 mx-2">
+                <div class="d-flex justify-content-center align-items-stretch flex-wrap">
+                    <div class="card p-1 m-2">
                         <div class="card-body text-center">
-                            <img src="https://entasium.nl/img/jeroen.jpg" class="rounded-circle w-100">
+                            <img src="https://entasium.nl/img/jeroen.jpg" class="rounded-circle" width="175px;">
                             <h5 class="pt-2 m-0 fs-4">Jeroen Tas</h5>
                             <p class="text-body-secondary"><small>Jeroen45</small></p>
                             <a href="https://github.com/Jeroen-45/" target="_blank" class="btn btn-light border-light-subtle"><i class="fa-brands fa-github"></i> GitHub</a>
                         </div>
                     </div>
-                    <div class="col-8 my-3 my-md-0 col-md-2 card p-1 mx-2">
+                    <div class="card p-1 m-2">
                         <div class="card-body text-center">
-                            <img src="https://entasium.nl/img/emo.jpg" class="rounded-circle w-100">
+                            <img src="https://entasium.nl/img/emo.jpg" class="rounded-circle" width="175px;">
                             <h5 class="pt-2 m-0 fs-4">Emo Enderman</h5>
                             <p class="text-body-secondary"><small>Eaorns</small></p>
                             <a href="https://github.com/Eaorns/" target="_blank" class="btn btn-light border-light-subtle"><i class="fa-brands fa-github"></i> GitHub</a>
                         </div>
                     </div>
-                    <div class="col-8 my-3 my-md-0 col-md-2 card p-1 mx-2">
+                    <div class="card p-1 m-2">
                         <div class="card-body text-center">
-                            <img src="https://entasium.nl/img/isa.jpg" class="rounded-circle w-100">
+                            <img src="https://entasium.nl/img/isa.jpg" class="rounded-circle" width="175px;">
                             <h5 class="pt-2 m-0 fs-4">Isa den Toom</h5>
                             <p class="text-body-secondary"><small> </small></p>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </section>
 
         <!-- Contact -->
         <section id="contact" class="pt-4 pb-5">
             <div class="container">
-                <div class="row">
+                <div class="row gx-5">
+                    <h2>Contact</h2>
+                    <p>Heb je interesse, of heb je nog vragen of opmerkingen? Laat het ons weten!</p>
                     <div class="col-md-6">
-                        <h2>Contact</h2>
-                        <p class="mb-0">Heb je interesse, of heb je nog vragen of opmerkingen? Laat het ons weten!</p>
-                        <form id="contact-form" action="https://openmma.nl/form.php" method="post" class="pe-5">                            
-                            <label class="form-label mt-1" for="email">Your email (required)</label>
-                            <input class="form-control" placeholder="Email address..." type="email" name="email" required>
-                            <label class="form-label mt-3" for="message">Message (required)</label>
-                            <textarea rows="5" class="form-control" placeholder="Message..." type="text" name="message" required></textarea>
+                        <form id="contact-form" action="https://openmma.nl/form.php" method="post">
+                            <label class="form-label mt-1" for="email">Email</label>
+                            <input class="form-control" type="email" name="email" required>
+                            <label class="form-label mt-3" for="message">Bericht</label>
+                            <textarea rows="5" class="form-control" type="text" name="message" required></textarea>
                             <div class="h-captcha mt-3" data-sitekey="8ff96ada-c23a-4b96-b686-52e6f0c4cb95"></div>
-                            <input id="submit" class="btn btn-primary mt-3" type="submit" value="Send message">
+                            <input id="submit" class="btn btn-purple mt-3" type="submit" value="Versturen">
                         </form>
                         <script>
                             $("#contact-form").submit(function(e) {
@@ -320,12 +346,12 @@
                                 $("#contact-form #submit").attr('disabled', true);
                                 grecaptcha.reset();
                             });
-                        </script>
+                            </script>
                     </div>
                     <div class="col-md-6">
-                        <div class="card p-4 mt-5">
-                            <h5>Of stuur een email:</h5>
+                        <div class="card p-4 mt-3">
                             <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">Je kunt ons ook mailen op:</h6>
                                 <h4>info@openmma.nl</h4>
                                 <p>Wij reageren zo snel mogelijk.</p>
                                 <a href="mailto:info@openmma.nl" class="btn btn-dark my-2"><i class="fas fa-envelope me-2"></i>Stuur een email</a>
