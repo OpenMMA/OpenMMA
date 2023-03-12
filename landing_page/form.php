@@ -21,7 +21,14 @@ curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
 $response = json_decode(curl_exec($verify));
 
 if($response->success) {
-    if (mail("info@openmma.nl", "Form message from " . $_POST['email'], "Message from " . $_POST['email'] . ":\r\n\r\n" . $_POST['message'])) {
+    $to      = "info@openmma.nl";
+    $subject = "Form message from " . $_POST['email'];
+    $message = "Message from " . $_POST['email'] . ":\r\n\r\n" . $_POST['message'];
+    $headers = array(
+        'From' => 'contact@openmma.nl',
+        'Reply-To' => $_POST['email']
+    );
+    if (mail($to, $subject, $message, $headers)) {
         echo json_encode(array('status' => 'success'));
     } else {
         echo json_encode(array('status' => 'mail_not_sent'));
