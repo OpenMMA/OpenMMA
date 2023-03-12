@@ -363,12 +363,12 @@
                                 $("#captcha-error").text("");
                                 $("#submit-error").text("");
                                 $("#submit-success").text("");
-                                
+
                                 if ($('[name=h-captcha-response]').val() == "") {
-                                    $("#captcha-error").text("Please complete the captcha");
+                                    $("#captcha-error").text("De captcha is niet juist ingevuld");
                                     return;
                                 }
-                                
+
                                 $.ajax({
                                     url: $("#contact-form").attr('action'),
                                     type: 'POST',
@@ -378,30 +378,29 @@
                                             data = JSON.parse(data);
                                             switch (data['status']) {
                                                 case 'missing_params':
-                                                    $("#submit-error").text("Please fill out all fields");
+                                                    $("#submit-error").text("Niet alle velden zijn ingevuld");
                                                     break;
                                                 case 'invalid_email':
-                                                    $("#email-error").text("Please enter a valid email address");
+                                                    $("#email-error").text("Het emailadres is niet geldig");
                                                     break;
                                                 case 'invalid_captcha':
-                                                    $("#capthca-error").text("Invalid captcha, please try again");
+                                                    $("#capthca-error").text("De captcha is niet juist ingevuld");
                                                     break;
                                                 case 'success':
-                                                    $("#submit-success").text("Message sent!");
+                                                    $("#submit-success").text("Het bericht is verzonden!");
                                                     $("#contact-form")[0].reset();
                                                     break;
                                                 case 'mail_not_sent':
                                                 default:
-                                                    $("#submit-error").value("Something went wrong! Please try again later, or send an email.");
+                                                    $("#submit-error").value("Er is een fout opgetreden. Probeer het later opnieuw of stuur een email.");
                                             }
                                         } catch {
-                                            console.log("CATCH");
-                                            $("#submit-error").text("Something went wrong! Please try again later, or send an email.");
+                                            $("#submit-error").text("Er is een fout opgetreden. Probeer het later opnieuw of stuur een email.");
                                         }
                                         $("#contact-form #submit").removeAttr('disabled');
                                     },
                                     error: () => {
-                                        $("#submit-error").value("Something went wrong! Please try again later, or send an email."); 
+                                        $("#submit-error").value("Er is een fout opgetreden. Probeer het later opnieuw of stuur een email.");
                                         $("#contact-form #submit").removeAttr('disabled');
                                     }
                                 });
