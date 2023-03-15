@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,5 +56,10 @@ class Event extends Model
     public function getBannerUrlAttribute()
     {
         return Image::find($this->banner)->url;
+    }
+
+    public function getRelativeWhenAttribute()
+    {
+        return Carbon::parse($this->start)->diffForHumans();
     }
 }

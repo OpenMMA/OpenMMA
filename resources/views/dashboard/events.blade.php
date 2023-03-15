@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $event->title }}</h5>
                         <p class="card-text">{{ $event->description }}</p>
-                        <p class="card-text"><small class="text-muted">Takes place {{ Carbon::parse($event->start)->diffForHumans() }}</small></p>
+                        <p class="card-text"><small class="text-muted">Takes place {{ $event->relativeWhen }}</small></p>
                         <a href="/event/{{ $event->slug }}/edit" class="btn btn-primary">Edit event</a>
                     </div>
                 </div>
