@@ -8,8 +8,16 @@
                                  'form_submit_right' => true,
                                  'form_target' => '/dashboard/system-settings',
                                  'form_fields' => [
-                                    (object)array('type' => 'text', 'name' => 'value', 'required' => true, 'label' => 'Site name', 'default' => app('settings')['site.name']),
+                                    (object)array('type' => 'text', 'name' => 'value', 'required' => true, 'label' => 'Site name', 'default' => setting('site.name')),
                                     (object)array('type' => 'hidden', 'name' => 'key', 'value' => 'site.name'),
                                  ]])
+    @include('components.form', ['form_name' => 'user_custom_fields_form',
+                                 'form_submit' => 'Save',
+                                 'form_submit_right' => true,
+                                 'form_target' => '/dashboard/system-settings',
+                                 'form_fields' => [
+                                    (object)array('type' => 'textarea', 'name' => 'value', 'required' => true, 'label' => 'Account custom fields', 'class' => 'font-monospace', 'default' => json_encode(setting('account.custom_fields'), JSON_PRETTY_PRINT)),
+                                    (object)array('type' => 'hidden', 'name' => 'key', 'value' => 'account.custom_fields'),
+                                ]])
 </div>
 @include('dashboard.footer')

@@ -32,11 +32,16 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
+        // TODO validate custom fields
+        $custom_fields = array_combine(array_map(fn($field) => $field->name, setting('account.custom_fields')), 
+                                       array_map(fn($field) => $input[$field->name], setting('account.custom_fields')));
+        
         return User::create([
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'custom_data' => json_encode($custom_fields),
         ]);
     }
 }

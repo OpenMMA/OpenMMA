@@ -42,32 +42,39 @@ class DatabaseSeeder extends Seeder
 
         $account_custom_fields = [
             array(
-              'name' => 'personal_email',
-              'label' => 'Personal Email address',
-              'type' => 'email',
-              'required' => true,
+                'name' => 'personal_email',
+                'label' => 'Personal Email address',
+                'type' => 'email',
+                'required' => true,
             ),
             array(
-              'name' => 'start_year',
-              'label' => 'Starting year',
-              'type' => 'number',
-              'attr' => array('min' => '2010', 'max' => '2030'),
-              'required' => true,
+                'name' => 'start_year',
+                'label' => 'Starting year',
+                'type' => 'number',
+                'min' => '2010',
+                'max' => '2030',
+                'required' => true,
             ),
             array(
-              'name' => 'phone_number',
-              'label' => 'Mobile phone number',
-              'type' => 'tel',
-              'attr' => array('pattern' => '06-?[0-9]{8}'),
-              'required' => false,
+                'name' => 'phone_number',
+                'label' => 'Mobile phone number',
+                'type' => 'tel',
+                'pattern' => '06-?[0-9]{8}',
+                'required' => false,
             ),
             array(
-              'name' => 'bachelor',
-              'label' => 'Bachelor(s)',
-              'type' => 'enum',
-              'multiple' => true,
-              'options' => ['BA', 'BB', 'BC', 'BD', 'BE'],
-              'required' => true,
+                'name' => 'bachelor',
+                'label' => 'Bachelor(s)',
+                'type' => 'select',
+                'multiple' => true,
+                'options' => [
+                    'BA' => 'BSc A', 
+                    'BB' => 'BSc B', 
+                    'BC' => 'BSc C', 
+                    'BD' => 'BSc D', 
+                    'BE' => 'BSc E'
+                ],
+                'required' => true,
             )
         ];
         SystemSetting::create(['key' => 'site.name', 'value' => 'OpenMMA', 'type' => 'text']);

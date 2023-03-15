@@ -25,6 +25,38 @@
     @case('textarea')
         {{ Form::textarea($field->name, $field->default ?? null, ['class' => 'form-control ' . ($field->class ?? ''), 'rows' => $field->rows ?? '10', 'required' => $field->required ?? false]) }}
         @break
+    @case('select')
+        {{ Form::select($field->name . ($field->multiple ? '[]' : ''), $field->options, $field->default ?? null, ['class' => 'form-control ' . ($field->class ?? ''), $field->multiple ? 'multiple' : '', 'id' => $field->name, 'required' => $field->required ?? false]) }}
+        @pushOnce('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+        @endPushOnce
+        @push('scripts')
+        <script>
+            $("#{{ $form_name }} #{{ $field->name }}").select2({
+                closeOnSelect : false,
+                allowHtml: true,
+                allowClear: true
+            });
+        </script>
+        @endpush
+        @pushOnce('styles')
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+        <style>
+            /* TEMPORARY FIX */
+            .select2-selection {
+                border: var(--bs-border-width) solid var(--bs-border-color) !important;
+                border-radius: .375rem !important;
+                padding: 1px 7px;
+            }
+        </style>
+        @endPushOnce
+        @break
+    @case('number')
+        {{ Form::number($field->name, $field->default ?? null, ['class' => 'form-control ' . ($field->class ?? ''), 'min' => $field->min ?? '', 'max' => $field->max ?? '', 'required' => $field->required ?? false]) }}
+        @break
+    @case('tel')
+        {{ Form::tel($field->name, $field->default ?? null, ['class' => 'form-control ' . ($field->class ?? ''), 'pattern' => $field->pattern ?? '', 'required' => $field->required ?? false]) }}
+        @break
     @case('tinymce')
         @push('scripts')
             <script>
@@ -39,6 +71,9 @@
         @break
     @case('checkbox')
         {{ Form::checkbox($field->name, $field->name, $field->checked ?? false, ['class' => 'form-check-input ' . ($field->class ?? '')]) }}
+        @break
+    @case('divider')
+        <hr class="{{ $field->class ?? '' }}">
         @break
 @endswitch
 @isset($field->error)
