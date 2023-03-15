@@ -34,7 +34,8 @@ Route::prefix('event')->group(function() {
     Route::get('/create', [EventController::class, 'create']);
     Route::post('/create', [EventController::class, 'store']);
     Route::get('/{event:slug}/edit', [EventController::class, 'edit']);
-    Route::put('/{event:slug}/edit', [EventController::class, 'update']);
+    Route::put('/{event:slug}/edit/{action}', [EventController::class, 'update'])->whereIn('action', ['body']);
+    Route::post('/{event:slug}/edit/{action}', [EventController::class, 'update'])->whereIn('action', ['banner', 'tags']);
     Route::get('/{event:slug}', [EventController::class, 'show']);
     Route::delete('/{event:slug}', [EventController::class, 'destroy']);
 });
@@ -54,6 +55,8 @@ Route::prefix('dashboard')->group(function() {
     Route::get('/groups', [GroupController::class, 'index']);
     Route::post('/groups/create', [GroupController::class, 'store']);
     Route::get('/group/{group:name}', [GroupController::class, 'show']);
+
+    Route::get('/events', [EventController::class, 'dashboardIndex']);
 
     Route::get('/system-settings', [SystemSettingController::class, 'index']);
     Route::post('/system-settings', [SystemSettingController::class, 'update']);

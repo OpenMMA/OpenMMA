@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('body');
             $table->timestamp('start')->nullable();
             $table->timestamp('end')->nullable();
+            $table->unsignedBigInteger('banner')->nullable();
             $table->enum('status', ['draft', 'published', 'unlisted'])->default('draft');
             $table->timestamps();
         });

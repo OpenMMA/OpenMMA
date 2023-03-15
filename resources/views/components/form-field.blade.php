@@ -35,7 +35,7 @@
             $("#{{ $form_name }} #{{ $field->name }}").select2({
                 closeOnSelect : false,
                 allowHtml: true,
-                allowClear: true
+                allowClear: true,
             });
         </script>
         @endpush
@@ -61,9 +61,10 @@
         @push('scripts')
             <script>
                 tinymce.init({
-                    selector: 'textarea#{{ $form_name . '-' . $field->name }}', // Replace this CSS selector to match the placeholder element for TinyMCE
+                    selector: 'textarea#{{ $form_name . '-' . $field->name }}',
                     plugins: 'code table lists',
-                    toolbar: 'undo redo | formatselect| bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
+                    toolbar: 'undo redo | formatselect| bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
+                    promotion: false
                 });
             </script>
         @endpush
@@ -72,6 +73,9 @@
     @case('checkbox')
         {{ Form::checkbox($field->name, $field->name, $field->checked ?? false, ['class' => 'form-check-input ' . ($field->class ?? '')]) }}
         @break
+    @case('file')
+        {{ Form::file($field->name, ['class' => 'form-control ' . ($field->class ?? ''), 'required' => $field->required ?? false, 'multiple' => $field->multiple ?? false]) }}
+        @break;
     @case('divider')
         <hr class="{{ $field->class ?? '' }}">
         @break

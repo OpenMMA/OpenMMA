@@ -16,7 +16,7 @@ use Carbon\Carbon;
             @include('components.form', ['form_name' => 'edit_event_form',
                                          'form_method' => 'PUT',
                                          'form_submit' => 'Save changes',
-                                         'form_target' => '/event/' . $event->slug . '/edit',
+                                         'form_target' => '/event/' . $event->slug . '/edit/body',
                                          'form_fields' => [
                                             (object)array('type' => 'text', 'name' => 'title', 'required' => true, 'default' => $event->title),
                                             array(
@@ -28,7 +28,13 @@ use Carbon\Carbon;
                                         ]])
         </div>
         <div class="col-4">
-
+        <h4>Set banner</h4>
+        @include('components.form', ['form_name' => 'banner_image_form',
+                                     'form_submit' => 'Upload',
+                                     'form_target' => '/event/' . $event->slug . '/edit/banner',
+                                     'form_fields' => [
+                                        (object)array('type' => 'file', 'name' => 'banner', 'required' => true),
+                                    ]])
         </div>
     </div>
 </div>

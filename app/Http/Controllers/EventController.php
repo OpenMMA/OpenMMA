@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,8 +17,13 @@ class EventController extends Controller
      */
     public function index(): Response
     {
-        
         return response()->view('events.calendar');
+    }
+
+    public function dashboardIndex(): Response
+    {
+        $events = Event::all();
+        return response()->view('dashboard.events', ['events' => $events]);
     }
 
     public function getevents(Request $request): JsonResponse
@@ -75,16 +81,31 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event): RedirectResponse
+    public function update(Request $request, Event $event, String $action): RedirectResponse
     {
-        $event->update([
-            'title'       => $request->title,
-            'description' => $request->description,
-            'body'        => $request->body,
-            'start'       => $request->start,
-            'end'         => $request->end
-        ]);
-        return response()->redirectTo('/event/' . $event->slug . '/edit')->with(array('status' => 'updated'));
+        switch ($action) {
+            case 'body':
+                $event->update([
+                    'title'       => $request->title,
+                    'description' => $request->description,
+                    'body'        => $request->body,
+                    'start'       => $request->start,
+                    'end'         => $request->end
+                ]);
+                break;
+            case 'banner':
+                $img = Image::store($request->file('banner'), 'banners');
+                if ($img == null)
+                    return response()->redirectTo('/event/' . $event->slug . '/edit')->with(array('action' => $action, 'status' => 'fail'));
+                $event->update(['banner' => $img->id]);
+                break;
+            case 'tags':
+
+                break;
+            default:
+                return response()->redirectTo('/event/' . $event->slug . '/edit')->with(array('action' => $action, 'status' => 'fail'));
+        }
+        return response()->redirectTo('/event/' . $event->slug . '/edit')->with(array('action' => $action, 'status' => 'updated'));
     }
 
     /**

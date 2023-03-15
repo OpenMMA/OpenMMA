@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\Image;
+use Carbon\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Event>
@@ -17,20 +19,16 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
-        $start = fake()->dateTimeBetween('-1 month', '+1 month');
-        $end = fake()->dateTimeBetween('-1 month', '+1 month');
-        if ($start > $end) {
-            $tmp = $start;
-            $start = $end;
-            $end = $tmp;
-        }
+        $start = Carbon::parse(fake()->dateTimeBetween('-1 week', '+1 month'))->roundMinute(30);
+        $end = Carbon::parse($start)->addMinutes(fake()->numberBetween(60, 60*24*3))->roundMinute(30);
         $title = fake()->sentence;
         return [
             'title' => $title,
             'description' => fake()->paragraph(1),
             'body' => fake()->paragraph(5),
             'start' => $start,
-            'end' => $end
+            'end' => $end,
+            'banner' => fake()->randomElement(Image::all())->id
         ];
     }
 }

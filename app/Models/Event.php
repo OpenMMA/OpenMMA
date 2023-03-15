@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Sluggable;
+use App\Models\Image;
 
 
 class Event extends Model
@@ -16,10 +18,20 @@ class Event extends Model
         'description',
         'body',
         'start',
-        'end'
+        'end',
+        'banner'
     ];
 
     protected $appends = ['url'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('start', 'asc');
+        });
+    }
 
     /**
      * Return the sluggable configuration array for this model.
@@ -38,5 +50,10 @@ class Event extends Model
     public function getUrlAttribute() 
     {
         return url("/event/{$this->slug}");
+    }
+
+    public function getBannerUrlAttribute()
+    {
+        return Image::find($this->banner)->url;
     }
 }

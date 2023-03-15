@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
 use App\Models\Group;
+use App\Models\Image;
 use App\Models\Role;
 use App\Models\SystemSetting;
 use Spatie\Permission\PermissionRegistrar;
@@ -30,6 +31,12 @@ class DatabaseSeeder extends Seeder
         Role::create(['name' => 'board.', 'title' => '']);
 
         \App\Models\User::factory(20)->create();
+
+        Image::create(['path' =>'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/dba49e79778043.5ccdb90d4adfc.jpg', 'external' => true, 'uploader_id' => 1]);
+        Image::create(['path' =>'https://static.vecteezy.com/system/resources/previews/000/476/390/original/vector-summer-beach-vacation-club-poster.jpg', 'external' => true, 'uploader_id' => 2]);
+        Image::create(['path' =>'https://static.vecteezy.com/system/resources/previews/000/669/980/original/vector-travel-poster-template.jpg', 'external' => true, 'uploader_id' => 3]);
+        Image::create(['path' =>'https://s3.envato.com/files/229310228/01_preview.jpg', 'external' => true, 'uploader_id' => 4]);
+
         \App\Models\Event::factory(8)->create();
 
         \App\Models\User::factory()->create([
