@@ -1,7 +1,3 @@
-@php
-    use Illuminate\Support\Facades\Route;
-@endphp
-
 @extends('layout.layout')
 
 @section('content')
