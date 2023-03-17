@@ -7,6 +7,11 @@ To set up a development environment, you will need the following prerequisites:
 - composer >=2.5
 - mariadb-server (or another laravel-supported database)
 
+    A quick way to set up a database is using docker:
+    ```
+    docker run -e MARIADB_ROOT_PASSWORD=password -p 3306:3306 mariadb
+    ```
+
 Once you have these prerequisites installed, you can follow these steps to get
 started:
 
@@ -22,7 +27,12 @@ started:
     php artisan migrate
     ```
 
-4. Start the server
+4. Load some test data
+    ```
+    php artisan db:seed
+    ```
+
+5. Start the server
     ```
     php artisan serve
     ```
