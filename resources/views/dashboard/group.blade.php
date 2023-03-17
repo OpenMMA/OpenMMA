@@ -1,7 +1,10 @@
 @php
 use App\Models\Role;
 @endphp
-@include('dashboard.header')
+
+@extends('dashboard.layout')
+
+@section('dashboard.content')
 <div class="border-bottom">
     <h5 class="ps-2 pt-3 mb-0">Group</h5>
     <h2 class="pb-2">{{ $group->title }}</h2>
@@ -43,8 +46,8 @@ use App\Models\Role;
             </table>
         </div>
         <div class="col-4">
-            
+
         </div>
     </div>
 </div>
-@include('dashboard.footer')
+@endsection

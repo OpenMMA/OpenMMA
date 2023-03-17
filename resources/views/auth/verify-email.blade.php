@@ -1,4 +1,6 @@
-@include('header')
+@extends('layout.layout')
+
+@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-5 mx-2 p-0 position-relative">
@@ -19,7 +21,7 @@
                     </p>
                     @else
                     <p>
-                        Thank you for registering! 
+                        Thank you for registering!
                         Before you can use your account, please verify your e-mail address.
                         If you did not receive or lost the verification email, you can request a new one:
                     </p>
@@ -32,4 +34,4 @@
         </div>
     </div>
 </div>
-@include('footer')@include('footer')
+@endsection

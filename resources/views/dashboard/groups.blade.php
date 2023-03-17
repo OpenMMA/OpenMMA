@@ -1,10 +1,13 @@
-@include('dashboard.header')
+@extends('dashboard.layout')
+
 @pushOnce('scripts')
 <script src="{{ asset('/js/dashboard/users.js') }}"></script>
 @endPushOnce
 @pushOnce('styles')
 <link rel="stylesheet" href="{{ asset('/css/dashboard/users.css') }}">
 @endPushOnce
+
+@section('dashboard.content')
 <div class="border-bottom">
     <h2 class="pt-3 pb-2">Groups</h2>
 </div>
@@ -38,4 +41,4 @@
         </tbody>
     </table>
 </div>
-@include('dashboard.footer')
+@endsection

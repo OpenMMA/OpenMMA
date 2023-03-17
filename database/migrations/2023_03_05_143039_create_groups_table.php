@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->text('name')->unique();
+            $table->string('name')->unique();
             $table->text('title');
             $table->unsignedBigInteger('page')->nullable();
             $table->char('color', 7)->default('#ff0000');

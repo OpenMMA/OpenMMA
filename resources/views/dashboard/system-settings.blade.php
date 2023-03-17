@@ -1,4 +1,6 @@
-@include('dashboard.header')
+@extends('dashboard.layout')
+
+@section('dashboard.content')
 <div class="border-bottom">
     <h2 class="pt-3 pb-2">System Settings</h2>
 </div>
@@ -20,4 +22,4 @@
                                     (object)array('type' => 'hidden', 'name' => 'key', 'value' => 'account.custom_fields'),
                                 ]])
 </div>
-@include('dashboard.footer')
+@endsection

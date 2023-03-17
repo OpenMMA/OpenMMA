@@ -1,13 +1,18 @@
 @php
 use Carbon\Carbon;
 @endphp
+
+@extends('layout.layout')
+
 @pushOnce('styles')
 @livewireStyles
 @endPushOnce
 @pushOnce('scripts')
 @livewireScripts
 @endPushOnce
-@include('header')
+
+@section('content')
+
 <div class="container">
     <div class="row">
         <div class="col-8 mt-3">
@@ -51,4 +56,4 @@ use Carbon\Carbon;
         </div>
     </div>
 </div>
-@include('footer')
+@endsection

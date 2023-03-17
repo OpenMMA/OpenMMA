@@ -19,7 +19,7 @@ use App\Http\Controllers\SystemSettingController;
 */
 
 Route::get('/', function() {
-    return view('index');
+    return redirect('/events');
 });
 
 
