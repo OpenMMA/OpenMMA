@@ -1,10 +1,14 @@
 @extends('dashboard.layout')
 
+
+
 @pushOnce('scripts')
 <script src="{{ asset('/js/dashboard/users.js') }}"></script>
+@livewireStyles
 @endPushOnce
 @pushOnce('styles')
 <link rel="stylesheet" href="{{ asset('/css/dashboard/users.css') }}">
+@livewireScripts
 @endPushOnce
 
 @section('dashboard.content')
@@ -39,15 +43,7 @@
                 </td>
                 <td>{{ $user->created_at }}</td>
                 <td class="text-center">
-                @if($user->user_verified_at)
-                    <i class="fa-solid fa-check text-success"></i>
-                @else
-                @include('components.form', ['form_name' => 'verify_user_form_' . $user->id,
-                                             'form_submit' => 'Verify',
-                                             'form_target' => "/user/$user->id/verify",
-                                             'form_submit_classes' => 'btn btn-warning px-1 py-0',
-                                             'form_fields' => []])
-                @endif
+                @livewire('verify-user', ['user' => $user], key($user->id))
                 </td>
                 <td class="hide"><a href="{{ url("/dashboard/user/$user->id") }}" class="btn btn-primary px-1 py-0">View</a></td>
             </tr>
