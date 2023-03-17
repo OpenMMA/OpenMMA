@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Sluggable;
 use App\Models\Image;
+use App\Models\EventRegistration;
 
 
 class Event extends Model
@@ -20,7 +21,10 @@ class Event extends Model
         'body',
         'start',
         'end',
-        'banner'
+        'banner',
+        'registerable',
+        'enable_comments',
+        'max_registrations',
     ];
 
     protected $appends = ['url'];
@@ -46,6 +50,15 @@ class Event extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function register($user_id, $data=[])
+    {
+        return EventRegistration::create([
+            'event_id' => $this->id,
+            'user_id'  => $user_id,
+            'data'     => json_encode($data)
+        ]);
     }
 
     public function getUrlAttribute() 

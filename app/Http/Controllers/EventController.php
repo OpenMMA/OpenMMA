@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -102,10 +103,42 @@ class EventController extends Controller
             case 'tags':
 
                 break;
+            case 'max_registrations':
+                $event->update([
+                    'max_registrations' => $request->max_registrations
+                ]);
+                break;
             default:
                 return response()->redirectTo('/event/' . $event->slug . '/edit')->with(array('action' => $action, 'status' => 'fail'));
         }
         return response()->redirectTo('/event/' . $event->slug . '/edit')->with(array('action' => $action, 'status' => 'updated'));
+    }
+
+    public function updateAjax(Request $request, Event $event, String $action): JsonResponse
+    {
+        switch ($action) {
+            case 'registerable':
+                $event->update([
+                    'registerable' => json_decode($request->registerable)
+                ]);
+                break;
+            case 'enable_comments':
+                $event->update([
+                    'enable_comments' => json_decode($request->enable_comments)
+                ]);
+                break;
+            default:
+                return response()->json(['action' => $action, 'status' => 'fail']);
+        }
+        return response()->json(['action' => $action, 'status' => 'success']);
+    }
+
+    public function register(Request $request, Event $event): RedirectResponse
+    {
+        // TODO check if not already registered
+        // TODO check if maximum number of registrations has not been reached
+        $event->register(Auth::id(), $event->enable_comments ? ['comment' => $request->comment] : []);
+        return response()->redirectTo('/event/' . $event->slug)->with(['status' => 'registered']);
     }
 
     /**

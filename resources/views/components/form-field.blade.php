@@ -1,10 +1,10 @@
 @if(isset($field->label) && !($field->label_after ?? false))
-    {{ Form::label($field->name, $field->label, ['class' => 'form-label']) }}
+    {{ Form::label($field->name, $field->label, ['class' => 'form-label ' . ($field->label_class ?? '')]) }}
 @endif
 @if(isset($field->wrapper))
     {{ $field->wrapper->open }}
 @else
-    <div class="mb-3 {{ $field->type == 'checkbox' ? 'form-check' : '' }}">
+    <div class="mb-3 {{ $field->type == 'checkbox' ? 'form-check' : '' }} {{ $field->type == 'switch' ? 'form-check form-switch' : '' }}">
 @endif
 @switch($field->type)
     @case('hidden')
@@ -71,6 +71,7 @@
         {{ Form::textarea($field->name, $field->default ?? null, ['class' => 'form-control ' . ($field->class ?? ''), 'required' => $field->required ?? false, 'id' => $form_name . '-' . $field->name]) }}
         @break
     @case('checkbox')
+    @case('switch')
         {{ Form::checkbox($field->name, $field->name, $field->checked ?? false, ['class' => 'form-check-input ' . ($field->class ?? '')]) }}
         @break
     @case('file')

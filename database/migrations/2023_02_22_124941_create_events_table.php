@@ -20,6 +20,9 @@ return new class extends Migration
             $table->timestamp('start')->nullable();
             $table->timestamp('end')->nullable();
             $table->unsignedBigInteger('banner')->nullable();
+            $table->boolean('registerable')->default(false);
+            $table->boolean('enable_comments')->default(false);
+            $table->integer('max_registrations')->default(0);
             $table->enum('status', ['draft', 'published', 'unlisted'])->default('draft');
             $table->timestamps();
         });

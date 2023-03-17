@@ -31,11 +31,13 @@ Route::get('/', function() {
 Route::get('/events', [EventController::class, 'index']);
 Route::post('/events', [EventController::class, 'getevents']);
 Route::prefix('event')->group(function() {
-    Route::get('/create', [EventController::class, 'create']);
+    Route::get('/create',  [EventController::class, 'create']);
     Route::post('/create', [EventController::class, 'store']);
-    Route::get('/{event:slug}/edit', [EventController::class, 'edit']);
-    Route::put('/{event:slug}/edit/{action}', [EventController::class, 'update'])->whereIn('action', ['body']);
-    Route::post('/{event:slug}/edit/{action}', [EventController::class, 'update'])->whereIn('action', ['banner', 'tags']);
+    Route::get('/{event:slug}/edit',           [EventController::class, 'edit']);
+    Route::put('/{event:slug}/edit/{action}',  [EventController::class, 'update'])->whereIn('action', ['body']);
+    Route::post('/{event:slug}/edit/{action}', [EventController::class, 'update'])->whereIn('action', ['banner', 'max_registrations', 'tags']);
+    Route::post('/{event:slug}/edit/ajax/{action}', [EventController::class, 'updateAjax'])->whereIn('action', ['registerable', 'enable_comments']);
+    Route::post('/{event:slug}/register', [EventController::class, 'register']);
     Route::get('/{event:slug}', [EventController::class, 'show']);
     Route::delete('/{event:slug}', [EventController::class, 'destroy']);
 });
