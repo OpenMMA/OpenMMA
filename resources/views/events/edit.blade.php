@@ -1,7 +1,10 @@
 @php
 use Carbon\Carbon;
 @endphp
-@include('header')
+
+@extends('layout.layout')
+
+@section('content')
 <div class="container">
     <div class="row">
         <div class="col-8">
@@ -111,4 +114,4 @@ use Carbon\Carbon;
         </div>
     </div>
 </div>
-@include('footer')
+@endsection

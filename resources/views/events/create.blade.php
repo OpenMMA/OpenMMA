@@ -1,4 +1,6 @@
-@include('header')
+@extends('layout.layout')
+
+@section('content')
 <div class="container">
     <div class="col-6 offset-3">
         @include('components.form', ['form_name' => 'create_event_form',
@@ -7,4 +9,4 @@
                                      'form_fields' => [(object)array('type' => 'text', 'name' => 'title', 'required' => true, 'label' => 'Title of new event')]])
     </div>
 </div>
-@include('footer')
+@endsection

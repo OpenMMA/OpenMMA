@@ -1,4 +1,6 @@
-@include('header')
+@extends('layout.layout')
+
+@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-5 mx-2 p-0 position-relative">
@@ -37,4 +39,4 @@
         </div>
     </div>
 </div>
-@include('footer')
+@endsection

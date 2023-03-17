@@ -1,4 +1,6 @@
-@include('header')
+@extends('layout.layout')
+
+@section('content')
 <div class="container">
     <div class="row">
         <h1>{{ $event->title }}</h1>
@@ -46,4 +48,4 @@
         </div>
     </div>
 </div>
-@include('footer')
+@endsection
