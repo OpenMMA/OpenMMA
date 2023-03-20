@@ -18,8 +18,9 @@ class UserController extends Controller
      */
     public function index(): Response
     {
-        $users = User::orderByDesc('created_at')->get();
-        return response()->view('dashboard.users', ['users' => $users]);
+        // $users = User::orderByDesc('created_at')->get();
+        // return response()->view('dashboard.users', ['users' => $users]);
+        return response()->view('dashboard.users');
     }
 
     public function verify(User $user): JsonResponse
