@@ -51,7 +51,7 @@
             @endforeach
         </tbody>
     </table>
-    <div class="d-none flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
+    <div class="flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
         <div>
             <p class="small text-muted">
                 Showing    
@@ -64,8 +64,20 @@
                 results
             </p>
         </div>
-        <div>
-            {{ $users->links() }}
+        <div class="d-sm-flex">
+            <div class="d-sm-flex flex-row align-items-start pe-3">
+                <p class="small text-muted text-nowrap pe-2">    
+                    Items per page:
+                </p>
+                <select wire:model="entries_per_page" class="form-select form-select-sm">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+            <div>
+                {{ $users->links() }}
+            </div>  
         </div>
     </div>
 </div>

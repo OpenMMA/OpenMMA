@@ -32,11 +32,11 @@
         @endPushOnce
         @push('scripts')
         <script>
-            $("#{{ $form_name }} #{{ $field->name }}").select2({
+            $(document).ready(() => {$("#{{ $form_name }} #{{ $field->name }}").select2({
                 closeOnSelect : false,
                 allowHtml: true,
                 allowClear: true,
-            });
+            })});
         </script>
         @endpush
         @pushOnce('styles')
