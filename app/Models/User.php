@@ -47,8 +47,18 @@ class User extends Authenticatable implements MustVerifyEmail
         'custom_data' => 'json',
     ];
 
-    public function getNameAttribute() 
+    public function getNameAttribute(): string
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getEmailVerifiedAttribute(): bool
+    {
+        return $this->email_verified_at != null;
+    }
+
+    public function getUserVerifiedAttribute(): bool
+    {
+        return $this->user_verified_at != null;
     }
 }
