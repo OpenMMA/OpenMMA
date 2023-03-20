@@ -35,7 +35,7 @@ class EventRegistration extends Model
      * Check if a given user has registered for a given event, 
      * and return the registration if this is the case
      */
-    public static function userRegistrationForEvent($user_id, $event_id): EventRegistration
+    public static function userRegistrationForEvent($user_id, $event_id): ?EventRegistration
     {
         return EventRegistration::where(['user_id' => $user_id, 'event_id' => $event_id])->first();
     }
