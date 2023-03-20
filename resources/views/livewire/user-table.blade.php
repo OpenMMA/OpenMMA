@@ -51,6 +51,21 @@
             @endforeach
         </tbody>
     </table>
-    {{-- TODO this should be replaced with custom links that use livewire --}}
-    {{ $users->links('pagination::bootstrap-5') }}
+    <div class="d-none flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
+        <div>
+            <p class="small text-muted">
+                Showing    
+                <span class="fw-semibold">{{ $users->firstItem() }}</span>
+                to
+                <span class="fw-semibold">{{ $users->lastItem() }}</span>
+                {{-- TODO sometimes 'of' dissapears??? --}}
+                of
+                <span class="fw-semibold">{{ $users->total() }}</span>
+                results
+            </p>
+        </div>
+        <div>
+            {{ $users->links() }}
+        </div>
+    </div>
 </div>
