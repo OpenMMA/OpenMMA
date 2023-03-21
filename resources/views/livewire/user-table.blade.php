@@ -11,7 +11,7 @@
                 @foreach($cols as $col => $attrs)
                 <th scope="col">
                     <div>
-                        {{ $attrs['label'] }}
+                        {{ $col_opts[$col]['label'] }}
                         <button wire:click="sortTable('{{ $col }}')" class="btn px-1 py-0">
                             @switch($attrs['sort_direction'])
                                 @case('asc')
