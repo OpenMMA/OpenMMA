@@ -2,19 +2,16 @@
 
 namespace App\Models\Groups;
 
-use App\Traits\CSSColor;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class GroupCategory extends Model
 {
-    use HasFactory, Sluggable, CSSColor;
+    use HasFactory, Sluggable;
 
     protected $fillable = [
-        'label',
-        'category',
-        'page'
+        'label'
     ];
 
     /**

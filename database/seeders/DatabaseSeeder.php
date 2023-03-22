@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Group::create(['name' => 'member', 'title' => 'Member', 'color' => '#3AC7DA']);
+        Group::create(['label' => 'Member', 'hexColor' => '#3AC7DA']);
         Permission::createPermissionsForGroup('member');
         Role::create(['name' => 'member.', 'title' => '']);
-        Group::create(['name' => 'alumni', 'title' => 'Alumni', 'color' => '#3A40DA']);
+        Group::create(['label' => 'Alumni', 'hexColor' => '#3A40DA']);
         Permission::createPermissionsForGroup('alumni');
         Role::create(['name' => 'alumni.', 'title' => '']);
-        Group::create(['name' => 'board', 'title' => 'Board', 'color' => '#AB3ADA']);
+        Group::create(['label' => 'Board', 'hexColor' => '#AB3ADA']);
         Permission::createPermissionsForGroup('board');
         Role::create(['name' => 'board.', 'title' => '']);
 
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         Image::create(['path' =>'https://static.vecteezy.com/system/resources/previews/000/669/980/original/vector-travel-poster-template.jpg', 'external' => true, 'uploader_id' => 3]);
         Image::create(['path' =>'https://s3.envato.com/files/229310228/01_preview.jpg', 'external' => true, 'uploader_id' => 4]);
 
-        \App\Models\Event::factory(8)->create();
+        \App\Models\Events\Event::factory(8)->create();
 
         \App\Models\User::factory()->create([
             'first_name' => 'Test',

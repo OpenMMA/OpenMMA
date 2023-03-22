@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('group_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->text('label');
-            $table->unsignedBigInteger('page')->nullable();
-            $table->integer('color')->default(0xffffff);
             $table->timestamps();
         });
     }
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('group_categories');
     }
 };
