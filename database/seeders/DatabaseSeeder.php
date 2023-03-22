@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Permission;
-use App\Models\Group;
+use App\Models\Groups\Group;
+use App\Models\Groups\Permission;
+use App\Models\Groups\Role;
 use App\Models\Image;
-use App\Models\Role;
 use App\Models\SystemSetting;
 use Spatie\Permission\PermissionRegistrar;
 

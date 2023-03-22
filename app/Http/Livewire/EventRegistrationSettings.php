@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Event;
+use App\Models\Events\Event;
 use Livewire\Component;
 
 class EventRegistrationSettings extends Component

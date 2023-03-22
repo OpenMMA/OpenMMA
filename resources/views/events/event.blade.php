@@ -15,7 +15,7 @@
                         <p>You need to be logged in to register.</p>
                     @endguest
                     @auth
-                    @if(\App\Models\EventRegistration::userRegistrationForEvent(Auth::id(), $event->id))
+                    @if(\App\Models\Events\EventRegistration::userRegistrationForEvent(Auth::id(), $event->id))
                         <p>You have registered for this event!</p>
                     @else
                     @include('components.form', ['form_name' => 'register_event_form',

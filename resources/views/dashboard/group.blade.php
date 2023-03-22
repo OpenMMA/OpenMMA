@@ -1,5 +1,5 @@
 @php
-use App\Models\Role;
+use App\Models\Groups\Role;
 @endphp
 
 @extends('dashboard.layout')

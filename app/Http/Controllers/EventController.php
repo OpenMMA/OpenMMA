@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
+use App\Models\Events\Event;
 use App\Models\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;

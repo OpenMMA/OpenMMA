@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Group;
-use App\Models\Permission;
-use App\Models\Role;
+use App\Models\Groups\Group;
+use App\Models\Groups\Permission;
+use App\Models\Groups\Role;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Events;
 
+use App\Models\Events\EventRegistration;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Sluggable;
 use App\Models\Image;
-use App\Models\EventRegistration;
-
 
 class Event extends Model
 {
