@@ -34,7 +34,7 @@
         <tbody class="table-group-divider">
             @foreach ($groups as $group)
             <tr>
-                <td>{{ $group->title }}</td>
+                <td>{{ $group->label }}</td>
                 <td class="hide"><a href="{{ url("/dashboard/group/$group->name") }}" class="btn btn-primary px-1 py-0">Edit</a></td>
             </tr>
             @endforeach

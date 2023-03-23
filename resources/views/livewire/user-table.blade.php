@@ -1,6 +1,12 @@
 @php
     use Carbon\Carbon;
 
+    $groups = \App\Models\Groups\Group::all();
+    if (array_key_exists('group', $filters)) {
+        $roles = \App\Models\Groups\Role::getGroupRoles($filters['group'])->mapWithKeys(fn($n) => [$n->id => $n]);
+    }
+
+    // dd($roles);
 @endphp
 <div>
     <input wire:model="query" class="form-control" type="text" placeholder="Search...">
@@ -32,20 +38,43 @@
         <tbody class="table-group-divider">
             @foreach ($users as $user)
             <tr>
-                <td>{{ $user->first_name }}</td>
-                <td>{{ $user->last_name }}</td>
-                <td>{{ $user->email }}</td>
-                <td class="text-center">
-                @if($user->email_verified_at)
-                    <i class="fa-solid fa-check text-success"></i>
-                    @else
-                    <i class="fa-solid fa-xmark text-danger"></i>
-                    @endif
-                </td>
-                <td>{{ Carbon::parse($user->created_at)->format("d-m-Y") }}</td>
-                <td class="text-center">
-                @livewire('verify-user', ['user' => $user], key($user->id))
-                </td>
+                @foreach ($cols as $col => $attrs)
+                <td>
+                    @switch($col_opts[$col]['display'])
+                        @case('check')
+                            @if($user->$col)
+                                <i class="fa-solid fa-check text-success"></i>
+                                @else
+                                <i class="fa-solid fa-xmark text-danger"></i>
+                                @endif
+                            @break
+                        @case('date')
+                            {{ Carbon::parse($user->$col)->format("d-m-Y") }}
+                            @break
+                        @case('groups')
+                            @foreach ($user->$col as $group)
+                                <span class="badge rounded-pill" style="background-color: {{ $groups->firstWhere('id', $group->group)->hexColor }}">
+                                    {{ $group->title }}
+                                </span><br>
+                            @endforeach
+                            @break
+                        @case('roles')
+                            @foreach ($user->role_ids as $role_id)
+                                @if ($roles->has($role_id))
+                                <span class="badge rounded-pill" style="background-color: #ed036f">
+                                    {{ $roles[$role_id]->title }}
+                                </span><br>
+                                @endif
+                            @endforeach
+                            @break;
+                        @case('verify')
+                            @livewire('verify-user', ['user' => $user], key($user->id))
+                            @break
+                        @case('val')
+                        @default
+                            {{ $user->$col }}
+                    @endswitch
+                @endforeach
                 <td class="hide"><a href="{{ url("/dashboard/user/$user->id") }}" class="btn btn-primary px-1 py-0">View</a></td>
             </tr>
             @endforeach

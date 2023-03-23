@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\User;
+use Illuminate\Database\Query\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,37 +12,30 @@ class UserTable extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    public int $entries_per_page;
+    public int $entries_per_page = 10;
     public array $cols; // Format col_name => [label, type, display, sort_direction, sort_idx, table_idx]
     public array $col_opts;
-
-    public string $query;
+    public array $filters = [];
+    public string $query = '';
 
     public function mount()
     {
-        $this->entries_per_page = 10;
-        $this->cols = [
-            'first_name' =>        ['sort_direction' => null, 'sort_idx' => 0, 'table_idx' => 0],
-            'last_name' =>         ['sort_direction' => null, 'sort_idx' => 1, 'table_idx' => 1],
-            'email' =>             ['sort_direction' => null, 'sort_idx' => 2, 'table_idx' => 2],
-            'email_verified_at' => ['sort_direction' => null, 'sort_idx' => 3, 'table_idx' => 3],
-            'created_at' =>        ['sort_direction' => null, 'sort_idx' => 4, 'table_idx' => 4],
-            'user_verified_at' =>  ['sort_direction' => null, 'sort_idx' => 5, 'table_idx' => 5],
-        ];
+        $this->cols = array_combine($this->cols, array_map(fn($i) => ['sort_direction' => null, 'sort_idx' => $i, 'table_idx' => $i], 
+                                                           array_keys($this->cols)));
         $this->col_opts = [
             'first_name' =>        ['label' => 'First name',     'type' => 'text',     'display' => 'val'],
             'last_name' =>         ['label' => 'Last name',      'type' => 'text',     'display' => 'val'],
             'email' =>             ['label' => 'Email address',  'type' => 'email',    'display' => 'val'],
             'email_verified_at' => ['label' => 'Email verified', 'type' => 'datetime', 'display' => 'check'],
-            'created_at' =>        ['label' => 'Registered',     'type' => 'datetime', 'display' => 'val'],
-            'user_verified_at' =>  ['label' => 'Verified',       'type' => 'datetime', 'display' => 'verify'],
-        
+            'created_at' =>        ['label' => 'Registered',     'type' => 'datetime', 'display' => 'date'],
+            'groups' =>            ['label' => 'Groups',         'type' => null,       'display' => 'groups'],
+            'roles' =>             ['label' => 'Roles',          'type' => null,       'display' => 'roles'],
+            'user_verified_at' =>  ['label' => 'Verified',       'type' => 'datetime', 'display' => 'verify']
         ];
         foreach (setting('account.custom_fields') as $custom_col) {
             // TODO determine appropriate 'display'-type?
             $this->col_opts[$custom_col->name] = ['label' => $custom_col->label, 'type' => $custom_col->type, 'display' => 'val'];
         }
-        $this->query = '';
     }
 
     public function sortTable($col)
@@ -56,11 +50,21 @@ class UserTable extends Component
 
     public function render()
     {
+        $user_query = User::where([]);
+        foreach ($this->filters as $col => $filters) {
+            switch($col) {
+                case 'group':
+                    $user_query->role($filters.'.');
+                    break;
+                default:
+                    $user_query->where($col, $filters);
+            }
+        }
         if ($this->query != '')
-            $user_query = User::whereRaw('CONCAT(first_name, \' \', last_name) LIKE ?', ["%$this->query%"])
-                              ->orWhere('email', 'LIKE', "%$this->query%");
+            $user_query = $user_query->whereRaw('CONCAT(first_name, \' \', last_name) LIKE ?', ["%$this->query%"])
+                                     ->orWhere('email', 'LIKE', "%$this->query%");
         else 
-            $user_query = User::where([]);
+            $user_query = $user_query->where([]);
 
         // Sort columns by table sorting priority
         uasort($this->cols, fn($x, $y) => $x['sort_idx'] < $y['sort_idx']);
@@ -78,6 +82,8 @@ class UserTable extends Component
                     // TODO: Is this solution safe?
                     $col = preg_replace('/[^a-zA-Z0-9_-]/', '', $col);
                     $user_query->orderByRaw('CASE WHEN `' . $col . '` IS NULL THEN 1 ELSE 0 END ' . $attrs['sort_direction']);
+                    break;
+                case 'groups':
                     break;
                 default:
                     $user_query->orderBy($col, $attrs['sort_direction']);

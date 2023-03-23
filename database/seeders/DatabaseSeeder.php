@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use App\Models\Groups\Group;
+use App\Models\Groups\GroupCategory;
 use App\Models\Groups\Permission;
 use App\Models\Groups\Role;
 use App\Models\Image;
@@ -20,17 +22,48 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Group::create(['label' => 'Member', 'hexColor' => '#3AC7DA']);
-        Permission::createPermissionsForGroup('member');
-        Role::create(['name' => 'member.', 'title' => '']);
-        Group::create(['label' => 'Alumni', 'hexColor' => '#3A40DA']);
-        Permission::createPermissionsForGroup('alumni');
-        Role::create(['name' => 'alumni.', 'title' => '']);
-        Group::create(['label' => 'Board', 'hexColor' => '#AB3ADA']);
-        Permission::createPermissionsForGroup('board');
-        Role::create(['name' => 'board.', 'title' => '']);
+        GroupCategory::create(['label' => 'Committees']);
+        GroupCategory::create(['label' => 'Societies']);
 
-        \App\Models\User::factory(20)->create();
+        $group_members = Group::create(['label' => 'Members', 'hexColor' => '#3AC7DA']);
+        Permission::createPermissionsForGroup('member');
+        Role::create(['name' => 'members.', 'title' => 'Member', 'isBaseRole' => true, 'group' => $group_members->id]);
+        $group_alumni = Group::create(['label' => 'Alumni', 'hexColor' => '#26E600']);
+        Permission::createPermissionsForGroup('alumni');
+        Role::create(['name' => 'alumni.', 'title' => 'Alumnus', 'isBaseRole' => true, 'group' => $group_alumni->id]);
+        $group_board = Group::create(['label' => 'Board', 'hexColor' => '#AB3ADA']);
+        Permission::createPermissionsForGroup('board');
+        Role::create(['name' => 'board.', 'title' => 'Board member', 'isBaseRole' => true, 'group' => $group_board->id]);
+        Role::create(['name' => 'board.chair', 'title' => 'Chair', 'isBaseRole' => false, 'group' => $group_board->id]);
+        Role::create(['name' => 'board.secretary', 'title' => 'Secretary', 'isBaseRole' => false, 'group' => $group_board->id]);
+        Role::create(['name' => 'board.treasurer', 'title' => 'Treasurer', 'isBaseRole' => false, 'group' => $group_board->id]);
+
+        $group_committee_1 = Group::create(['label' => 'Committee 1', 'hexColor' => '#FF0000', 'category' => 1]);
+        Permission::createPermissionsForGroup('committee-1');
+        Role::create(['name' => 'committee-1.', 'title' => 'Committee 1', 'isBaseRole' => true, 'group' => $group_committee_1->id]);
+        $group_committee_2 = Group::create(['label' => 'Committee 2', 'hexColor' => '#00FF00', 'category' => 1]);
+        Permission::createPermissionsForGroup('committee-2');
+        Role::create(['name' => 'committee-2.', 'title' => 'Committee 2', 'isBaseRole' => true, 'group' => $group_committee_2->id]);
+        $group_committee_3 = Group::create(['label' => 'Committee 3', 'hexColor' => '#0000FF', 'category' => 1]);
+        Permission::createPermissionsForGroup('committee-3');
+        Role::create(['name' => 'committee-3.', 'title' => 'Committee 3', 'isBaseRole' => true, 'group' => $group_committee_3->id]);
+
+        User::factory(20)->create();
+        foreach (User::get() as $user) {
+            $user->assignRole('members.');
+        }
+        $board = User::inRandomOrder()->limit(5)->get();
+        foreach ($board as $user) {
+            $user->assignRole('board.');
+        }
+        $board[0]->assignRole('board.chair');
+        $board[1]->assignRole('board.secretary');
+        $board[2]->assignRole('board.treasurer');
+
+        foreach (User::inRandomOrder()->limit(3)->get() as $user) {
+            $user->removeRole('members.');
+            $user->assignRole('alumni.');
+        }
 
         Image::create(['path' =>'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/dba49e79778043.5ccdb90d4adfc.jpg', 'external' => true, 'uploader_id' => 1]);
         Image::create(['path' =>'https://static.vecteezy.com/system/resources/previews/000/476/390/original/vector-summer-beach-vacation-club-poster.jpg', 'external' => true, 'uploader_id' => 2]);
@@ -39,7 +72,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Events\Event::factory(8)->create();
 
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'first_name' => 'Test',
             'last_name' => 'Admin',
             'email' => 'admin@example.com',

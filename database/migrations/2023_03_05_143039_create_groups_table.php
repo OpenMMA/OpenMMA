@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('label');
-            $table->unsignedBigInteger('page')->nullable();
             $table->integer('color')->default(0xffffff);
+            $table->unsignedBigInteger('category')->nullable();
             $table->timestamps();
         });
     }

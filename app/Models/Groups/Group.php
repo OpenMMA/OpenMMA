@@ -4,6 +4,7 @@ namespace App\Models\Groups;
 
 use App\Traits\CSSColor;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,8 +14,7 @@ class Group extends Model
 
     protected $fillable = [
         'label',
-        'category',
-        'page'
+        'category'
     ];
 
     /**
@@ -29,5 +29,16 @@ class Group extends Model
                 'source' => 'label'
             ]
         ];
+    }
+
+    static function inCategory(?string $category_name): Collection
+    {
+        if ($category_name == null)
+            return Group::where('category', null)->get();
+
+        $category = GroupCategory::where('name', $category_name)->first();
+        if ($category == null)
+            return Collection::empty();
+        return Group::where('category', $category->id)->get();
     }
 }

@@ -7,8 +7,17 @@
             <li class="nav-item"><a href="/dashboard" class="nav-link {{ Request::capture()->path() == 'dashboard' ? 'active' : '' }}">Dashboard</a></li>
             <hr>
             <li class="nav-item"><a href="/dashboard/users" class="nav-link {{ Request::capture()->path() == 'dashboard/users' ? 'active' : '' }}">Users</a></li>
-            <li class="nav-item"><a href="/dashboard/groups" class="nav-link {{ Request::capture()->path() == 'dashboard/groups' ? 'active' : '' }}">Groups</a></li>
-            <li class="nav-item"><a href="/dashboard/roles" class="nav-link {{ Request::capture()->path() == 'dashboard/roles' ? 'active' : '' }}">Roles</a></li>
+            <hr class="mb-1">
+            <p class="small text-muted m-0 px-2">Groups</p>
+            @foreach (\App\Models\Groups\Group::inCategory(null) as $group)
+                <li class="nav-item"><a href="/dashboard/group/{{ $group->name }}" class="nav-link {{ Request::capture()->path() == 'dashboard/group/'.$group->name  ? 'active' : '' }}">{{ $group->label }}</a></li>
+            @endforeach
+            <p class="small text-muted m-0 px-2 pt-2">Categories</p>
+            @foreach (\App\Models\Groups\GroupCategory::get() as $category)
+                <li class="nav-item"><a href="/dashboard/category/{{ $category->name }}" class="nav-link {{ Request::capture()->path() == 'dashboard/category/'.$category->name  ? 'active' : '' }}">{{ $category->label }}</a></li>
+            @endforeach
+            {{-- <li class="nav-item"><a href="/dashboard/groups" class="nav-link {{ Request::capture()->path() == 'dashboard/groups' ? 'active' : '' }}">Groups</a></li> --}}
+            {{-- <li class="nav-item"><a href="/dashboard/roles" class="nav-link {{ Request::capture()->path() == 'dashboard/roles' ? 'active' : '' }}">Roles</a></li> --}}
             <hr>
             <li class="nav-item"><a href="/dashboard/events" class="nav-link {{ Request::capture()->path() == 'dashboard/events' ? 'active' : '' }}">Events</a></li>
             <li class="nav-item"><a href="/dashboard/insights" class="nav-link {{ Request::capture()->path() == 'dashboard/insights' ? 'active' : '' }}">Insights</a></li>

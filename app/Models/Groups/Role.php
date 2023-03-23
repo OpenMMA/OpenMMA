@@ -9,9 +9,15 @@ class Role extends \Spatie\Permission\Models\Role
 {
     use HasFactory;
 
-    public static function getGroup($group)
+    protected $fillable = [
+        'label',
+        'isBaseRole',
+        'group'
+    ];
+
+    public static function getGroupRoles($group)
     {
-        return Role::where('name', 'LIKE', "$group.%")->get();
+        return Role::where('name', 'LIKE', "$group._%")->get();
     }
 
     public static function getGroupMembers($group)

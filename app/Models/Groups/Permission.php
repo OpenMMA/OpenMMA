@@ -18,16 +18,14 @@ class Permission extends \Spatie\Permission\Models\Permission
         'manage_registrations',
         'view_statistics',
 
-        'enable_page',
-        'manage_page',
-        
-        'assign_role',
         'create_role',
         'edit_role',
+        'assign_role',
         'delete_role',
     ];
     public static $general_permissions = [
         'create_group',
+        'edit_group',
         'assign_group',
         'delete_group',
 

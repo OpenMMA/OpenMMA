@@ -4,20 +4,32 @@ use App\Models\Groups\Role;
 
 @extends('dashboard.layout')
 
+@pushOnce('scripts')
+<script src="{{ asset('/js/dashboard/users.js') }}"></script>
+@livewireStyles
+@endPushOnce
+@pushOnce('styles')
+<link rel="stylesheet" href="{{ asset('/css/dashboard/users.css') }}">
+@livewireScripts
+@endPushOnce
+
 @section('dashboard.content')
 <div class="border-bottom">
     <h5 class="ps-2 pt-3 mb-0">Group</h5>
-    <h2 class="pb-2">{{ $group->title }}</h2>
+    <h2 class="pb-2">{{ $group->label }}</h2>
 </div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-8">
-            <h4>Roles</h4>
-            <table class="table table-striped" id="user_table">
+            <h4>Members</h4>
+            <div>
+                @livewire('user-table', ['cols' => ['first_name', 'last_name', 'roles'], 'filters' => ['group' => $group->name]])
+            </div>
+            {{-- <table class="table table-striped" id="user_table">
                 <thead>
                     <tr>
                         <th scope="col" width="">Member</th>
-                        {{-- <th scope="col" width="1%"></th> --}}
+                        <th scope="col" width="1%"></th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -27,7 +39,7 @@ use App\Models\Groups\Role;
                     </tr>
                     @endforeach
                 </tbody>
-            </table>
+            </table> --}}
             <h4>Roles</h4>
             <table class="table table-striped" id="user_table">
                 <thead>
@@ -37,7 +49,7 @@ use App\Models\Groups\Role;
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                    @foreach (Role::getGroup($group->name) as $role)
+                    @foreach (Role::getGroupRoles($group->name) as $role)
                     <tr>
                         <td>{{ $role->title }}</td>
                     </tr>
