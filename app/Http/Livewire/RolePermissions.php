@@ -10,8 +10,35 @@ use Livewire\Component;
 class RolePermissions extends Component
 {
     public Role $role;
-    public Collection $permissions;
-    public Collection $permission_labels;
+    public array $permissions;
+    public array $base_permission_defenition = [
+        0 => [
+            'label' => 'Events',
+            'elements' => [
+                'create_event',
+                'edit_event',
+                'publish_event',
+                'delete_event',
+            ]
+        ],
+        1 => [
+            'label' => 'Registrations',
+            'elements' => [
+                'view_registrations',
+                'manage_registrations',
+                'view_statistics',
+            ]
+        ],
+        2 => [
+            'label' => 'Roles',
+            'elements' => [
+                'create_role',
+                'edit_role',
+                'assign_role',
+                'delete_role',
+            ]
+        ],
+    ];
 
     protected $rules = [
         'permissions.*' => 'bool'
@@ -20,14 +47,8 @@ class RolePermissions extends Component
     public function mount()
     {
         $group = explode('.', $this->role->name, 2)[0];
-        $permissions = Permission::getPermissionsForGroup($group)->mapWithKeys(fn($n) => [explode('.', $n->name, 2)[1] => $n]);
-        $this->permissions = $permissions->mapWithKeys(fn($n, $k) => [$k => $this->role->hasPermissionTo($group.'.'.$k)]);
-        $this->permission_labels = $permissions->mapWithKeys(fn($n, $k) => [$k => $n->label]);
-        // dd($this->permission_labels);
-        // $permissions = array_keys($this->permissions->toArray());
-
-        // $has_permissions = array_map(fn($permission) => $this->role->hasPermissionTo($permission), $permissions);
-        // $this->has_permissions = array_combine($permissions, $has_permissions);
+        $permissions = array_merge(...array_map(fn($n) => $n['elements'], $this->base_permission_defenition));
+        $this->permissions = array_combine($permissions, array_map(fn($n) => $this->role->hasPermissionTo($group.'.'.$n), $permissions));
     }
 
     public function updatePermissions()

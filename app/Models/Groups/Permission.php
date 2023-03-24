@@ -37,7 +37,7 @@ class Permission extends \Spatie\Permission\Models\Permission
     {
         array_map(
             fn($permission_name, $permission_label) => 
-                Permission::create(['name' => $group . '.' . $permission_name, 'label' => $permission_label]),
+                Permission::create(['name' => $group . '.' . $permission_name]),
             array_keys(Permission::$base_permissions),
             array_values(Permission::$base_permissions)
         );
