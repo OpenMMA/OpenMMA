@@ -14,8 +14,7 @@ class RoleController extends Controller
      */
     public function index(): Response
     {
-        $groups = Role::where('name', 'NOT LIKE', '%:%')->get();
-        return response()->view('dashboard.groups', ['groups' => $groups]);
+        //
     }
 
     /**
@@ -26,30 +25,26 @@ class RoleController extends Controller
         //
     }
 
-    private function simplify($str) {
-        return preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtolower(trim($str))));
-    }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request): RedirectResponse
     {
-        $name = RoleController::simplify($request->group_name);
-        if (Role::where('name', '=', $name)->exists()) {
-            return response()->redirectTo('/dashboard/groups')->with(array('status' => 'exists'));
-        }
+        // $name = RoleController::simplify($request->group_name);
+        // if (Role::where('name', '=', $name)->exists()) {
+        //     return response()->redirectTo('/dashboard/groups')->with(array('status' => 'exists'));
+        // }
         
-        $role = Role::create(['name' => $name, 'title' => $request->group_name]);
-        return response()->redirectTo('/dashboard/group/' . $role->id)->with(array('status' => 'success'));
+        // $role = Role::create(['name' => $name, 'title' => $request->group_name]);
+        // return response()->redirectTo('/dashboard/group/' . $role->id)->with(array('status' => 'success'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Role $role): Response
+    public function show(string $group, Role $role): Response
     {
-        return response()->view('dashboard.group', ['group' => $role]);
+        return response()->view('dashboard.role', ['group' => $group, 'role' => $role]);
     }
 
     /**

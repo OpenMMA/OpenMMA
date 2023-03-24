@@ -59,6 +59,8 @@ Route::prefix('dashboard')->group(function() {
     Route::post('/groups/create', [GroupController::class, 'store']);
     Route::get('/group/{group:name}', [GroupController::class, 'show']);
 
+    Route::get('/group/{group}/role/{role}', [RoleController::class, 'show']);
+
     Route::get('/category/{category:name}', [GroupCategoryController::class, 'show']);
 
     Route::get('/events', [EventController::class, 'dashboardIndex']);

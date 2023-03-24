@@ -45,13 +45,14 @@ use App\Models\Groups\Role;
                 <thead>
                     <tr>
                         <th scope="col" width="">Role name</th>
-                        {{-- <th scope="col" width="1%"></th> --}}
+                        <th scope="col" width="1%"></th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
                     @foreach (Role::getGroupRoles($group->name) as $role)
                     <tr>
                         <td>{{ $role->title }}</td>
+                        <td><a href="/dashboard/group/{{ $group->name }}/role/{{ explode('.', $role->name, 2)[1] }}">link</a></td>
                     </tr>
                     @endforeach
                 </tbody>
