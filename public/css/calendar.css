@@ -54,13 +54,6 @@
     margin-right: 7px;
 }
 
-/* .day > div {
-    height: 25px;
-}
-.day > div:first-of-type {
-    margin-top: 23px;
-} */
-
 body {
     --event-red: #ff595eff;
     --event-yellow: #ffca3aff;
@@ -95,13 +88,29 @@ body {
     margin-right: 8px;
     color: #111;
     font-size: 14px;
-    width: 180%;
+    width: 90%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     position: relative;
     z-index: 52;
 }
+
+.day:nth-of-type(7n+1) p { max-width: 690%; }
+.day:nth-of-type(7n+2) p { max-width: 590%; }
+.day:nth-of-type(7n+3) p { max-width: 490%; }
+.day:nth-of-type(7n+4) p { max-width: 390%; }
+.day:nth-of-type(7n+5) p { max-width: 290%; }
+.day:nth-of-type(7n+6) p { max-width: 190%; }
+.day:nth-of-type(7n)   p { max-width:  90%; }
+
+.event[data-blocks="1"] p { width:  90%; }
+.event[data-blocks="2"] p { width: 190%; }
+.event[data-blocks="3"] p { width: 290%; }
+.event[data-blocks="4"] p { width: 390%; }
+.event[data-blocks="5"] p { width: 490%; }
+.event[data-blocks="6"] p { width: 590%; }
+.event[data-blocks="7"] p { width: 690%; }
 
 .event-start {
     margin-left: 5px;
@@ -143,11 +152,6 @@ body {
     margin-right: 2px;
     max-width: 100%;
     width: calc(100% - 3px);
-}
-.event-single.event-hover:not(.event-noextend) {
-    padding-right: 5px;
-    max-width: 180%;
-    width: auto;
 }
 
 .event-c1 {

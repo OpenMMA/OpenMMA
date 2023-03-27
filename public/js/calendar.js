@@ -229,7 +229,9 @@ class Calendar {
                     'data-bs-toggle': "popover",
                     'data-bs-trigger': "focus",
                     'data-bs-placement': "bottom",
-                    'data-bs-title': event.title});
+                    'data-bs-title': event.title,
+                    'data-blocks': 1
+                });
             new bootstrap.Popover(e, {'trigger': "focus", 'html': true, 'content': desc});
             this.container.find(`#day-${event_start}`).append(e);
         } else {
@@ -241,10 +243,11 @@ class Calendar {
                         'data-bs-toggle': "popover",
                         'data-bs-trigger': "focus",
                         'data-bs-placement': "bottom",
-                        'data-bs-title': event.title});
+                        'data-bs-title': event.title
+                    });
                 new bootstrap.Popover(e, {'trigger': "focus", 'html': true, 'content': desc});
                 if (i == event_start) {
-                    e.addClass("event-start").append(text);
+                    e.addClass("event-start").attr({'data-blocks': event_end - event_start + 1}).append(text);
                 } else if (i == event_end) {
                     e.addClass("event-end");
                 } else {
