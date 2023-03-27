@@ -14,6 +14,6 @@ use App\Models\Groups\Permission;
 @endPushOnce
 
 @section('dashboard.content')
-{{-- {{ json_encode(Permission::getPermissionsForGroup($group)) }} --}}
-    @livewire('role-permissions', ['role' => $role, 'group' => $group], key($user->id))
+<h2>Role: {{ $role->title }}</h2>
+@livewire('role-permissions', ['role' => $role], key($user->id))
 @endsection

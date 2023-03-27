@@ -8,7 +8,7 @@ class Permission extends \Spatie\Permission\Models\Permission
 {
     use HasFactory;
 
-    public static $base_permissions = [
+    public static $group_permissions = [
         'create_event' => 'Create event',
         'edit_event' => 'Edit event',
         'publish_event' => 'Publish event',
@@ -20,26 +20,27 @@ class Permission extends \Spatie\Permission\Models\Permission
 
         'create_role' => 'Create role',
         'edit_role' => 'Edit role',
-        'assign_role' => 'Assign role',
+        'assign_role' => 'Assign role to member',
         'delete_role' => 'Delete role',
     ];
-    public static $general_permissions = [
+    public static $global_permissions = [
         'create_group' => 'Create group',
         'edit_group' => 'Edit group',
-        'assign_group' => 'Assign user to group',
         'delete_group' => 'Delete group',
-
+        
+        'give_global_permissions' => 'Allow granting global permissions',
+        
         'view_users' => 'View members',
         'manage_users' => 'Manage members',
+        'assign_users' => 'Assign user to group',
     ];
 
     public static function createPermissionsForGroup($group)
     {
         array_map(
-            fn($permission_name, $permission_label) => 
+            fn($permission_name) => 
                 Permission::create(['name' => $group . '.' . $permission_name]),
-            array_keys(Permission::$base_permissions),
-            array_values(Permission::$base_permissions)
+            array_keys(Permission::$group_permissions)
         );
     }
 

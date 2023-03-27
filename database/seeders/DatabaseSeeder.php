@@ -25,6 +25,14 @@ class DatabaseSeeder extends Seeder
         GroupCategory::create(['label' => 'Committees']);
         GroupCategory::create(['label' => 'Societies']);
 
+        // Global permissions
+        Permission::createPermissionsForGroup('*'); 
+        array_map(
+            fn($permission_name) => 
+                Permission::create(['name' => $permission_name]),
+            array_keys(Permission::$global_permissions)
+        );
+        
         $group_members = Group::create(['label' => 'Members', 'hexColor' => '#3AC7DA']);
         Permission::createPermissionsForGroup('member');
         Role::create(['name' => 'members.', 'title' => 'Member', 'isBaseRole' => true, 'group' => $group_members->id]);
