@@ -17,10 +17,17 @@ class SystemSettingController extends Controller
     public function update(Request $request)
     {
         $setting = SystemSetting::where('key', $request->key)->first();
+        $old_value = $setting->value;
         $setting->value = $request->value;
         $setting->save();
 
         Cache::forget('settings');
+
+        switch ($request->key) {
+            case 'account.custom_fields':
+                \App\Models\User::syncCustomFields($old_value, $setting->value);
+                break;
+        }
 
         return response()->redirectTo('/dashboard/system-settings');
     }

@@ -50,6 +50,22 @@ class User extends Authenticatable implements MustVerifyEmail
         'custom_data' => 'json',
     ];
 
+    
+    public static function create(array $fields): User
+    {
+        $model = parent::create($fields);
+        $fields = setting('account.custom_fields');
+        foreach ($fields as $field) {
+            $name = $field['name'];
+            if (!array_key_exists($name, $model->custom_data)) {
+                $model->custom_data[$name] = $model->default ?? null;
+            }
+        }
+        $model->save();
+        return $model;
+    }
+
+
     public function getNameAttribute(): string
     {
         return $this->first_name . ' ' . $this->last_name;
@@ -86,5 +102,25 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         // TODO can this be done more efficiently?
         return Role::where('isBaseRole', false)->find($this->role_ids);
+    }
+
+    public static function syncCustomFields(array $old_fields, array $new_fields)
+    {
+        $old_field_names = array_map(fn($n) => $n['name'], $old_fields);
+        $new_field_names = array_map(fn($n) => $n['name'], $new_fields);
+
+        $remove_fields    = array_diff($old_field_names, $new_field_names);
+        $introduce_fields = array_diff($new_field_names, $old_field_names);
+
+        $new_fields = array_combine($new_field_names, $new_fields);
+
+        foreach (User::all() as $user) {
+            $data = $user->custom_data;
+            foreach ($remove_fields as $field)
+                unset($data[$field]);
+            foreach ($introduce_fields as $field)
+                $data[$field] = $new_fields[$field]['default'] ?? (($new_fields[$field]['multiple'] ?? false) ? [] : null); // TODO better type-defined default values
+            $user->update(['custom_data' => $data]);
+        }
     }
 }

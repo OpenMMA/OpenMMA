@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {        
         GroupCategory::create(['label' => 'Committees']);
         GroupCategory::create(['label' => 'Societies']);
 
@@ -125,7 +125,9 @@ class DatabaseSeeder extends Seeder
                 'required' => true,
             )
         ];
+
         SystemSetting::create(['key' => 'site.name', 'value' => 'OpenMMA', 'type' => 'text']);
         SystemSetting::create(['key' => 'account.custom_fields', 'value' => json_encode($account_custom_fields), 'type' => 'json']);
+        User::syncCustomFields([], $account_custom_fields);
     }
 }
