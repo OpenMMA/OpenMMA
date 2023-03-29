@@ -37,3 +37,6 @@ started:
     php artisan serve
     ```
     The first time you open the site, you will need to generate an app key.
+
+
+### Troubleshooting
