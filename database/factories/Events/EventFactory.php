@@ -23,7 +23,7 @@ class EventFactory extends Factory
         $end = Carbon::parse($start)->addMinutes(fake()->numberBetween(60, 60*24*3))->roundMinute(30);
         $title = fake()->sentence;
         return [
-            'title' => $title . $title . $title . $title,
+            'title' => $title,
             'description' => fake()->paragraph(1),
             'body' => fake()->paragraph(5),
             'start' => $start,
