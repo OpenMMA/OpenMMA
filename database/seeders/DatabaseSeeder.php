@@ -80,13 +80,19 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Events\Event::factory(8)->create();
 
-        User::factory()->create([
+        $admin = User::factory()->create([
             'first_name' => 'Test',
             'last_name' => 'Admin',
             'email' => 'admin@example.com',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => 'rememberme',
         ]);
+        $admin_role = Role::create(['name' => ':admin', 'title' => 'Admin', 'group' => 0]);
+        $admin_role->givePermissionTo('*.event.*');
+        $admin_role->givePermissionTo('*.role.*');
+        $admin_role->givePermissionTo('group.*');
+        $admin_role->givePermissionTo('give_global_permissions');
+        $admin->assignRole(':admin');
 
         $account_custom_fields = [
             array(

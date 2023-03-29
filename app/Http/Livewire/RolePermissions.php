@@ -5,10 +5,14 @@ namespace App\Http\Livewire;
 use App\Models\Groups\Group;
 use App\Models\Groups\Permission;
 use App\Models\Groups\Role;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class RolePermissions extends Component
 {
+    use AuthorizesRequests;
+
     public Role $role;
     public Group $group;
     public array $group_permissions;
@@ -18,72 +22,85 @@ class RolePermissions extends Component
         0 => [
             'label' => 'events',
             'elements' => [
-                'create_event',
-                'edit_event',
-                'publish_event',
-                'delete_event',
+                'event.create',
+                'event.edit',
+                'event.publish',
+                'event.delete',
             ]
         ],
         1 => [
             'label' => 'registrations',
             'elements' => [
-                'view_registrations',
-                'manage_registrations',
-                'view_statistics',
+                'registration.view',
+                'registration.manage',
+                'registration.statistics',
             ]
         ],
         2 => [
             'label' => 'roles',
             'elements' => [
-                'create_role',
-                'edit_role',
-                'assign_role',
-                'delete_role',
+                'role.create',
+                'role.edit',
+                'role.assign',
+                'role.delete',
             ]
         ],
+        3 => [
+            'label' => 'settings',
+            'elements' => [
+                'setting.general',
+            ]
+        ]
     ];
     public array $global_permission_defenition = [
         0 => [
             'label' => 'Events',
             'elements' => [
-                'create_event',
-                'edit_event',
-                'publish_event',
-                'delete_event',
+                'event.create',
+                'event.edit',
+                'event.publish',
+                'event.delete',
             ]
         ],
         1 => [
             'label' => 'Registrations',
             'elements' => [
-                'view_registrations',
-                'manage_registrations',
-                'view_statistics',
+                'registration.view',
+                'registration.manage',
+                'registration.statistics',
             ]
         ],
         2 => [
             'label' => 'Roles',
             'elements' => [
-                'create_role',
-                'edit_role',
-                'assign_role',
-                'delete_role',
+                'role.create',
+                'role.edit',
+                'role.assign',
+                'role.delete',
                 'give_global_permissions',
             ]
         ],
         3 => [
             'label' => 'Groups',
             'elements' => [
-                'create_group',
-                'edit_group',
-                'delete_group',
+                'group.create',
+                'group.edit',
+                'group.delete',
             ]
         ],
         4 => [
             'label' => 'Members',
             'elements' => [
-                'view_users',
-                'manage_users',
-                'assign_users',
+                'user.view',
+                'user.manage',
+                'user.assign',
+            ]
+            ],
+        5 => [
+            'label' => 'Settings',
+            'elements' => [
+                'setting.general',
+                'global_setting.system',
             ]
         ]
 
@@ -92,6 +109,19 @@ class RolePermissions extends Component
     protected $rules = [
         'permissions.*' => 'bool'
     ];
+
+    private static function flatten(array $array): array
+    {
+        // NOTE only works with 2-dimensional arrays!!!
+        foreach ($array as $key => $val) {
+            if (is_array($val)) {
+                foreach ($val as $subkey => $subval)
+                    $array[$key.'.'.$subkey] = $subval;
+                unset($array[$key]);
+            }
+        }
+        return $array;
+    }
 
     public function mount()
     {
@@ -106,9 +136,12 @@ class RolePermissions extends Component
 
     public function updateGroupPermissions()
     {
-        // TODO Check if user is allowed to edit given role
-        // $user->can($role->name.'edit_roles');
         $group = explode('.', $this->role->name, 2)[0];
+        // TODO Should we use $this->authorize()?
+        if (!Auth::user()->can($group.'.role.edit'))
+            return; // TODO error message?
+        
+        $this->group_permissions = $this::flatten($this->group_permissions);
         foreach ($this->group_permissions as $permission => $has_permission) {
             if ($has_permission)
                 $this->role->givePermissionTo($group.'.'.$permission);
@@ -119,9 +152,12 @@ class RolePermissions extends Component
 
     public function updateGlobalPermissions()
     {
-        // TODO Check if user is allowed to edit given role
-        // $user->can($role->name.'edit_roles') && $user->can($role->name.'give_global_permissions');
         $group = explode('.', $this->role->name, 2)[0];
+        // TODO Should we use $this->authorize()?
+        if (!Auth::user()->can($group.'.role.edit') || Auth::user()->can('give_global_permissions'))
+            return; // TODO error message?
+
+        $this->global_permissions = $this::flatten($this->global_permissions);
         foreach ($this->global_permissions as $permission => $has_permission) {
             $prefix = array_key_exists($permission, Permission::$global_permissions) ? '' : '*.';
             if ($has_permission)

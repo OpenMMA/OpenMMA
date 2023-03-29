@@ -9,30 +9,41 @@ class Permission extends \Spatie\Permission\Models\Permission
     use HasFactory;
 
     public static $group_permissions = [
-        'create_event' => 'Create event',
-        'edit_event' => 'Edit event',
-        'publish_event' => 'Publish event',
-        'delete_event' => 'Delete event',
+        'event.create' => 'Create event',
+        'event.edit' => 'Edit event',
+        'event.publish' => 'Publish event',
+        'event.delete' => 'Delete event',
+        'event.*' => 'Complete event control',
         
-        'view_registrations' => 'View registrations',
-        'manage_registrations' => 'Manage registrations',
-        'view_statistics' => 'View registration statistics',
+        'registration.view' => 'View registrations',
+        'registration.manage' => 'Manage registrations',
+        'registration.statistics' => 'View registration statistics',
+        'registration.*' => 'Complete registration control',
 
-        'create_role' => 'Create role',
-        'edit_role' => 'Edit role',
-        'assign_role' => 'Assign role to member',
-        'delete_role' => 'Delete role',
+        'role.create' => 'Create role',
+        'role.edit' => 'Edit role',
+        'role.assign' => 'Assign role to member',
+        'role.delete' => 'Delete role',
+        'role.*' => 'Complete role control',
+
+        'setting.general' => 'Manage general group settings',
+        'setting.*' => 'Manage all group settings',
     ];
     public static $global_permissions = [
-        'create_group' => 'Create group',
-        'edit_group' => 'Edit group',
-        'delete_group' => 'Delete group',
+        'group.create' => 'Create group',
+        'group.edit' => 'Edit group',
+        'group.delete' => 'Delete group',
+        'group.*' => 'Complete group control',
         
-        'give_global_permissions' => 'Allow granting global permissions',
+        'give_global_permissions' => 'May grant global permissions',
         
-        'view_users' => 'View members',
-        'manage_users' => 'Manage members',
-        'assign_users' => 'Assign user to group',
+        'user.view' => 'View members',
+        'user.manage' => 'Manage members',
+        'user.assign' => 'Assign member to group',
+        'user.*' => 'Complete member control',
+
+        'global_setting.system' => 'Manage global system settings',
+        'global_setting.*' => 'Manage all global settings',
     ];
 
     public static function createPermissionsForGroup($group)
