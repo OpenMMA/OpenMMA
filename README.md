@@ -39,4 +39,10 @@ started:
     The first time you open the site, you will need to generate an app key.
 
 
-### Troubleshooting
+## Troubleshooting
+
+### Images are not loading
+The image storage directory needs to be linked to the public directory
+```
+php artisan storage:link
+```
