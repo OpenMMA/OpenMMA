@@ -29,7 +29,7 @@ class Calendar {
         let cells = $(this._create('div')).addClass("calendar-days text-secondary");
         for (let i = 0; i < 42; i++) {
             let cell = $(this._create('div')).addClass("day container p-0").attr("id", "day-" + i).css({"z-index": 42 - i});
-            cell.append($(this._create('span')));
+            cell.append($(this._create('span')).addClass("fw-light"));
             cells.append(cell);
         }
         c.append(cells);
@@ -177,10 +177,11 @@ class Calendar {
     renderCalendar() {
         $("#monthyear").text(months[this.date.getMonth()] + " " + this.date.getFullYear());
 
+        let today = +this._roundDay(new Date());
         let curr = new Date(this.date_base);
         for (let d = 0; d < 42; d++) {
             let el = $("#day-" + d);
-            el.children("span").text(curr.getDate());
+            el.children("span").text(curr.getDate()).removeClass("fw-bold").addClass((+curr == today) ? "fw-bold" : "");
             if (curr.getMonth() == this.date.getMonth()) {
                 el.removeClass("inactive");
             } else {
