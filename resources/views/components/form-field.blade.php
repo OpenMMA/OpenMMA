@@ -1,5 +1,10 @@
+@php
+    if (isset($field->label)) {
+        $label = Form::label($field->name, $field->label, ['class' => 'form-label ' . ($field->label_class ?? '')]);
+    }
+@endphp
 @if(isset($field->label) && !($field->label_after ?? false))
-    {{ Form::label($field->name, $field->label, ['class' => 'form-label ' . ($field->label_class ?? '')]) }}
+    {{ $label }}
 @endif
 @if(isset($field->wrapper))
     {{ $field->wrapper->open }}
@@ -48,6 +53,9 @@
                 border-radius: .375rem !important;
                 padding: 1px 7px;
             }
+            .select2-dropdown {
+                border: var(--bs-border-width) solid var(--bs-border-color) !important;
+            }
         </style>
         @endPushOnce
         @break
@@ -87,7 +95,7 @@
     @endif
 @endisset
 @if(isset($field->label) && ($field->label_after ?? false))
-    {{ Form::label($field->name, $field->label, ['class' => 'form-label']) }}
+    {{ $label }}
 @endisset
 @if(isset($field->wrapper))
     {{ $field->wrapper->close }}
