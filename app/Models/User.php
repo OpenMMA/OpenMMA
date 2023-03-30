@@ -50,21 +50,30 @@ class User extends Authenticatable implements MustVerifyEmail
         'custom_data' => 'json',
     ];
 
-    
-    public static function create(array $fields): User
+
+    public static function create(array $attributes = [])
     {
-        $model = parent::create($fields);
+        $model = static::query()->create($attributes);
+        $custom_data = json_decode($model->custom_data);
+
         $fields = setting('account.custom_fields');
         foreach ($fields as $field) {
-            $name = $field['name'];
-            if (!array_key_exists($name, $model->custom_data)) {
-                $model->custom_data[$name] = $model->default ?? null;
+            $name = $field->name;
+            if (!isset($custom_data->$name)) {
+                $custom_data[$name] = $field->default ?? null;
             }
         }
-        $model->save();
+        $model->update(['custom_data' => $custom_data]);
+
         return $model;
     }
 
+
+    // public function sendEmailVerificationNotification()
+    // {
+    //     // Make sure notifiaction email is queued to prevent error:500 when mail server not working
+    //     $this->notify(new \App\Notifications\VerifyEmailQueued);
+    // }
 
     public function getNameAttribute(): string
     {
