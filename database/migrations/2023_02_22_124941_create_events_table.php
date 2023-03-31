@@ -19,12 +19,23 @@ return new class extends Migration
             $table->text('body');
             $table->timestamp('start')->nullable();
             $table->timestamp('end')->nullable();
-            $table->unsignedBigInteger('banner')->nullable();
+            $table->foreignId('banner')->nullable()->constrained('images')->nullOnDelete();
             $table->boolean('registerable')->default(false);
             $table->boolean('enable_comments')->default(false);
             $table->integer('max_registrations')->default(0);
+            $table->boolean('allow_externals')->default(false);
+            $table->boolean('only_allow_groups')->default(false);
             $table->enum('status', ['draft', 'published', 'unlisted'])->default('draft');
+            $table->enum('visibility', ['visible', 'protected', 'local', 'hidden', 'selection'])->default('visible');
             $table->timestamps();
+        });
+        Schema::create('event_registration_allowed_for', function (Blueprint $table) {
+            $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
+            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
+        });
+        Schema::create('event_visible_for', function (Blueprint $table) {
+            $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
+            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
         });
     }
 
@@ -33,6 +44,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('event_registration_allowed_for');
+        Schema::dropIfExists('event_visible_for');
         Schema::dropIfExists('events');
     }
 };
