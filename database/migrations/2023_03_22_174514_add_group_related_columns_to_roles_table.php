@@ -15,8 +15,11 @@ return new class extends Migration
             $table->boolean('isBaseRole')
                   ->default(false)
                   ->after('title');
-            $table->unsignedBigInteger('group')
-                  ->after('isBaseRole');
+            $table->foreignId('group')
+                  ->after('isBaseRole')
+                  ->nullable() // TODO temporary to allow for roles outside groups for testing
+                  ->constrained('groups')
+                  ->cascadeOnDelete();
         });
     }
 

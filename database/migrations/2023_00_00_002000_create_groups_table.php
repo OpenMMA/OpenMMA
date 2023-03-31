@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->text('label');
             $table->integer('color')->default(0xffffff);
-            $table->unsignedBigInteger('category')->nullable();
+            $table->foreignId('category')->nullable()->constrained('group_categories')->nullOnDelete();
             $table->timestamps();
         });
     }

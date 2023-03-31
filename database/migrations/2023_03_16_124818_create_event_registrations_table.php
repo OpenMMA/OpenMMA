@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('event_registrations', function (Blueprint $table) {
             $table->id(); // Not required for data, but required for eloquent
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('event_id');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
             $table->json('data');
             $table->timestamps();
             $table->unique(['user_id', 'event_id']);

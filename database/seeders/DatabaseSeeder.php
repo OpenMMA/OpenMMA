@@ -21,18 +21,18 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {        
+    {
         GroupCategory::create(['label' => 'Committees']);
         GroupCategory::create(['label' => 'Societies']);
 
         // Global permissions
-        Permission::createPermissionsForGroup('*'); 
+        Permission::createPermissionsForGroup('*');
         array_map(
-            fn($permission_name) => 
+            fn($permission_name) =>
                 Permission::create(['name' => $permission_name]),
             array_keys(Permission::$global_permissions)
         );
-        
+
         $group_members = Group::create(['label' => 'Members', 'hexColor' => '#3AC7DA']);
         Permission::createPermissionsForGroup('member');
         Role::create(['name' => 'members.', 'title' => 'Member', 'isBaseRole' => true, 'group' => $group_members->id]);
@@ -87,7 +87,7 @@ class DatabaseSeeder extends Seeder
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => 'rememberme',
         ]);
-        $admin_role = Role::create(['name' => ':admin', 'title' => 'Admin', 'group' => 0]);
+        $admin_role = Role::create(['name' => ':admin', 'title' => 'Admin', 'group' => null]);
         $admin_role->givePermissionTo('*.event.*');
         $admin_role->givePermissionTo('*.role.*');
         $admin_role->givePermissionTo('group.*');
@@ -122,10 +122,10 @@ class DatabaseSeeder extends Seeder
                 'type' => 'select',
                 'multiple' => true,
                 'options' => [
-                    'BA' => 'BSc A', 
-                    'BB' => 'BSc B', 
-                    'BC' => 'BSc C', 
-                    'BD' => 'BSc D', 
+                    'BA' => 'BSc A',
+                    'BB' => 'BSc B',
+                    'BC' => 'BSc C',
+                    'BD' => 'BSc D',
                     'BE' => 'BSc E'
                 ],
                 'required' => true,
