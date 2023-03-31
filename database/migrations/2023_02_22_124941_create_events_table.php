@@ -29,14 +29,20 @@ return new class extends Migration
             $table->enum('visibility', ['visible', 'protected', 'local', 'hidden', 'selection'])->default('visible');
             $table->timestamps();
         });
-        Schema::create('event_registration_allowed_for', function (Blueprint $table) {
-            $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
-            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
-        });
-        Schema::create('event_visible_for', function (Blueprint $table) {
-            $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
-            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
-        });
+
+        $db_name = DB::connection()->getDatabaseName();
+        foreach (['event_registration_allowed_for', 'event_visible_for'] as $table) {
+            Schema::create($table.'_group', function (Blueprint $table) {
+                $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
+                $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
+                $table->primary(['event_id', 'group_id']);
+            });
+            Schema::create($table.'_category', function (Blueprint $table) {
+                $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
+                $table->foreignId('category_id')->constrained('group_categories')->cascadeOnDelete();
+                $table->primary(['event_id', 'category_id']);
+            });
+        }
     }
 
     /**
