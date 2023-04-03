@@ -50,8 +50,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_registration_allowed_for');
-        Schema::dropIfExists('event_visible_for');
+        Schema::dropIfExists('event_registration_allowed_for_group');
+        Schema::dropIfExists('event_registration_allowed_for_category');
+        Schema::dropIfExists('event_visible_for_group');
+        Schema::dropIfExists('event_visible_for_category');
         Schema::dropIfExists('events');
     }
 };

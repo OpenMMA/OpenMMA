@@ -24,6 +24,10 @@ class Event extends Model
         'registerable',
         'enable_comments',
         'max_registrations',
+        'allow_externals',
+        'only_allow_groups',
+        'status',
+        'visibility',
     ];
 
     protected $appends = ['url'];
@@ -60,7 +64,7 @@ class Event extends Model
         ]);
     }
 
-    public function getUrlAttribute() 
+    public function getUrlAttribute()
     {
         return url("/event/{$this->slug}");
     }

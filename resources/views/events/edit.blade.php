@@ -50,6 +50,11 @@ use Carbon\Carbon;
             </div>
             <div class="card mb-3">
                 <div class="card-body">
+                    @livewire('event-publish-status', ['event' => $event], key($event->id))
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
                     @livewire('event-registration-settings', ['event' => $event], key($event->id))
                 </div>
             </div>
