@@ -20,7 +20,7 @@ class UserTable extends Component
 
     public function mount()
     {
-        $this->cols = array_combine($this->cols, array_map(fn($i) => ['sort_direction' => null, 'sort_idx' => $i, 'table_idx' => $i], 
+        $this->cols = array_combine($this->cols, array_map(fn($i) => ['sort_direction' => null, 'sort_idx' => $i, 'table_idx' => $i],
                                                            array_keys($this->cols)));
         $this->col_opts = [
             'first_name' =>        ['label' => 'First name',     'type' => 'text',     'display' => 'val'],
@@ -42,7 +42,7 @@ class UserTable extends Component
     {
         if (!array_key_exists($col, $this->cols))
             return;
-        
+
         $switch_array = ['' => 'asc', 'asc' => 'desc', 'desc' => null];
         $this->cols[$col]['sort_direction'] = $switch_array[$this->cols[$col]['sort_direction']];
         $this->cols[$col]['sort_idx'] = max(array_column($this->cols, 'sort_idx')) + 1;
@@ -63,8 +63,6 @@ class UserTable extends Component
         if ($this->query != '')
             $user_query = $user_query->whereRaw('CONCAT(first_name, \' \', last_name) LIKE ?', ["%$this->query%"])
                                      ->orWhere('email', 'LIKE', "%$this->query%");
-        else 
-            $user_query = $user_query->where([]);
 
         // Sort columns by table sorting priority
         uasort($this->cols, fn($x, $y) => $x['sort_idx'] < $y['sort_idx']);
@@ -92,7 +90,7 @@ class UserTable extends Component
 
         // Revert columns to original (display) sorting
         uasort($this->cols, fn($x, $y) => $x['table_idx'] > $y['table_idx']);
-        
+
         return view('livewire.user-table', [
             'users' => $user_query->paginate($this->entries_per_page)
         ]);
