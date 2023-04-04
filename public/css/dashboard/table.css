@@ -1,0 +1,7 @@
+.lw_table td.hide a {
+    visibility: hidden;
+}
+
+.lw_table tr:hover > td.hide a {
+    visibility: visible;
+}

@@ -9,7 +9,7 @@ use App\Models\Groups\Role;
 @livewireStyles
 @endPushOnce
 @pushOnce('styles')
-<link rel="stylesheet" href="{{ asset('/css/dashboard/users.css') }}">
+<link rel="stylesheet" href="{{ asset('/css/dashboard/table.css') }}">
 @livewireScripts
 @endPushOnce
 
@@ -25,21 +25,10 @@ use App\Models\Groups\Role;
             <div>
                 @livewire('user-table', ['cols' => ['first_name', 'last_name', 'roles'], 'filters' => ['group' => $group->name]])
             </div>
-            {{-- <table class="table table-striped" id="user_table">
-                <thead>
-                    <tr>
-                        <th scope="col" width="">Member</th>
-                        <th scope="col" width="1%"></th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                    @foreach (Role::getGroupMembers($group->name) as $member)
-                    <tr>
-                        <td>{{ $member->name }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table> --}}
+            <h4>Events</h4>
+            <div>
+                @livewire('event-table', ['group' => $group, 'cols' => ['title', 'start', 'end', 'status']])
+            </div>
             <h4>Roles</h4>
             <table class="table table-striped" id="user_table">
                 <thead>

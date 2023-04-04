@@ -78,7 +78,7 @@ class DatabaseSeeder extends Seeder
         Image::create(['path' =>'https://static.vecteezy.com/system/resources/previews/000/669/980/original/vector-travel-poster-template.jpg', 'external' => true, 'uploader_id' => 3]);
         Image::create(['path' =>'https://s3.envato.com/files/229310228/01_preview.jpg', 'external' => true, 'uploader_id' => 4]);
 
-        \App\Models\Events\Event::factory(8)->create();
+        \App\Models\Events\Event::factory(24)->create();
 
         $admin = User::factory()->create([
             'first_name' => 'Test',

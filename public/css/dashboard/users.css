@@ -1,7 +1,0 @@
-#user_table td.hide a {
-    visibility: hidden;
-}
-
-#user_table tr:hover > td.hide a {
-    visibility: visible;
-}

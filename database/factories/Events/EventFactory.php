@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Events;
 
+use App\Models\Groups\Group;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Image;
@@ -19,7 +20,7 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
-        $start = Carbon::parse(fake()->dateTimeBetween('-1 week', '+1 month'))->roundMinute(30);
+        $start = Carbon::parse(fake()->dateTimeBetween('-1 month', '+3 month'))->roundMinute(30);
         $end = Carbon::parse($start)->addMinutes(fake()->numberBetween(60, 60*24*3))->roundMinute(30);
         $title = fake()->sentence;
         return [
@@ -28,7 +29,8 @@ class EventFactory extends Factory
             'body' => fake()->paragraph(5),
             'start' => $start,
             'end' => $end,
-            'banner' => fake()->randomElement(Image::all())->id
+            'banner' => fake()->randomElement(Image::all())->id,
+            'group' => fake()->randomElement(Group::all())->id,
         ];
     }
 }

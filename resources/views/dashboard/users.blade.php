@@ -5,7 +5,7 @@
 @livewireStyles
 @endPushOnce
 @pushOnce('styles')
-<link rel="stylesheet" href="{{ asset('/css/dashboard/users.css') }}">
+<link rel="stylesheet" href="{{ asset('/css/dashboard/table.css') }}">
 @livewireScripts
 @endPushOnce
 

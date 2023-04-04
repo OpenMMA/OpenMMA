@@ -4,7 +4,7 @@
 <script src="{{ asset('/js/dashboard/users.js') }}"></script>
 @endPushOnce
 @pushOnce('styles')
-<link rel="stylesheet" href="{{ asset('/css/dashboard/users.css') }}">
+<link rel="stylesheet" href="{{ asset('/css/dashboard/table.css') }}">
 @endPushOnce
 
 @section('dashboard.content')

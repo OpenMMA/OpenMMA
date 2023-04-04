@@ -9,8 +9,12 @@
     // dd($roles);
 @endphp
 <div>
-    <input wire:model="query" class="form-control" type="text" placeholder="Search...">
-    <table class="table table-striped" id="user_table">
+    <div class="d-flex align-items-start mx-2">
+        <div class="flex-grow-1">
+            <input wire:model="query" class="form-control" type="text" placeholder="Search...">
+        </div>
+    </div>
+    <table class="table table-striped lw_table" id="user_table">
         <thead>
             {{-- TODO fix table column width to be minimal but not less than header width --}}
             <tr>
@@ -29,7 +33,7 @@
                                 @default
                                     <i class="fa-solid fa-sort align-end"></i>
                             @endswitch
-                        </button> 
+                        </button>
                     </div>
                 </th>
                 @endforeach
@@ -83,7 +87,7 @@
     <div class="flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
         <div>
             <p class="small text-muted">
-                Showing    
+                Showing
                 <span class="fw-semibold">{{ $users->firstItem() }}</span>
                 to
                 <span class="fw-semibold">{{ $users->lastItem() }}</span>
@@ -95,7 +99,7 @@
         </div>
         <div class="d-sm-flex">
             <div class="d-sm-flex flex-row align-items-start pe-3">
-                <p class="small text-muted text-nowrap pe-2">    
+                <p class="small text-muted text-nowrap pe-2">
                     Items per page:
                 </p>
                 <select wire:model="entries_per_page" class="form-select form-select-sm">
@@ -106,7 +110,7 @@
             </div>
             <div>
                 {{ $users->links() }}
-            </div>  
+            </div>
         </div>
     </div>
 </div>
