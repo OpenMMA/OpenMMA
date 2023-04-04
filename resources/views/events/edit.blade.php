@@ -1,5 +1,6 @@
 @php
 use Carbon\Carbon;
+use \App\Models\Image;
 @endphp
 
 @extends('layout.layout')
@@ -40,6 +41,9 @@ use Carbon\Carbon;
             <div class="card mb-3">
                 <div class="card-body">
                     <h4>Set banner</h4>
+                    @if ($event->banner)
+                        <img src="{{ Image::find($event->banner)->url }}" class="mx-auto d-block mb-2 rounded shadow-sm" style="max-height: 180px;">
+                    @endif
                     @include('components.form', ['form_name' => 'banner_image_form',
                                                  'form_submit' => 'Upload',
                                                  'form_target' => '/event/' . $event->slug . '/edit/banner',
