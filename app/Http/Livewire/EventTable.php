@@ -13,7 +13,7 @@ class EventTable extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    public Group $group;
+    public Group $group; // TODO protect against user tampering
     public bool $upcoming = true;
     public array $entries_per_page = [10, 10];
     public array $cols; // Format col_name => [label, type, display, sort_direction, sort_idx, table_idx]

@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class EventRegistrationSettings extends Component
 {
-    public Event $event;
+    public Event $event; // TODO protect against user tampering
     public bool $registerable;
     public bool $enable_comments;
     public int $max_registrations;

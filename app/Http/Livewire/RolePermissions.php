@@ -13,8 +13,8 @@ class RolePermissions extends Component
 {
     use AuthorizesRequests;
 
-    public Role $role;
-    public Group $group;
+    public Role $role; // TODO protect against user tampering
+    public Group $group; // TODO protect against user tampering
     public array $group_permissions;
     public array $global_permissions;
     public bool $global_permissions_enabled;
@@ -140,12 +140,12 @@ class RolePermissions extends Component
         // TODO Should we use $this->authorize()?
         if (!Auth::user()->can($group.'.role.edit'))
             return; // TODO error message?
-        
+
         $this->group_permissions = $this::flatten($this->group_permissions);
         foreach ($this->group_permissions as $permission => $has_permission) {
             if ($has_permission)
                 $this->role->givePermissionTo($group.'.'.$permission);
-            else   
+            else
                 $this->role->revokePermissionTo($group.'.'.$permission);
         }
     }
@@ -162,7 +162,7 @@ class RolePermissions extends Component
             $prefix = array_key_exists($permission, Permission::$global_permissions) ? '' : '*.';
             if ($has_permission)
                 $this->role->givePermissionTo($prefix.$permission);
-            else   
+            else
                 $this->role->revokePermissionTo($prefix.$permission);
         }
     }

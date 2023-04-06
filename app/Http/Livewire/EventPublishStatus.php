@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class EventPublishStatus extends Component
 {
-    public Event $event;
+    public Event $event; // TODO protect against user tampering
     public string $status;
     public string $visibility;
 
