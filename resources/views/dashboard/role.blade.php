@@ -14,6 +14,8 @@ use App\Models\Groups\Permission;
 @endPushOnce
 
 @section('dashboard.content')
-<h2>Role: {{ $role->title }}</h2>
+<h5 class="mb-0 text-muted">Role</h5>
+<h2>{{ $role->title }}</h2>
+<hr class="border-secondary">
 @livewire('role-permissions', ['role' => $role], key($user->id))
 @endsection
