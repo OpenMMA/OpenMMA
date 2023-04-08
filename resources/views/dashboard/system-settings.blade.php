@@ -1,9 +1,8 @@
 @extends('dashboard.layout')
 
 @section('dashboard.content')
-<div class="border-bottom">
-    <h2 class="pt-3 pb-2">System Settings</h2>
-</div>
+<h2>System Settings</h2>
+<hr class="border-secondary">
 <div class="pt-3 px-3">
     @include('components.form', ['form_name' => 'site_name_form',
                                  'form_submit' => 'Save',

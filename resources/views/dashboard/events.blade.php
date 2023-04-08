@@ -5,6 +5,8 @@
 @extends('dashboard.layout')
 
 @section('dashboard.content')
+    <h2>Events</h2>
+    <hr class="border-secondary">
     @foreach ($events as $event)
     <div class="container-fluid">
         <div class="row">
