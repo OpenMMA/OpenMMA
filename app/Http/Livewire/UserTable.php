@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Groups\Group;
+use App\Models\Groups\Role;
 use App\Models\User;
 use Illuminate\Database\Query\Builder;
 use Livewire\Component;
@@ -13,24 +15,32 @@ class UserTable extends Component
 
     protected $paginationTheme = 'bootstrap';
     public int $entries_per_page = 10;
-    public array $cols; // Format col_name => [label, type, display, sort_direction, sort_idx, table_idx]
+    public bool $disable_entries_per_page = false;
+    public bool $add_view_button = true;
+    public array $cols; // Format col_name => [label, type, display, sortable, sort_direction, sort_idx, table_idx]
     public array $col_opts;
     public array $filters = [];
     public string $query = '';
+    public Group $group; // TODO protect against user tampering
+
+    protected $listeners = ['refreshUserTable' => 'render'];
 
     public function mount()
     {
         $this->cols = array_combine($this->cols, array_map(fn($i) => ['sort_direction' => null, 'sort_idx' => $i, 'table_idx' => $i],
                                                            array_keys($this->cols)));
         $this->col_opts = [
-            'first_name' =>        ['label' => 'First name',     'type' => 'text',     'display' => 'val'],
-            'last_name' =>         ['label' => 'Last name',      'type' => 'text',     'display' => 'val'],
-            'email' =>             ['label' => 'Email address',  'type' => 'email',    'display' => 'val'],
-            'email_verified_at' => ['label' => 'Email verified', 'type' => 'datetime', 'display' => 'check'],
-            'created_at' =>        ['label' => 'Registered',     'type' => 'datetime', 'display' => 'date'],
-            'groups' =>            ['label' => 'Groups',         'type' => null,       'display' => 'groups'],
-            'roles' =>             ['label' => 'Roles',          'type' => null,       'display' => 'roles'],
-            'user_verified_at' =>  ['label' => 'Verified',       'type' => 'datetime', 'display' => 'verify']
+            'name' =>              ['label' => 'Name',              'sortable' => true,  'type' => 'text',     'display' => 'full_name'],
+            'first_name' =>        ['label' => 'First name',        'sortable' => true,  'type' => 'text',     'display' => 'val'],
+            'last_name' =>         ['label' => 'Last name',         'sortable' => true,  'type' => 'text',     'display' => 'val'],
+            'email' =>             ['label' => 'Email address',     'sortable' => true,  'type' => 'email',    'display' => 'val'],
+            'email_verified_at' => ['label' => 'Email verified',    'sortable' => true,  'type' => 'datetime', 'display' => 'check'],
+            'created_at' =>        ['label' => 'Registered',        'sortable' => true,  'type' => 'datetime', 'display' => 'date'],
+            'groups' =>            ['label' => 'Groups',            'sortable' => true,  'type' => null,       'display' => 'groups'],
+            'roles' =>             ['label' => 'Roles',             'sortable' => true,  'type' => null,       'display' => 'roles'],
+            'user_verified_at' =>  ['label' => 'Verified',          'sortable' => true,  'type' => 'datetime', 'display' => 'verify'],
+            'add_to_group' =>      ['label' => 'Add to group',      'sortable' => false, 'type' => null,       'display' => 'add_to_group'],
+            'remove_from_group' => ['label' => 'Remove from group', 'sortable' => false, 'type' => null,       'display' => 'remove_from_group']
         ];
         foreach (setting('account.custom_fields') as $custom_col) {
             // TODO determine appropriate 'display'-type?
@@ -56,10 +66,19 @@ class UserTable extends Component
                 case 'group':
                     $user_query->role($filters.'.');
                     break;
+                case 'notgroup':
+                    $user_query->whereNotExists(function (Builder $query) use ($filters) {
+                        $query->from('model_has_roles')
+                              ->join('roles', 'roles.id', 'model_has_roles.role_id')
+                              ->where('roles.name', $filters.'.')
+                              ->whereColumn('model_has_roles.model_id', 'users.id');
+                    });
+                    break;
                 default:
                     $user_query->where($col, $filters);
             }
         }
+        // dd($user_query->toSql(), $user_query->get(), $this->filters);
         if ($this->query != '')
             $user_query = $user_query->whereRaw('CONCAT(first_name, \' \', last_name) LIKE ?', ["%$this->query%"])
                                      ->orWhere('email', 'LIKE', "%$this->query%");
@@ -82,6 +101,9 @@ class UserTable extends Component
                     $user_query->orderByRaw('CASE WHEN `' . $col . '` IS NULL THEN 1 ELSE 0 END ' . $attrs['sort_direction']);
                     break;
                 case 'groups':
+                    break;
+                case 'full_name':
+                    $user_query->orderBy('last_name', $attrs['sort_direction']);
                     break;
                 default:
                     $user_query->orderBy($col, $attrs['sort_direction']);

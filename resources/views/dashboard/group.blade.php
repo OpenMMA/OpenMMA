@@ -21,9 +21,27 @@ use App\Models\Groups\Role;
 <div class="container-fluid">
     <div class="row">
         <div class="col-8">
+            <div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_user_to_group">+ Add members</button>
+                <div class="modal fade" id="add_user_to_group" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Add members to {{ $group->label }}</h1>
+                            </div>
+                            <div class="modal-body mx-3">
+                                @livewire('user-table', ['cols' => ['name', 'email', 'add_to_group'], 'group' => $group, 'entries_per_page' => 8, 'disable_entries_per_page' => true, 'filters' => ['notgroup' => $group->name], 'add_view_button' => false])
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <h4>Members</h4>
             <div>
-                @livewire('user-table', ['cols' => ['first_name', 'last_name', 'roles'], 'filters' => ['group' => $group->name]])
+                @livewire('user-table', ['cols' => ['first_name', 'last_name', 'roles', 'remove_from_group'], 'group' => $group, 'filters' => ['group' => $group->name]])
             </div>
             <h4>Events</h4>
             <div>

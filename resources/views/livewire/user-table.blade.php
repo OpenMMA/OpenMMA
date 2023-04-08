@@ -22,6 +22,7 @@
                 <th scope="col">
                     <div>
                         {{ $col_opts[$col]['label'] }}
+                        @if ($col_opts[$col]['sortable'])
                         <button wire:click="sortTable('{{ $col }}')" class="btn px-1 py-0">
                             @switch($attrs['sort_direction'])
                                 @case('asc')
@@ -34,6 +35,7 @@
                                     <i class="fa-solid fa-sort align-end"></i>
                             @endswitch
                         </button>
+                        @endif
                     </div>
                 </th>
                 @endforeach
@@ -74,12 +76,20 @@
                         @case('verify')
                             @livewire('verify-user', ['user' => $user], key($user->id))
                             @break
+                        @case('add_to_group')
+                            @livewire('user-group-modifier', ['user' => $user, 'group' => $group, 'render_add' => true], key($user->id))
+                            @break;
+                            @case('remove_from_group')
+                            @livewire('user-group-modifier', ['user' => $user, 'group' => $group, 'render_remove' => true], key($user->id))
+                            @break;
                         @case('val')
                         @default
                             {{ $user->$col }}
                     @endswitch
                 @endforeach
+                @if ($add_view_button)
                 <td class="hide"><a href="{{ url("/dashboard/user/$user->id") }}" class="btn btn-primary px-1 py-0">View</a></td>
+                @endif
             </tr>
             @endforeach
         </tbody>
@@ -98,6 +108,7 @@
             </p>
         </div>
         <div class="d-sm-flex">
+            @if (!$disable_entries_per_page)
             <div class="d-sm-flex flex-row align-items-start pe-3">
                 <p class="small text-muted text-nowrap pe-2">
                     Items per page:
@@ -108,6 +119,7 @@
                     <option value="100">100</option>
                 </select>
             </div>
+            @endif
             <div>
                 {{ $users->links() }}
             </div>
