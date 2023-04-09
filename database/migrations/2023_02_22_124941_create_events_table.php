@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('slug')->nullable()->unique();
             $table->text('description');
             $table->text('body');
-            $table->timestamp('start');
-            $table->timestamp('end');
+            $table->dateTime('start');
+            $table->dateTime('end');
             $table->foreignId('banner')->nullable()->constrained('images')->nullOnDelete();
             $table->foreignId('group')->nullable()->constrained('groups')->nullOnDelete();
             $table->boolean('registerable')->default(false);

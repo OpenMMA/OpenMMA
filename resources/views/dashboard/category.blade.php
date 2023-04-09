@@ -6,10 +6,9 @@ use App\Models\Groups\GroupCategory;
 @extends('dashboard.layout')
 
 @section('dashboard.content')
-<div class="border-bottom">
-    <h5 class="ps-2 pt-3 mb-0">Category</h5>
-    <h2 class="pb-2">{{ $category->label }}</h2>
-</div>
+<h5 class="mb-0 text-muted">Category</h5>
+<h2>{{ $category->label }}</h2>
+<hr class="border-secondary">
 <div class="container-fluid">
     <div class="row">
         <div class="col-8">

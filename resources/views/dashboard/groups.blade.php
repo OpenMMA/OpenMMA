@@ -8,9 +8,8 @@
 @endPushOnce
 
 @section('dashboard.content')
-<div class="border-bottom">
-    <h2 class="pt-3 pb-2">Groups</h2>
-</div>
+<h2>Groups</h2>
+<hr class="border-secondary">
 <div class="pt-3 px-3">
     <div class="row justify-content-end">
         <div class="col-3">

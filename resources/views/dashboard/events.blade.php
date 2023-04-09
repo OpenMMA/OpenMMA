@@ -5,20 +5,30 @@
 @extends('dashboard.layout')
 
 @section('dashboard.content')
+    <h2>Events</h2>
+    <hr class="border-secondary">
     @foreach ($events as $event)
     <div class="container-fluid">
         <div class="row">
-            <div class="card mb-3 p-0" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="{{ $event->bannerUrl }}" class="img-fluid rounded-start">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $event->title }}</h5>
-                            <p class="card-text">{{ $event->description }}</p>
-                            <p class="card-text"><small class="text-muted">Takes place {{ $event->relativeWhen }}</small></p>
-                            <a href="/event/{{ $event->slug }}/edit" class="btn btn-primary">Edit event</a>
+            <div class="card mb-3 p-0">
+                <div class="d-flex flex-row">
+                    <div class="flex-shrink-0 h-100" style="width: 100px;
+                                                            background-image:url({{ $event->bannerUrl }});
+                                                            background-size: cover;
+                                                            background-position: center;
+                                                            background-repeat: no-repeat;"></div>
+                    <div class="flex-grow-1">
+                        <div class="card-body d-flex flex-row">
+                            <div class="flex-grow-1">
+                                <h5 class="card-title">{{ $event->title }}</h5>
+                                <p class="card-text mb-0">{{ $event->description }}</p>
+                            </div>
+                            <div class="align-self-center flex-shrink-0">
+                                <a href="/event/{{ $event->slug }}/edit" class="btn btn-primary mx-2">Edit event</a>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted small">
+                            <i class="fa fa-calendar"></i> Takes place {{ $event->relativeWhen }}
                         </div>
                     </div>
                 </div>
