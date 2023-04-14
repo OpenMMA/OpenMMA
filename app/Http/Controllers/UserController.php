@@ -23,6 +23,14 @@ class UserController extends Controller
         return response()->view('dashboard.users');
     }
 
+    /**
+     * Display a profile page for the user.
+     */
+    public function profile(): Response
+    {
+        return response()->view('profile.profile');
+    }
+
     public function verify(User $user): JsonResponse
     {
         if ($user->user_verified_at != NULL)

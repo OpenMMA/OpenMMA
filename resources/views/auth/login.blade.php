@@ -13,14 +13,13 @@
             Login
         </div>
         <div class="card-body">
-            @include('components.form', ['form_name' => 'login_form',
-                                            'form_submit' => 'Login',
-                                            'form_target' => '/login',
-                                            'form_fields' => [
-                                            (object)array('type' => 'email', 'name' => 'email', 'required' => true, 'label' => 'Email address'),
-                                            (object)array('type' => 'password', 'name' => 'password', 'required' => true, 'label' => 'Password'),
-                                            (object)array('type' => 'checkbox', 'name' => 'remember', 'label' => 'Remember me', 'label_after' => true)
-                                        ]])
+            <form method="POST" action="/login">
+                @csrf
+                @include('components.form.form-fields.email', ['field' => (object)array('name' => 'email', 'required' => true, 'label' => 'Email address')])
+                @include('components.form.form-fields.password', ['field' => (object)array('name' => 'password', 'required' => true, 'label' => 'Password')])
+                @include('components.form.form-fields.check', ['field' => (object)array('name' => 'remember', 'label' => 'Remember me', 'label_after' => true)])
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
         <div class="ms-1 mt-2">
             <a href="/register">Register</a>
             <br>

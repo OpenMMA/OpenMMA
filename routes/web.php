@@ -65,4 +65,8 @@ Route::middleware('verified')->group(function() {
         Route::get('/system-settings', [SystemSettingController::class, 'index']);
         Route::post('/system-settings', [SystemSettingController::class, 'update']);
     });
+
+    Route::prefix('profile')->group(function() {
+        Route::get('/', [UserController::class, 'profile']);
+    });
 });
