@@ -40,7 +40,7 @@
             {{ $field->required ?? false ? 'required' : '' }}
             {!! $field->attributes ?? ''!!}>
         @foreach($field->options as $key => $value)
-            <option value="{{ $key }}" {{ $field->value == $key ? 'selected' : '' }}>{{ $value }}</option>
+            <option value="{{ $key }}" {{ $field->value ?? '' == $key ? 'selected' : '' }}>{{ $value }}</option>
         @endforeach
     </select>
 @overwrite
