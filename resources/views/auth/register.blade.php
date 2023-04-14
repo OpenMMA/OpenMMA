@@ -7,18 +7,17 @@
             Register
         </div>
         <div class="card-body">
-            @include('components.form', ['form_name' => 'register_form',
-                                            'form_submit' => 'Register',
-                                            'form_target' => '/register',
-                                            'form_fields' => array_merge([
-                                            (object)array('type' => 'text', 'name' => 'first_name', 'required' => true, 'label' => 'First name', 'error' => 'first_name'),
-                                            (object)array('type' => 'text', 'name' => 'last_name', 'required' => true, 'label' => 'Last name', 'error' => 'last_name'),
-                                            (object)array('type' => 'email', 'name' => 'email', 'required' => true, 'label' => 'Email address', 'error' => 'email'),
-                                            (object)array('type' => 'password', 'name' => 'password', 'required' => true, 'label' => 'Password', 'error' => 'password'),
-                                            (object)array('type' => 'password', 'name' => 'password_confirmation', 'required' => true, 'label' => 'Password (confirm)', 'error' => 'password_confirm'),
-                                            (object)array('type' => 'divider', 'class' => 'm-4'),
-                                        ], array_map(fn($v) => (object)$v, setting('account.custom_fields'))
-                                        )])
+            <form method="POST" action="/register">
+                @csrf
+                @include('components.form-fields.text', ['field' => (object)array('name' => 'first_name', 'required' => true, 'label' => 'First name')])
+                @include('components.form-fields.text', ['field' => (object)array('name' => 'last_name', 'required' => true, 'label' => 'Last name')])
+                @include('components.form-fields.email', ['field' => (object)array('name' => 'email', 'required' => true, 'label' => 'Email address')])
+                @include('components.form-fields.password', ['field' => (object)array('name' => 'password', 'required' => true, 'label' => 'Password')])
+                @include('components.form-fields.password', ['field' => (object)array('name' => 'password_confirmation', 'required' => true, 'label' => 'Password (confirm)')])
+                <div class="m-4"></div>
+                @include('components.form-fields', ['fields' => array_map(fn($v) => (object)$v, setting('account.custom_fields'))])
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
         </div>
     </div>
 </div>

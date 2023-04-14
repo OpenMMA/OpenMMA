@@ -10,12 +10,11 @@
             {{ $event->status }} - {{ $event->visibility }}
         </div>
         <a href="/event/{{ $event->slug }}/edit" class="btn btn-primary rounded-0 flex-shrink-0 h-100">Edit event</a>
-        @include('components.form', ['form_name' => 'delete_event_form',
-                                        'form_submit' => 'Delete event',
-                                        'form_submit_classes' => 'btn-danger rounded-0 flex-shrink-0 h-100',
-                                        'form_target' => '/event/'.$event->slug,
-                                        'form_method' => 'delete',
-                                        'form_fields' => []])
+        {{-- TODO: Fix --}}
+        <form method="DELETE" action="/event/{{ $event->slug }}">
+            @csrf
+            <button type="submit" class="btn btn-danger rounded-0 flex-shrink-0 h-100">Delete event</button>
+        </form>
     </div>
     <div class="flex-grow-1 overflow-auto">
         <div class="container py-3">
@@ -46,12 +45,13 @@
                         </div>
                         @else
                         <div class="card-body">
-                        @include('components.form', ['form_name' => 'register_event_form',
-                                                        'form_submit' => 'Register',
-                                                        'form_submit_classes' => 'btn-primary',
-                                                        'form_target' => '/event/'.$event->slug.'/register',
-                                                        'form_method' => 'post',
-                                                        'form_fields' => $event->enable_comments ? [(object)array('type' => 'textarea', 'name' => 'comment', 'rows' => 4, 'label' => 'Please enter additional information:')] : []])
+                            <form method="POST" action="/event/{{ $event->slug }}/register">
+                                @csrf
+                                @if ($event->enable_comments)
+                                    @include('components.form.form-fields.textarea', ['field' => (object)array('name' => 'comment', 'rows' => 4, 'label' => 'Please enter additional information:')])
+                                @endif
+                                <button type="submit" class="btn btn-primary">Register</button>
+                            </form>
                         </div>
                         @endif
                         @endauth
