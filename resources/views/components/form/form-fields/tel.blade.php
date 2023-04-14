@@ -12,5 +12,5 @@
            {{ isset($field->placeholder) ? 'placeholder="' . $field->placeholder . '"' : '' }}
            {{ isset($field->pattern) ? 'pattern="' . $field->pattern . '"' : '' }}
            {{ $field->required ?? false ? 'required' : '' }}
-           {{ $field->attributes ?? ''}}>
+           {!! $field->attributes ?? ''!!}>
 @overwrite

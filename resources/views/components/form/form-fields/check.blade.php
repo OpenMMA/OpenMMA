@@ -11,5 +11,5 @@
            class="form-check-input{{ isset($field->class) ? ' ' . $field->class : '' }}"
            {{ $field->value ?? false ? 'checked' : '' }}
            {{ $field->required ?? false ? 'required' : '' }}
-           {{ $field->attributes ?? ''}}>
+           {!! $field->attributes ?? ''!!}>
 @overwrite

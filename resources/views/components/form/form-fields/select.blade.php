@@ -38,7 +38,7 @@
             class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
             {{ $field->multiple ?? false ? 'multiple' : '' }}
             {{ $field->required ?? false ? 'required' : '' }}
-            {{ $field->attributes ?? ''}}>
+            {!! $field->attributes ?? ''!!}>
         @foreach($field->options as $key => $value)
             <option value="{{ $key }}" {{ $field->value == $key ? 'selected' : '' }}>{{ $value }}</option>
         @endforeach

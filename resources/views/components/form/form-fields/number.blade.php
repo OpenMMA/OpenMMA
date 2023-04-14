@@ -14,5 +14,5 @@
            {{ isset($field->max) ? 'max="' . $field->max . '"' : '' }}
            {{ isset($field->step) ? 'step="' . $field->step . '"' : '' }}
            {{ $field->required ?? false ? 'required' : '' }}
-           {{ $field->attributes ?? ''}}>
+           {!! $field->attributes ?? ''!!}>
 @overwrite

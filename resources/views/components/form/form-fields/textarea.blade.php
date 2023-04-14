@@ -12,6 +12,6 @@
         {{ isset($field_value) ? 'value="' . $field_value . '"' : '' }}
         {{ isset($field->placeholder) ? 'placeholder="' . $field->placeholder . '"' : '' }}
         {{ $field->required ?? false ? 'required' : '' }}
-        {{ $field->attributes ?? ''}}>
+        {!! $field->attributes ?? ''!!}>
     </textarea>
 @overwrite

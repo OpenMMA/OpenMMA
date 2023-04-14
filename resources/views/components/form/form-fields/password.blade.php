@@ -10,5 +10,5 @@
            class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
            {{ isset($field->placeholder) ? 'placeholder="' . $field->placeholder . '"' : '' }}
            {{ $field->required ?? false ? 'required' : '' }}
-           {{ $field->attributes ?? ''}}>
+           {!! $field->attributes ?? ''!!}>
 @overwrite
