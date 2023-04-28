@@ -16,7 +16,11 @@ class UserTable extends Component
     protected $paginationTheme = 'bootstrap';
     public int $entries_per_page = 10;
     public bool $disable_entries_per_page = false;
+
     public bool $add_view_button = true;
+    public bool $add_add_button = false;
+    public bool $add_remove_button = false;
+
     public array $cols; // Format col_name => [label, type, display, sortable, sort_direction, sort_idx, table_idx]
     public array $col_opts;
     public array $filters = [];
@@ -39,8 +43,6 @@ class UserTable extends Component
             'groups' =>            ['label' => 'Groups',            'sortable' => true,  'type' => null,       'display' => 'groups'],
             'roles' =>             ['label' => 'Roles',             'sortable' => true,  'type' => null,       'display' => 'roles'],
             'user_verified_at' =>  ['label' => 'Verified',          'sortable' => true,  'type' => 'datetime', 'display' => 'verify'],
-            'add_to_group' =>      ['label' => 'Add to group',      'sortable' => false, 'type' => null,       'display' => 'add_to_group'],
-            'remove_from_group' => ['label' => 'Remove from group', 'sortable' => false, 'type' => null,       'display' => 'remove_from_group']
         ];
         foreach (setting('account.custom_fields') as $custom_col) {
             // TODO determine appropriate 'display'-type?

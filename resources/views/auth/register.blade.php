@@ -15,7 +15,7 @@
                                             (object)array('type' => 'text', 'name' => 'last_name', 'required' => true, 'label' => 'Last name', 'error' => 'last_name'),
                                             (object)array('type' => 'email', 'name' => 'email', 'required' => true, 'label' => 'Email address', 'error' => 'email'),
                                             (object)array('type' => 'password', 'name' => 'password', 'required' => true, 'label' => 'Password', 'error' => 'password'),
-                                            (object)array('type' => 'password', 'name' => 'password_confirmation', 'required' => true, 'label' => 'Password (confirm)', 'error' => 'password_confirm'),
+                                            (object)array('type' => 'password', 'name' => 'password_confirmation', 'required' => true, 'label' => 'Password (confirm)'),
                                             (object)array('type' => 'divider', 'class' => 'm-4'),
                                         ], array_map(fn($v) => (object)$v, setting('account.custom_fields'))
                                         )])

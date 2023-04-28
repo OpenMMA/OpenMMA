@@ -56,7 +56,7 @@
                         @endif
                         @endauth
                         @else
-                        <div class="card-header">
+                        <div class="card-header border-0">
                             Registering for this event is not possible.
                         </div>
                         @endif

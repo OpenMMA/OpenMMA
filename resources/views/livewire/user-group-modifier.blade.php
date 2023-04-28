@@ -1,8 +1,8 @@
-<div>
+<div class="d-inline">
     @if ($render_add)
-    <button wire:click="add" class="btn"><i class="fa-solid fa-plus"></i></button>
+    <a href="#" wire:click="add"><i class="fa-solid fa-user-plus pe-3"></i></a>
     @endif
     @if ($render_remove)
-    <button wire:click="remove" class="btn"><i class="fa-solid fa-trash"></i></button>
+    <a href="#" wire:click="remove"><i class="fa-solid fa-user-minus pe-3"></i></a>
     @endif
 </div>

@@ -6,7 +6,6 @@
         $roles = \App\Models\Groups\Role::getGroupRoles($filters['group'])->mapWithKeys(fn($n) => [$n->id => $n]);
     }
 
-    // dd($roles);
 @endphp
 <div>
     <input wire:model="query" class="form-control" type="text" placeholder="Search...">
@@ -72,20 +71,25 @@
                             @case('verify')
                                 @livewire('verify-user', ['user' => $user], key($user->id))
                                 @break
-                            @case('add_to_group')
-                                @livewire('user-group-modifier', ['user' => $user, 'group' => $group, 'render_add' => true], key($user->id))
-                                @break;
-                            @case('remove_from_group')
-                                @livewire('user-group-modifier', ['user' => $user, 'group' => $group, 'render_remove' => true], key($user->id))
-                                @break;
                             @case('val')
                             @default
                                 {{ $user->$col }}
                         @endswitch
                     @endforeach
-                    @if ($add_view_button)
-                    <td class="hide"><a href="{{ url("/dashboard/user/$user->id") }}" class="btn btn-primary px-1 py-0">View</a></td>
+                    @if ($add_view_button || $add_add_button || $add_remove_button)
+                    <td class="hide text-nowrap">
+                        @if ($add_view_button)
+                        <a href="{{ url("/dashboard/user/$user->id") }}"><i class="fa-solid fa-pencil pe-3"></i></a>
+                        @endif
+                        @if ($add_add_button)
+                        @livewire('user-group-modifier', ['user' => $user, 'group' => $group, 'render_add' => true], key($user->id))
+                        @endif
+                        @if ($add_remove_button)
+                        @livewire('user-group-modifier', ['user' => $user, 'group' => $group, 'render_remove' => true], key($user->id))
+                        @endif
+                    </td>
                     @endif
+
                 </tr>
                 @endforeach
             </tbody>
@@ -103,10 +107,10 @@
             results
         </div>
         <div>
+            @if (!$disable_entries_per_page)
             <div class="d-inline-block small text-muted text-nowrap pe-1">
                 Items per page:
             </div>
-            @if (!$disable_entries_per_page)
             <div class="d-inline-block me-2 mb-3">
                 <select wire:model="entries_per_page" class="form-select form-select-sm">
                     <option value="10">10</option>
