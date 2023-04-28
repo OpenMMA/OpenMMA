@@ -89,6 +89,16 @@
                     results
                 </div>
                 <div>
+                    <div class="d-inline-block small text-muted text-nowrap pe-1">
+                        Items per page:
+                    </div>
+                    <div class="d-inline-block me-2 mb-3">
+                        <select wire:model="entries_per_page.{{$loop->index}}" class="form-select form-select-sm">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
                     <div class="d-inline-block">
                         {{ $event_list->links() }}
                     </div>

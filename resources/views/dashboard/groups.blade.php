@@ -13,14 +13,11 @@
 <div class="pt-3 px-3">
     <div class="row justify-content-end">
         <div class="col-3">
-            @include('components.form', ['form_name' => 'add_group_form',
-                                         'form_submit' => 'Create',
-                                         'form_target' => '/dashboard/groups/create',
-                                         'form_classes' => 'row justify-content-end',
-                                         'form_submit_classes' => 'd-inline-block w-auto',
-                                         'form_fields' => [
-                                            (object)array('type' => 'text', 'name' => 'group_name', 'required' => true, 'placeholder' => 'New group name...', 'class' => 'd-inline-block align-bottom w-50 me-2', 'wrapper' => (object)array('open' => '', 'close' => '')),
-                                         ]])
+            <form method="POST" action="/dashboard/groups/create" class="row justify-content-end">
+                @csrf
+                @include('components.form.form-fields.text', ['field' => (object)array('name' => 'group_name', 'required' => true, 'placeholder' => 'New group name...', 'wrapper_classes' => '')])
+                <button type="submit" class="btn btn-primary d-inline-block w-auto">Create</button>
+            </form>
         </div>
     </div>
     <table class="table table-striped" id="user_table">

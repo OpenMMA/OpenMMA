@@ -8,13 +8,14 @@
     <div class="row">
         <div class="col">
             <p class="fs-5 mb-0 pt-1 text-nowrap">
-                Hello, {{ Auth::user()->first_name }}!
+                Hello, <span id="navbar-first-name">{{ Auth::user()->first_name }}</span>!
             </p>
         </div>
         <div class="col">
-            {{ Form::open(array('url' => '/logout')) }}
-                {{ Form::submit('Logout', ['class' => 'btn btn-primary']) }}
-            {{ Form::close() }}
+            <form method="POST" action="/logout" class="mb-0">
+                @csrf
+                <button type="submit" class="btn btn-primary">Logout</button>
+            </form>
         </div>
     @endauth
     @guest

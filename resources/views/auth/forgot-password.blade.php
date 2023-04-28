@@ -13,10 +13,11 @@
                     @if(session('status'))
                         {{ session('status') }}
                     @else
-                        @include('components.form', ['form_name' => 'forgot_password_form',
-                                                    'form_submit' => 'Request reset link',
-                                                    'form_target' => '/forgot-password',
-                                                    'form_fields' => [(object)array('type' => 'email', 'name' => 'email', 'required' => true, 'label' => 'Email address', 'error' => 'email')]])
+                        <form method="POST" action="/forgot-password">
+                            @csrf
+                            @include('components.form-fields.email', ['field' => (object)array('name' => 'email', 'required' => true, 'label' => 'Email address')])
+                            <button type="submit" class="btn btn-primary">Request reset link</button>
+                        </form>
                     @endif
                 </div>
             </div>

@@ -22,7 +22,7 @@
             @foreach (\App\Models\Groups\Group::inCategory(null) as $group)
                 <li class="nav-item">
                     <a href="/dashboard/group/{{ $group->name }}" class="nav-link {{ Request::capture()->path() == 'dashboard/group/'.$group->name  ? 'active' : '' }}">
-                        <i class="fa fa-fw fa-users me-1"></i>
+                        <i class="fa fa-fw fa-user-group me-1"></i>
                         {{ $group->label }}
                     </a>
                 </li>

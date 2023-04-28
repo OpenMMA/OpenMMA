@@ -76,6 +76,7 @@
                                 {{ $user->$col }}
                         @endswitch
                     @endforeach
+<<<<<<< HEAD
                     @if ($add_view_button || $add_add_button || $add_remove_button)
                     <td class="hide text-nowrap">
                         @if ($add_view_button)
@@ -90,6 +91,9 @@
                     </td>
                     @endif
 
+=======
+                    <td class="hide"><a href="{{ url("/dashboard/user/$user->id") }}" class="btn btn-primary px-1 py-0">View</a></td>
+>>>>>>> 7e3ac59e228580adf30df47b8d48d1998ffb501c
                 </tr>
                 @endforeach
             </tbody>
@@ -107,7 +111,10 @@
             results
         </div>
         <div>
+<<<<<<< HEAD
             @if (!$disable_entries_per_page)
+=======
+>>>>>>> 7e3ac59e228580adf30df47b8d48d1998ffb501c
             <div class="d-inline-block small text-muted text-nowrap pe-1">
                 Items per page:
             </div>
@@ -118,7 +125,10 @@
                     <option value="100">100</option>
                 </select>
             </div>
+<<<<<<< HEAD
             @endif
+=======
+>>>>>>> 7e3ac59e228580adf30df47b8d48d1998ffb501c
             <div class="d-inline-block">
                 {{ $users->links() }}
             </div>

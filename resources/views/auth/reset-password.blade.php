@@ -10,15 +10,14 @@
                     Reset password
                 </div>
                 <div class="card-body">
-                    @include('components.form', ['form_name' => 'password_reset_form',
-                                                'form_submit' => 'Reset password',
-                                                'form_target' => '/reset-password',
-                                                'form_fields' => [
-                                                    (object)array('type' => 'email', 'name' => 'email', 'default' => Request::get('email'), 'required' => true, 'label' => 'Email address', 'error' => 'email'),
-                                                    (object)array('type' => 'password', 'name' => 'password', 'required' => true, 'label' => 'Password', 'error' => 'password'),
-                                                    (object)array('type' => 'password', 'name' => 'password_confirmation', 'required' => true, 'label' => 'Password (confirm)', 'error' => 'password_confirm'),
-                                                    (object)array('type' => 'hidden', 'name' => 'token', 'value' => request()->route('token'))
-                                                ]])
+                    <form method="POST" action="/reset-password">
+                        @csrf
+                        @include('components.form-fields.email', ['field' => (object)array('name' => 'email', 'required' => true, 'label' => 'Email address')])
+                        @include('components.form-fields.password', ['field' => (object)array('name' => 'password', 'required' => true, 'label' => 'Password')])
+                        @include('components.form-fields.password', ['field' => (object)array('name' => 'password_confirmation', 'required' => true, 'label' => 'Password (confirm)')])
+                        @include('components.form-fields.hidden', ['field' => (object)array('name' => 'token', 'value' => request()->route('token'))])
+                        <button type="submit" class="btn btn-primary">Reset password</button>
+                    </form>
                 </div>
             </div>
         </div>
