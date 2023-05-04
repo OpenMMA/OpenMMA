@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Events\Event;
+use App\Models\Events\EventRegistration;
 use App\Models\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
@@ -27,6 +28,14 @@ class EventController extends Controller
         return response()->view('dashboard.events', ['events' => $events]);
     }
 
+    public function profileIndex(): Response
+    {
+        // Get all events that the user is registered for
+        $registrations = EventRegistration::registrationsForUser(Auth::user()->id);
+        $events = array_map(fn($r) => Event::where('id', $r->event_id)->first(), $registrations);
+        return response()->view('profile.events', ['events' => $events]);
+    }
+
     public function getevents(Request $request): JsonResponse
     {
         $start = Carbon::createFromTimestamp($request->input('start'));
@@ -34,10 +43,10 @@ class EventController extends Controller
         $events = Event::where([['start', '>=', $start], ['start', '<=', $end]])
                        ->orWhere([['end', '>=', $start], ['end', '<=', $end]])
                        ->get()->all();
-        return response()->json(array_map(fn($e) => array('title' => $e->title, 
-                                                          'description' => $e->description, 
-                                                          'start' => $e->start, 
-                                                          'end' => $e->end, 
+        return response()->json(array_map(fn($e) => array('title' => $e->title,
+                                                          'description' => $e->description,
+                                                          'start' => $e->start,
+                                                          'end' => $e->end,
                                                           'url' => $e->url), $events));
     }
 
