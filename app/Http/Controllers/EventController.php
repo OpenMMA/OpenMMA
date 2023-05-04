@@ -33,7 +33,9 @@ class EventController extends Controller
         // Get all events that the user is registered for
         $registrations = EventRegistration::registrationsForUser(Auth::user()->id);
         $events = array_map(fn($r) => Event::where('id', $r->event_id)->first(), $registrations);
-        return response()->view('profile.events', ['events' => $events]);
+        $upcoming_events = array_filter($events, fn($e) => $e->start > Carbon::now());
+        $past_events = array_filter($events, fn($e) => $e->start < Carbon::now());
+        return response()->view('profile.events', ['upcoming_events' => $upcoming_events, 'past_events' => $past_events]);
     }
 
     public function getevents(Request $request): JsonResponse
