@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Classes\Color;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use App\Models\Groups\Group;
@@ -33,26 +34,26 @@ class DatabaseSeeder extends Seeder
             array_keys(Permission::$global_permissions)
         );
 
-        $group_members = Group::create(['label' => 'Members', 'hexColor' => '#3AC7DA']);
+        $group_members = Group::create(['label' => 'Members', 'color' => new Color('#3AC7DA')]);
         Permission::createPermissionsForGroup('member');
         Role::create(['name' => 'members.', 'title' => 'Member', 'isBaseRole' => true, 'group' => $group_members->id]);
-        $group_alumni = Group::create(['label' => 'Alumni', 'hexColor' => '#26E600']);
+        $group_alumni = Group::create(['label' => 'Alumni', 'color' => new Color('#ff595e')]);
         Permission::createPermissionsForGroup('alumni');
         Role::create(['name' => 'alumni.', 'title' => 'Alumnus', 'isBaseRole' => true, 'group' => $group_alumni->id]);
-        $group_board = Group::create(['label' => 'Board', 'hexColor' => '#AB3ADA']);
+        $group_board = Group::create(['label' => 'Board', 'color' => new Color('#ffca3a')]);
         Permission::createPermissionsForGroup('board');
         Role::create(['name' => 'board.', 'title' => 'Board member', 'isBaseRole' => true, 'group' => $group_board->id]);
         Role::create(['name' => 'board.chair', 'title' => 'Chair', 'isBaseRole' => false, 'group' => $group_board->id]);
         Role::create(['name' => 'board.secretary', 'title' => 'Secretary', 'isBaseRole' => false, 'group' => $group_board->id]);
         Role::create(['name' => 'board.treasurer', 'title' => 'Treasurer', 'isBaseRole' => false, 'group' => $group_board->id]);
 
-        $group_committee_1 = Group::create(['label' => 'Committee 1', 'hexColor' => '#FF0000', 'category' => 1]);
+        $group_committee_1 = Group::create(['label' => 'Committee 1', 'color' => new Color('#8ac926'), 'category' => 1]);
         Permission::createPermissionsForGroup('committee-1');
         Role::create(['name' => 'committee-1.', 'title' => 'Committee 1', 'isBaseRole' => true, 'group' => $group_committee_1->id]);
-        $group_committee_2 = Group::create(['label' => 'Committee 2', 'hexColor' => '#00FF00', 'category' => 1]);
+        $group_committee_2 = Group::create(['label' => 'Committee 2', 'color' => new Color('#1982c4'), 'category' => 1]);
         Permission::createPermissionsForGroup('committee-2');
         Role::create(['name' => 'committee-2.', 'title' => 'Committee 2', 'isBaseRole' => true, 'group' => $group_committee_2->id]);
-        $group_committee_3 = Group::create(['label' => 'Committee 3', 'hexColor' => '#0000FF', 'category' => 1]);
+        $group_committee_3 = Group::create(['label' => 'Committee 3', 'color' => new Color('#6a4c93'), 'category' => 1]);
         Permission::createPermissionsForGroup('committee-3');
         Role::create(['name' => 'committee-3.', 'title' => 'Committee 3', 'isBaseRole' => true, 'group' => $group_committee_3->id]);
 

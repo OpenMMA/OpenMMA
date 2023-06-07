@@ -1,3 +1,17 @@
+function registerEventHover() {
+    events = $('a.event').map(function() { return $(this).attr('event-id'); });
+    new Set(events).forEach((e) => {
+        $(`[event-id=${e}]`).hover(() => $(`[event-id=${e}]`).addClass('event-hover'),
+                                   () => $(`[event-id=${e}]`).removeClass('event-hover'));
+
+    });
+}
+
+$(document).ready(() => {
+    registerEventHover();
+    Livewire.hook('message.processed', () => { registerEventHover() });
+});
+
 var date = new Date();
 $(document).ready(() => {
     let calendar = new Calendar($("#calendar"));
@@ -11,7 +25,7 @@ class Calendar {
     constructor(c, url) {
         this.container = c;
         this.date = new Date();
-        this.date_base = this._getFirstDay();  
+        this.date_base = this._getFirstDay();
         this.url = url;
         this.events = [];
 
@@ -71,7 +85,7 @@ class Calendar {
     }
 
     /**
-     * 
+     *
      */
     _getLastDay() {
         let end = this._getFirstDay();
@@ -99,7 +113,7 @@ class Calendar {
     }
 
     /**
-     * 
+     *
      */
     getEvents() {
         let _this = this;
@@ -126,7 +140,7 @@ class Calendar {
                 });
             });
             _this.events.sort((a, b) => _this._daysDiff(b.start, b.end) - _this._daysDiff(a.start, a.end));
-            
+
             // Scheduler  TODO: kinda inefficcient, not the end of the world but may be improved.
             let occupancy = Array.from({length: 6*7}, () => Array.from({length: 3}, () => false));
             _this.events.forEach((event) => {
@@ -145,7 +159,7 @@ class Calendar {
                     occupancy[j][event.offset] = true;
                 event.offset += 1;
             });
-    
+
             console.log(_this.events);
             _this.render();
         });

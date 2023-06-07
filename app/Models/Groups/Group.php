@@ -2,7 +2,7 @@
 
 namespace App\Models\Groups;
 
-use App\Traits\CSSColor;
+use App\Casts\ColorCast;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,11 +10,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-    use HasFactory, Sluggable, CSSColor;
+    use HasFactory, Sluggable;
 
     protected $fillable = [
         'label',
-        'category'
+        'category',
+        'color'
+    ];
+
+    protected $casts = [
+        'color' => ColorCast::class
     ];
 
     /**
@@ -39,6 +44,7 @@ class Group extends Model
         $category = GroupCategory::where('name', $category_name)->first();
         if ($category == null)
             return Collection::empty();
+
         return Group::where('category', $category->id)->get();
     }
 }

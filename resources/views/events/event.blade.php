@@ -45,14 +45,6 @@
                         </div>
                         @else
                         <div class="card-body">
-<<<<<<< HEAD
-                        @include('components.form', ['form_name' => 'register_event_form',
-                                                        'form_submit' => 'Register',
-                                                        'form_submit_classes' => 'btn-primary',
-                                                        'form_target' => '/event/'.$event->slug.'/register',
-                                                        'form_method' => 'post',
-                                                        'form_fields' => $event->enable_comments ? [(object)array('type' => 'textarea', 'name' => 'comment', 'rows' => 4, 'label' => 'Please enter additional information:')] : []])
-=======
                             <form method="POST" action="/event/{{ $event->slug }}/register">
                                 @csrf
                                 @if ($event->enable_comments)
@@ -60,16 +52,11 @@
                                 @endif
                                 <button type="submit" class="btn btn-primary">Register</button>
                             </form>
->>>>>>> 7e3ac59e228580adf30df47b8d48d1998ffb501c
                         </div>
                         @endif
                         @endauth
                         @else
-<<<<<<< HEAD
-                        <div class="card-header border-0">
-=======
                         <div class="card-header">
->>>>>>> 7e3ac59e228580adf30df47b8d48d1998ffb501c
                             Registering for this event is not possible.
                         </div>
                         @endif

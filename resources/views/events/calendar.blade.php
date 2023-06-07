@@ -8,5 +8,11 @@
 @endPushOnce
 
 @section('content')
-<div class="container calendar-container p-3 sticky-top rounded shadow-lg" id="calendar"></div>
+<div class="container calendar-container p-3 rounded shadow-lg" id="calendar"></div>
+
+<div class="my-5"></div>
+
+@livewire('calendar')
+
+<div style="height: 400px;"></div>
 @endsection

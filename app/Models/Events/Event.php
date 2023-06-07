@@ -2,7 +2,9 @@
 
 namespace App\Models\Events;
 
+use App\Classes\Color;
 use App\Models\Events\EventRegistration;
+use App\Models\Groups\Group;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +23,7 @@ class Event extends Model
         'start',
         'end',
         'banner',
+        'group',
         'registerable',
         'enable_comments',
         'max_registrations',
@@ -28,6 +31,11 @@ class Event extends Model
         'only_allow_groups',
         'status',
         'visibility',
+    ];
+
+    protected $casts = [
+        'start' => 'datetime',
+        'end' => 'datetime'
     ];
 
     protected $appends = ['url'];
@@ -77,5 +85,10 @@ class Event extends Model
     public function getRelativeWhenAttribute()
     {
         return Carbon::parse($this->start)->diffForHumans();
+    }
+
+    public function getColorAttribute(): Color
+    {
+        return Group::find($this->group)->color;
     }
 }
