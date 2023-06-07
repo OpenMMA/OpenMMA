@@ -1,5 +1,10 @@
 @extends('layout.layout')
 
+@php
+    // Store the previous url to redirect back to
+    session()->put('url.intended', url()->previous());
+@endphp
+
 @section('content')
 <div class="d-flex justify-content-center align-items-center bg-polygons" style="min-height: 100%">
     <div class="card shadow m-4 border-0 flex-grow-1" style="max-width: 500px;">

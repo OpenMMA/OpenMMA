@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Http\Responses\LoginResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -19,7 +20,17 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->instance(LoginResponse::class, new class extends LoginResponse {
+            public function toResponse($request)
+            {
+                // dd(url()->previous());
+                // if (url()->previous()) {
+                //     return redirect(url()->previous());
+                // }
+                // return redirect('/profile');
+                return redirect()->intended('/profile');
+            }
+        });
     }
 
     /**
