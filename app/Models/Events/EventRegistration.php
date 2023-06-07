@@ -20,7 +20,7 @@ class EventRegistration extends Model
      */
     public static function registrationsForUser($user_id): array
     {
-        return EventRegistration::where(['user_id' => $user_id])->all();
+        return EventRegistration::where(['user_id' => $user_id])->get()->all();
     }
 
     /**
@@ -28,11 +28,11 @@ class EventRegistration extends Model
      */
     public static function registrationsForEvent($event_id): array
     {
-        return EventRegistration::where(['event_id' => $event_id])->all();
+        return EventRegistration::where(['event_id' => $event_id])->get()->all();
     }
-    
+
     /**
-     * Check if a given user has registered for a given event, 
+     * Check if a given user has registered for a given event,
      * and return the registration if this is the case
      */
     public static function userRegistrationForEvent($user_id, $event_id): ?EventRegistration

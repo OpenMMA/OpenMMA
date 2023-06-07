@@ -68,5 +68,6 @@ Route::middleware('verified')->group(function() {
 
     Route::prefix('profile')->group(function() {
         Route::get('/', [UserController::class, 'profile']);
+        Route::get('/events', [EventController::class, 'profileIndex']);
     });
 });
