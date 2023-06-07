@@ -23,12 +23,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LoginResponse::class, new class extends LoginResponse {
             public function toResponse($request)
             {
-                // dd(url()->previous());
-                // if (url()->previous()) {
-                //     return redirect(url()->previous());
-                // }
-                // return redirect('/profile');
-                return redirect()->intended('/profile');
+                return redirect()->intended(RouteServiceProvider::HOME);
             }
         });
     }
