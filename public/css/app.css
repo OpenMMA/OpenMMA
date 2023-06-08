@@ -1,7 +1,7 @@
 .bg-polygons {
     background-color: #403f96;
     background: linear-gradient(0, #403f96 0%, #3e3d8d 100%);
-    background: url(../img/polygons.png);
+    background: url(../img-static/polygons.png);
     background-size: cover;
 }
 
