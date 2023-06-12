@@ -12,10 +12,10 @@
                 <div class="card-body">
                     <form method="POST" action="/reset-password">
                         @csrf
-                        @include('components.form-fields.email', ['field' => (object)array('name' => 'email', 'required' => true, 'label' => 'Email address')])
-                        @include('components.form-fields.password', ['field' => (object)array('name' => 'password', 'required' => true, 'label' => 'Password')])
-                        @include('components.form-fields.password', ['field' => (object)array('name' => 'password_confirmation', 'required' => true, 'label' => 'Password (confirm)')])
-                        @include('components.form-fields.hidden', ['field' => (object)array('name' => 'token', 'value' => request()->route('token'))])
+                        @include('components.form.form-fields.email', ['field' => (object)array('name' => 'email', 'required' => true, 'label' => 'Email address')])
+                        @include('components.form.form-fields.password', ['field' => (object)array('name' => 'password', 'required' => true, 'label' => 'Password')])
+                        @include('components.form.form-fields.password', ['field' => (object)array('name' => 'password_confirmation', 'required' => true, 'label' => 'Password (confirm)')])
+                        @include('components.form.form-fields.hidden', ['field' => (object)array('name' => 'token', 'value' => request()->route('token'))])
                         <button type="submit" class="btn btn-primary">Reset password</button>
                     </form>
                 </div>

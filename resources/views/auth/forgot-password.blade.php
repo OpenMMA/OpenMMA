@@ -15,7 +15,7 @@
                     @else
                         <form method="POST" action="/forgot-password">
                             @csrf
-                            @include('components.form-fields.email', ['field' => (object)array('name' => 'email', 'required' => true, 'label' => 'Email address')])
+                            @include('components.form.form-fields.email', ['field' => (object)array('name' => 'email', 'required' => true, 'label' => 'Email address')])
                             <button type="submit" class="btn btn-primary">Request reset link</button>
                         </form>
                     @endif
