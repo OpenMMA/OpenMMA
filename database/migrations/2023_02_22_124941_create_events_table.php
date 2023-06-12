@@ -21,6 +21,7 @@ return new class extends Migration
             $table->dateTime('end');
             $table->foreignId('banner')->nullable()->constrained('images')->nullOnDelete();
             $table->foreignId('group')->nullable()->constrained('groups')->nullOnDelete();
+            $table->foreignId('color')->nullable()->constrained('colors')->nullOnDelete();
             $table->boolean('registerable')->default(false);
             $table->boolean('enable_comments')->default(false);
             $table->integer('max_registrations')->default(0);

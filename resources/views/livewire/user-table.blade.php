@@ -1,4 +1,5 @@
 @php
+    use App\Models\Color;
     use Carbon\Carbon;
 
     $groups = \App\Models\Groups\Group::all();
@@ -54,7 +55,7 @@
                                 @break
                             @case('groups')
                                 @foreach ($user->$col as $group)
-                                    <span class="badge rounded-pill" style="background-color: {{ $groups->firstWhere('id', $group->group)->hexColor }}">
+                                    <span class="badge rounded-pill" style="background-color: {{ Color::find($groups->firstWhere('id', $group->group)->color)->primary }}">
                                         {{ $group->title }}
                                     </span><br>
                                 @endforeach

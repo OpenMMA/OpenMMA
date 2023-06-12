@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Events;
 
+use App\Models\Color;
 use App\Models\Groups\Group;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -31,6 +32,7 @@ class EventFactory extends Factory
             'end' => $end,
             'banner' => fake()->randomElement(Image::all())->id,
             'group' => fake()->randomElement(Group::all())->id,
+            'color' => fake()->randomElement(Color::all())->id
         ];
     }
 }

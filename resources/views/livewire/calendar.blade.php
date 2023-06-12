@@ -9,6 +9,10 @@
 @pushOnce('styles')
 <link href="{{ asset('/css/calendar.css') }}" rel="stylesheet">
 @livewireStyles
+<style>
+    {!! implode("\n", array_map(fn($c) => ".ec{$c->id}{border-color:{$c->primary};background-color:{$c->secondary}80;}", $colors)) !!}
+    {!! implode("\n", array_map(fn($c) => ".ec{$c->id}.event-hover{background-color:{$c->secondary}d8;}", $colors)) !!}
+</style>
 @endPushOnce
 
 <div>
@@ -36,28 +40,28 @@
             @foreach ($calendar_days as $day)
             <div id="day-{{$loop->iteration}}" class="day container p-0 {{ $day->thismonth ? '' : 'inactive' }}" style="z-index: {{42-$loop->iteration}}">
                 <span class="{{ $day->today ? 'fw-bold' : 'fw-light' }}">{{ $day->date }}</span>
-                @foreach ($day->events as $event)
-                    @if ($event)
-                    @switch($event->type)
+                @foreach ($day->events as $event_slot)
+                    @if ($event_slot)
+                    @switch($event_slot->type)
                         @case('single')
-                            <a class="event event-c3 event-p{{$loop->iteration}} event-single" data-blocks="1" event-id="e{{$event->event->id}}" style="border-color: {{ $event->event->color->rgb() }}; background-color: {{ $event->event->color->saturatedRGB() }};" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
-                                <p>{{ $event->event->title }}</p>
+                            <a class="event event-c3 event-p{{$loop->iteration}} ec{{$event_slot->event->color}} event-single" data-blocks="1" event-id="e{{$event_slot->event->id}}" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
+                                <p>{{ $event_slot->event->title }}</p>
                                 <span class="position-absolute top-0 left-0 w-100 h-100"></span>
                             </a>
                             @break
                             @case('start')
-                                <a class="event event-c3 event-p{{$loop->iteration}} event-start" data-blocks="{{$event->blocks}}" event-id="e{{$event->event->id}}" style="border-color: {{ $event->event->color->rgb() }}; background-color: {{ $event->event->color->saturatedRGB() }};" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
-                                    <p>{{ $event->event->title }}</p>
+                                <a class="event event-c3 event-p{{$loop->iteration}} ec{{$event_slot->event->color}} event-start" data-blocks="{{$event_slot->blocks}}" event-id="e{{$event_slot->event->id}}" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
+                                    <p>{{ $event_slot->event->title }}</p>
                                     <span class="position-absolute top-0 left-0 w-100 h-100"></span>
                                 </a>
                                 @break
                             @case('middle')
-                                <a class="event event-c3 event-p{{$loop->iteration}} event-middle" event-id="e{{$event->event->id}}" style="background-color: {{ $event->event->color->saturatedRGB() }};" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
+                                <a class="event event-c3 event-p{{$loop->iteration}} ec{{$event_slot->event->color}} event-middle" event-id="e{{$event_slot->event->id}}" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
                                     <span class="position-absolute top-0 left-0 w-100 h-100"></span>
                                 </a>
                                 @break
                             @case('end')
-                                <a class="event event-c3 event-p{{$loop->iteration}} event-end" event-id="e{{$event->event->id}}" style="background-color: {{ $event->event->color->saturatedRGB() }};" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
+                                <a class="event event-c3 event-p{{$loop->iteration}} ec{{$event_slot->event->color}} event-end" event-id="e{{$event_slot->event->id}}" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
                                     <span class="position-absolute top-0 left-0 w-100 h-100"></span>
                                 </a>
                                 @break
@@ -69,6 +73,5 @@
         </div>
     </div>
     <script>
-        // @js(array_map(fn($e) => $e->id, $events)).forEach(e => registerEventHover(e));
     </script>
 </div>

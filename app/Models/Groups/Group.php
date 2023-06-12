@@ -2,7 +2,6 @@
 
 namespace App\Models\Groups;
 
-use App\Casts\ColorCast;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,10 +15,6 @@ class Group extends Model
         'label',
         'category',
         'color'
-    ];
-
-    protected $casts = [
-        'color' => ColorCast::class
     ];
 
     /**

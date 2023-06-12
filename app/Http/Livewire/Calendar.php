@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Color;
 use App\Models\Events\Event;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -26,6 +27,9 @@ class Calendar extends Component
         $start = $this->month->copy()->startOfWeek(Carbon::MONDAY);
         $end = $start->copy()->addDays(42);
 
+        // Used to keep track of which colors are used, to generate CSS
+        $colors_used = [];
+
         $days = [];
         for ($wd = $start->copy(); !$wd->isSameDay($end); $wd->addDay()) {
             array_push($days, (object)['date'      => $wd->format('d'),
@@ -46,6 +50,8 @@ class Calendar extends Component
             // TODO verify if variables are right way around (start - event->start, not other way around)
             $event_start = $start->diffInDays($event->start, false);
             $event_end = $start->diffInDays($event->end);
+
+            array_push($colors_used, $event->color);
 
             $offset = -1;
             for ($i = 0; $i < Calendar::$POSITIONS && $offset == -1; $i++) {
@@ -76,6 +82,6 @@ class Calendar extends Component
             }
         }
 
-        return view('livewire.calendar', ['calendar_days' => $days, 'events' => $events]);
+        return view('livewire.calendar', ['calendar_days' => $days, 'events' => $events, 'colors' => array_map(fn($c) => Color::find($c), array_unique($colors_used))]);
     }
 }

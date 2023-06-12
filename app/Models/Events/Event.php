@@ -2,7 +2,7 @@
 
 namespace App\Models\Events;
 
-use App\Classes\Color;
+use App\Models\Color;
 use App\Models\Events\EventRegistration;
 use App\Models\Groups\Group;
 use Carbon\Carbon;
@@ -24,6 +24,7 @@ class Event extends Model
         'end',
         'banner',
         'group',
+        'color',
         'registerable',
         'enable_comments',
         'max_registrations',
@@ -87,8 +88,8 @@ class Event extends Model
         return Carbon::parse($this->start)->diffForHumans();
     }
 
-    public function getColorAttribute(): Color
+    public function getColorAttribute(): int
     {
-        return Group::find($this->group)->color;
+        return $this->color ?? Group::find($this->group)->color;
     }
 }
