@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('colors', function (Blueprint $table) {
             $table->id();
-            $table->text('primary');
-            $table->text('secondary');
+            $table->char('primary', 7);
+            $table->char('secondary', 7);
             $table->timestamps();
         });
     }
