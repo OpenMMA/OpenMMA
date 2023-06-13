@@ -33,6 +33,11 @@ class DatabaseSeeder extends Seeder
                 Permission::create(['name' => $permission_name]),
             array_keys(Permission::$global_permissions)
         );
+        array_map(
+            fn($permission_name) =>
+                Permission::create(['name' => $permission_name]),
+            array_keys(Permission::$implicit_permissions)
+        );
 
         Color::create(['primary' => '#ff595e', 'secondary' => '#ff898d']);
         Color::create(['primary' => '#ffca3a', 'secondary' => '#ffda74']);
@@ -100,6 +105,7 @@ class DatabaseSeeder extends Seeder
         $admin_role->givePermissionTo('*.role.*');
         $admin_role->givePermissionTo('group.*');
         $admin_role->givePermissionTo('give_global_permissions');
+        $admin_role->givePermissionTo('may_access_dashboard');
         $admin->assignRole(':admin');
 
         $account_custom_fields = [

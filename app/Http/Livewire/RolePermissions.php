@@ -148,14 +148,21 @@ class RolePermissions extends Component
             else
                 $this->role->revokePermissionTo($group.'.'.$permission);
         }
+
+        // Make sure access to the dashboard is granted when access is required
+        if (in_array(true, $this->group_permissions) || in_array(true, $this->global_permissions))
+            $this->role->givePermissionTo('may_access_dashboard');
+        else
+            $this->role->revokePermissionTo('may_access_dashboard');
     }
 
     public function updateGlobalPermissions()
     {
         $group = explode('.', $this->role->name, 2)[0];
         // TODO Should we use $this->authorize()?
-        if (!Auth::user()->can($group.'.role.edit') || Auth::user()->can('give_global_permissions'))
+        if (!Auth::user()->can($group.'.role.edit') && !Auth::user()->can('give_global_permissions'))
             return; // TODO error message?
+
 
         $this->global_permissions = $this::flatten($this->global_permissions);
         foreach ($this->global_permissions as $permission => $has_permission) {
@@ -165,6 +172,12 @@ class RolePermissions extends Component
             else
                 $this->role->revokePermissionTo($prefix.$permission);
         }
+
+        // Make sure access to the dashboard is granted when access is required
+        if (in_array(true, $this->group_permissions) || in_array(true, $this->global_permissions))
+            $this->role->givePermissionTo('may_access_dashboard');
+        else
+            $this->role->revokePermissionTo('may_access_dashboard');
     }
 
     public function enableGlobalPermissions()

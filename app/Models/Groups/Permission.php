@@ -14,7 +14,7 @@ class Permission extends \Spatie\Permission\Models\Permission
         'event.publish' => 'Publish event',
         'event.delete' => 'Delete event',
         'event.*' => 'Complete event control',
-        
+
         'registration.view' => 'View registrations',
         'registration.manage' => 'Manage registrations',
         'registration.statistics' => 'View registration statistics',
@@ -34,9 +34,9 @@ class Permission extends \Spatie\Permission\Models\Permission
         'group.edit' => 'Edit group',
         'group.delete' => 'Delete group',
         'group.*' => 'Complete group control',
-        
+
         'give_global_permissions' => 'May grant global permissions',
-        
+
         'user.view' => 'View members',
         'user.manage' => 'Manage members',
         'user.assign' => 'Assign member to group',
@@ -45,11 +45,14 @@ class Permission extends \Spatie\Permission\Models\Permission
         'global_setting.system' => 'Manage global system settings',
         'global_setting.*' => 'Manage all global settings',
     ];
+    public static $implicit_permissions = [
+        'may_access_dashboard' => 'Can access dashboard (SHOULD BE SET AUTOMATICALLY)'
+    ];
 
     public static function createPermissionsForGroup($group)
     {
         array_map(
-            fn($permission_name) => 
+            fn($permission_name) =>
                 Permission::create(['name' => $group . '.' . $permission_name]),
             array_keys(Permission::$group_permissions)
         );
