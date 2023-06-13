@@ -7,8 +7,8 @@
     <input type="hidden"
            name="{{ $field->name }}"
            id="{{ $field->name }}"
-           {{ isset($field->class) ? 'class="' . $field->class . '"' : '' }}
-           {{ isset($field->value) ? 'value="' . $field->value . '"' : '' }}
+           @if (isset($field->class)) class="{{ $field->class }}" @endif
+           @if (isset($field->value)) value="{{ $field->value }}" @endif
            {{ $field->required ?? false ? 'required' : '' }}
-           {!! $field->attributes ?? ''!!}>
+           {!! $field->attributes ?? '' !!}>
 @overwrite

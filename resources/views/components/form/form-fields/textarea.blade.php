@@ -9,9 +9,9 @@
         id="{{ $field->name }}"
         class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
         rows="{{ $field->rows ?? 10 }}"
-        {{ isset($field_value) ? 'value="' . $field_value . '"' : '' }}
-        {{ isset($field->placeholder) ? 'placeholder="' . $field->placeholder . '"' : '' }}
+        @if (isset($field->placeholder)) placeholder="{{ $field->placeholder }}" @endif
         {{ $field->required ?? false ? 'required' : '' }}
-        {!! $field->attributes ?? ''!!}>
+        {!! $field->attributes ?? '' !!}>
+{{ $field->value }}
     </textarea>
 @overwrite

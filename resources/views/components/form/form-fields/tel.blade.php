@@ -8,9 +8,9 @@
            name="{{ $field->name }}"
            id="{{ $field->name }}"
            class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
-           {{ isset($field->value) ? 'value="' . $field->value . '"' : '' }}
-           {{ isset($field->placeholder) ? 'placeholder="' . $field->placeholder . '"' : '' }}
-           {!! isset($field->pattern) ? 'pattern="' . $field->pattern . '"' : '' !!}
+           @if (isset($field->value)) value="{{ $field->value }}" @endif
+           @if (isset($field->placeholder)) placeholder="{{ $field->placeholder }}" @endif
+           @if (isset($field->pattern)) pattern="{{ $field->pattern }}" @endif
            {{ $field->required ?? false ? 'required' : '' }}
-           {!! $field->attributes ?? ''!!}>
+           {!! $field->attributes ?? '' !!}>
 @overwrite

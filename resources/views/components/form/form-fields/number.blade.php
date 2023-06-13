@@ -8,11 +8,11 @@
            name="{{ $field->name }}"
            id="{{ $field->name }}"
            class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
-           {{ isset($field->value) ? 'value="' . $field->value . '"' : '' }}
-           {{ isset($field->placeholder) ? 'placeholder="' . $field->placeholder . '"' : '' }}
-           {{ isset($field->min) ? 'min="' . $field->min . '"' : '' }}
-           {{ isset($field->max) ? 'max="' . $field->max . '"' : '' }}
-           {{ isset($field->step) ? 'step="' . $field->step . '"' : '' }}
+           @if (isset($field->value)) value="{{ $field->value }}" @endif
+           @if (isset($field->placeholder)) placeholder="{{ $field->placeholder }}" @endif
+           @if (isset($field->min)) min="{{ $field->min }}" @endif
+           @if (isset($field->max)) max="{{ $field->max }}" @endif
+           @if (isset($field->step)) step="{{ $field->step }}" @endif
            {{ $field->required ?? false ? 'required' : '' }}
-           {!! $field->attributes ?? ''!!}>
+           {!! $field->attributes ?? '' !!}>
 @overwrite

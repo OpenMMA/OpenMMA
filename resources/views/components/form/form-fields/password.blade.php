@@ -8,7 +8,7 @@
            name="{{ $field->name }}"
            id="{{ $field->name }}"
            class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
-           {{ isset($field->placeholder) ? 'placeholder="' . $field->placeholder . '"' : '' }}
+           @if (isset($field->placeholder)) placeholder="{{ $field->placeholder }}" @endif
            {{ $field->required ?? false ? 'required' : '' }}
-           {!! $field->attributes ?? ''!!}>
+           {!! $field->attributes ?? '' !!}>
 @overwrite
