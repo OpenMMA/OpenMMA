@@ -8,9 +8,6 @@
 @endPushOnce
 
 @section('content')
-<div class="container calendar-container p-3 rounded shadow-lg" id="calendar"></div>
-
-<div class="my-5"></div>
 
 @livewire('calendar')
 

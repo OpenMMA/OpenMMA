@@ -9,13 +9,20 @@
 @pushOnce('styles')
 <link href="{{ asset('/css/calendar.css') }}" rel="stylesheet">
 @livewireStyles
-<style>
-    {!! implode("\n", array_map(fn($c) => ".ec{$c->id}{border-color:{$c->primary};background-color:{$c->secondary}80;}", $colors)) !!}
-    {!! implode("\n", array_map(fn($c) => ".ec{$c->id}.event-hover{background-color:{$c->secondary}d8;}", $colors)) !!}
-</style>
 @endPushOnce
 
 <div>
+    <style>
+        @foreach ($colors as $color)
+            .event-c{{$color->id}} {
+                border-color: {{$color->primary}};
+                background-color: {{$color->secondary}}80;
+            }
+            .event-c{{$color->id}}.event-hover {
+                background-color: {{$color->secondary}}d8;
+            }
+        @endforeach
+    </style>
     <div class="container calendar-container p-3 sticky-top rounded shadow-lg" id="calendar">
         <div class="container text-center">
             <div class="row justify-content-center m-3">
@@ -44,24 +51,24 @@
                     @if ($event_slot)
                     @switch($event_slot->type)
                         @case('single')
-                            <a class="event event-c3 event-p{{$loop->iteration}} ec{{$event_slot->event->color}} event-single" data-blocks="1" event-id="e{{$event_slot->event->id}}" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
+                            <a class="event event-c3 event-p{{$loop->iteration}} event-c{{$event_slot->event->color}} event-single" data-blocks="1" event-id="e{{$event_slot->event->id}}" href="{{$event_slot->event->url}}" target="_blank">
                                 <p>{{ $event_slot->event->title }}</p>
                                 <span class="position-absolute top-0 left-0 w-100 h-100"></span>
                             </a>
                             @break
                             @case('start')
-                                <a class="event event-c3 event-p{{$loop->iteration}} ec{{$event_slot->event->color}} event-start" data-blocks="{{$event_slot->blocks}}" event-id="e{{$event_slot->event->id}}" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
+                                <a class="event event-c3 event-p{{$loop->iteration}} event-c{{$event_slot->event->color}} event-start" data-blocks="{{$event_slot->blocks}}" event-id="e{{$event_slot->event->id}}" href="{{$event_slot->event->url}}" target="_blank">
                                     <p>{{ $event_slot->event->title }}</p>
                                     <span class="position-absolute top-0 left-0 w-100 h-100"></span>
                                 </a>
                                 @break
                             @case('middle')
-                                <a class="event event-c3 event-p{{$loop->iteration}} ec{{$event_slot->event->color}} event-middle" event-id="e{{$event_slot->event->id}}" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
+                                <a class="event event-c3 event-p{{$loop->iteration}} event-c{{$event_slot->event->color}} event-middle" event-id="e{{$event_slot->event->id}}" href="{{$event_slot->event->url}}" target="_blank">
                                     <span class="position-absolute top-0 left-0 w-100 h-100"></span>
                                 </a>
                                 @break
                             @case('end')
-                                <a class="event event-c3 event-p{{$loop->iteration}} ec{{$event_slot->event->color}} event-end" event-id="e{{$event_slot->event->id}}" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="bottom" data-bs-title="Accusantium sequi minus omnis qui facilis a.">
+                                <a class="event event-c3 event-p{{$loop->iteration}} event-c{{$event_slot->event->color}} event-end" event-id="e{{$event_slot->event->id}}" href="{{$event_slot->event->url}}" target="_blank">
                                     <span class="position-absolute top-0 left-0 w-100 h-100"></span>
                                 </a>
                                 @break
