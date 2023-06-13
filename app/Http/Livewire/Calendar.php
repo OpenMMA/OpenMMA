@@ -5,10 +5,15 @@ namespace App\Http\Livewire;
 use App\Models\Color;
 use App\Models\Events\Event;
 use Carbon\Carbon;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class Calendar extends Component
 {
+    use AuthorizesRequests;
+
     public static int $POSITIONS = 3;
     public Carbon $month;
 
@@ -38,9 +43,13 @@ class Calendar extends Component
                                        'events'    => array_fill(0, Calendar::$POSITIONS, null)]);
         }
 
-        $events = Event::where([['start', '>=', $start], ['start', '<=', $end]])
-                       ->orWhere([['end', '>=', $start], ['end', '<=', $end]])
+        $events = Event::where([['status', 'published']])
+                       ->where(fn($q) => $q->where([['start', '>=', $start], ['start', '<=', $end]])
+                                           ->orWhere([['end', '>=', $start], ['end', '<=', $end]]))
                        ->get()->all();
+
+        $events = array_filter($events, fn($e) => Gate::allows('view', $e));
+        // $events = array_filter($events, fn($e) => Auth::user()?->can('view', $e));
 
         // Sort events by their duration, from longest to shortest
         usort($events, fn($a, $b) => $b->end->diffInHours($b->start) - $a->end->diffInHours($a->start));

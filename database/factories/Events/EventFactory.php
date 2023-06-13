@@ -32,7 +32,9 @@ class EventFactory extends Factory
             'end' => $end,
             'banner' => fake()->randomElement(Image::all())->id,
             'group' => fake()->randomElement(Group::all())->id,
-            'color' => fake()->randomElement(Color::all())->id
+            'color' => fake()->randomElement(Color::all())->id,
+            'status' => fake()->randomElement(['draft', 'published']),
+            'visibility' => fake()->randomElement(['visible', 'protected'])
         ];
     }
 }
