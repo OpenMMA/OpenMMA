@@ -151,9 +151,9 @@ class RolePermissions extends Component
 
         // Make sure access to the dashboard is granted when access is required
         if (in_array(true, $this->group_permissions) || in_array(true, $this->global_permissions))
-            $this->role->givePermissionTo('may_access_dashboard');
+            $this->role->givePermissionTo('access_dashboard');
         else
-            $this->role->revokePermissionTo('may_access_dashboard');
+            $this->role->revokePermissionTo('access_dashboard');
     }
 
     public function updateGlobalPermissions()
@@ -175,9 +175,9 @@ class RolePermissions extends Component
 
         // Make sure access to the dashboard is granted when access is required
         if (in_array(true, $this->group_permissions) || in_array(true, $this->global_permissions))
-            $this->role->givePermissionTo('may_access_dashboard');
+            $this->role->givePermissionTo('access_dashboard');
         else
-            $this->role->revokePermissionTo('may_access_dashboard');
+            $this->role->revokePermissionTo('access_dashboard');
     }
 
     public function enableGlobalPermissions()

@@ -46,7 +46,7 @@ class Permission extends \Spatie\Permission\Models\Permission
         'global_setting.*' => 'Manage all global settings',
     ];
     public static $implicit_permissions = [
-        'may_access_dashboard' => 'Can access dashboard (SHOULD BE SET AUTOMATICALLY)'
+        'access_dashboard' => 'Can access dashboard (SHOULD BE SET AUTOMATICALLY)'
     ];
 
     public static function createPermissionsForGroup($group)

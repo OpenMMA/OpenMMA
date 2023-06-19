@@ -47,7 +47,7 @@ Route::middleware('verified')->group(function() {
         Route::delete('/{event:slug}', [EventController::class, 'destroy']);
     });
 
-    Route::prefix('dashboard')->middleware('may_access_dashboard')->group(function() {
+    Route::prefix('dashboard')->middleware('can:access_dashboard')->group(function() {
         Route::get('/', function() { return view('dashboard.index'); });
 
         Route::get('/users', [UserController::class, 'index']);
