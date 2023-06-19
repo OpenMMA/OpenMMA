@@ -12,6 +12,5 @@
         @if (isset($field->placeholder)) placeholder="{{ $field->placeholder }}" @endif
         {{ $field->required ?? false ? 'required' : '' }}
         {!! $field->attributes ?? '' !!}>
-{{ $field->value }}
-    </textarea>
+{{ $field->value ?? '' }}</textarea>
 @overwrite
