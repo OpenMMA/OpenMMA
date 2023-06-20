@@ -42,7 +42,6 @@ Route::middleware('verified')->group(function() {
         Route::get('/{event:slug}/edit',           [EventController::class, 'edit']);
         Route::put('/{event:slug}/edit/{action}',  [EventController::class, 'update'])->whereIn('action', ['body']);
         Route::post('/{event:slug}/edit/{action}', [EventController::class, 'update'])->whereIn('action', ['banner', 'max_registrations', 'tags']);
-        Route::post('/{event:slug}/edit/ajax/{action}', [EventController::class, 'updateAjax'])->whereIn('action', ['registerable', 'enable_comments']);
         Route::post('/{event:slug}/register', [EventController::class, 'register']);
         Route::delete('/{event:slug}', [EventController::class, 'destroy']);
     });

@@ -95,6 +95,7 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event, String $action): RedirectResponse
     {
+        dd($action);
         switch ($action) {
             case 'body':
                 $event->update([
@@ -123,25 +124,6 @@ class EventController extends Controller
                 return response()->redirectTo('/event/' . $event->slug . '/edit')->with(array('action' => $action, 'status' => 'fail'));
         }
         return response()->redirectTo('/event/' . $event->slug . '/edit')->with(array('action' => $action, 'status' => 'updated'));
-    }
-
-    public function updateAjax(Request $request, Event $event, String $action): JsonResponse
-    {
-        switch ($action) {
-            case 'registerable':
-                $event->update([
-                    'registerable' => json_decode($request->registerable)
-                ]);
-                break;
-            case 'enable_comments':
-                $event->update([
-                    'enable_comments' => json_decode($request->enable_comments)
-                ]);
-                break;
-            default:
-                return response()->json(['action' => $action, 'status' => 'fail']);
-        }
-        return response()->json(['action' => $action, 'status' => 'success']);
     }
 
     public function register(Request $request, Event $event): RedirectResponse

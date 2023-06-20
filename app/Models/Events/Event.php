@@ -88,6 +88,23 @@ class Event extends Model
         return Carbon::parse($this->start)->diffForHumans();
     }
 
+    public function getTimeRangeAttribute()
+    {
+        return $this->start->diffInDays($this->end) == 0 ?
+            $this->start->format('D d M H:i') . ' - ' . $this->end->format('H:i') :
+            $this->start->format('D d M H:i') . ' - ' . $this->end->format('D d M H:i');
+    }
+
+    public function getGroupNameAttribute(): string
+    {
+        return Group::find($this->group)->name;
+    }
+
+    public function getGroupLabelAttribute(): string
+    {
+        return Group::find($this->group)->label;
+    }
+
     public function getColorAttribute(): int
     {
         return $this->color ?? Group::find($this->group)->color;
