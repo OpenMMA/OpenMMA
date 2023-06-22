@@ -28,6 +28,7 @@ class Event extends Model
         'registerable',
         'enable_comments',
         'max_registrations',
+        'queueable',
         'allow_externals',
         'only_allow_groups',
         'status',
@@ -108,5 +109,36 @@ class Event extends Model
     public function getColorAttribute(): int
     {
         return $this->color ?? Group::find($this->group)->color;
+    }
+
+    /**
+     * Get all registrations, including queued entries
+     */
+    public function getAllRegistrationsAttribute(): array
+    {
+        return EventRegistration::where(['event_id' => $this->id])->get()->all();
+    }
+
+    /**
+     * Get registrations, without queued entries
+     */
+    public function getRegistrationsAttribute(): array
+    {
+        $registrations = EventRegistration::where(['event_id' => $this->id])->orderBy('created_at', 'asc');
+        return ($this->max_registrations > 0) ?
+            $registrations->take($this->max_registrations) :
+            $registrations->all();
+    }
+
+    /**
+     * Get queued registration entries
+     */
+    public function getQueueAttribute(): array
+    {
+        return ($this->max_registrations > 0) ?
+            EventRegistration::where(['event_id' => $this->id])
+                             ->orderBy('created_at', 'asc')
+                             ->skip($this->max_registrations)->all() :
+            [];
     }
 }

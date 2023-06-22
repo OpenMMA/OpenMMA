@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('registerable')->default(false);
             $table->boolean('enable_comments')->default(false);
             $table->integer('max_registrations')->default(0);
+            $table->boolean('queueable')->default(false);
             $table->boolean('allow_externals')->default(false);
             $table->boolean('only_allow_groups')->default(false);
             $table->enum('status', ['draft', 'published', 'unlisted'])->default('draft');

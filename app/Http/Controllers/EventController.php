@@ -95,7 +95,6 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event, String $action): RedirectResponse
     {
-        dd($action);
         switch ($action) {
             case 'body':
                 $event->update([

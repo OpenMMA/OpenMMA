@@ -46,13 +46,30 @@
                         </div>
                         @else
                         <div class="card-body">
+                            @if ($event->max_registrations > 0)
+                                @php
+                                    $places_left = max([0, $event->max_registrations - sizeof($event->registrations)]);
+                                @endphp
+                                <small>Max. {{ $event->max_registrations }} participants, <b>{{ $places_left }}</b> place{{ $places_left == 1 ? '' : 's' }} left</small><br>
+                            @else
+                                @php
+                                    $places_left = 1;
+                                @endphp
+                            @endif
+                            @if ($places_left > 0 || $event->queueable)
                             <form method="POST" action="/event/{{ $event->slug }}/register">
+                                @if ($places_left == 0)
+                                    The event is full, but you can register to queue if places become available.
+                                @endif
                                 @csrf
                                 @if ($event->enable_comments)
-                                    @include('components.form.form-fields.textarea', ['field' => (object)array('name' => 'comment', 'rows' => 4, 'label' => 'Please enter additional information:')])
+                                @include('components.form.form-fields.textarea', ['field' => (object)array('name' => 'comment', 'rows' => 4, 'label' => 'Please enter additional information:')])
                                 @endif
-                                <button type="submit" class="btn btn-primary">Register</button>
+                                <button type="submit" class="btn btn-primary">{{ $places_left > 0 ? "Register" : "Enter queue" }}</button>
                             </form>
+                            @else
+                                The event is full. Registering is not possible unless places become available.
+                            @endif
                         </div>
                         @endif
                         @endauth
@@ -68,4 +85,5 @@
         </div>
     </div>
 </div>
+{{-- {{ dd($event->registrations) }} --}}
 @endsection

@@ -12,16 +12,22 @@
             <input wire:model="enable_comments" class="form-check-input" type="checkbox" role="switch" id="enable_comments">
         </div>
         <form wire:submit.prevent="setMaxRegistrations">
-            <div class="d-flex gap-1 mt-2">
+            <div class="d-flex gap-1 m-2">
                 <div class="flex-grow-1">
                     <label class="form-label" for="max_registrations">Max. registrations (0 for no limit)</label>
-                    <input wire:model="max_registrations" class="form-control" id="max_registrations" type="number" min="0">
+                    <input wire:model.defer="max_registrations" class="form-control" id="max_registrations" type="number" min="0">
                 </div>
                 <div class="align-self-end">
                     <input type="submit" class="btn btn-primary" value="Change">
                 </div>
             </div>
         </form>
+        @if ($max_registrations > 0)
+        <div class="form-check form-switch">
+            <label for="queueable">Enable queueing when full</label>
+            <input wire:model="queueable" class="form-check-input" type="checkbox" role="switch" id="queueable">
+        </div>
+        @endif
         <hr>
         <div class="form-check form-switch">
             <label for="allow_externals">Allow externals to register for this activity</label>
