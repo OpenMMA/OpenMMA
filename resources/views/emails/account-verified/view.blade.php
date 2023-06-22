@@ -6,4 +6,4 @@ Your account has been approved!
 <br>
 Kind regards,
 <br>
-OpenCTX
+{{ setting('site.name') }}

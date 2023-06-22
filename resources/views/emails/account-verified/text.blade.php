@@ -3,4 +3,4 @@ Dear {{ $user->name }},
 Your account has been approved!
 
 Kind regards,
-OpenCTX
+{{ setting('site.name') }}
