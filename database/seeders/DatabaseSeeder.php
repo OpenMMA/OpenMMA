@@ -165,7 +165,7 @@ class DatabaseSeeder extends Seeder
                     'required' => true,
                 )
             ];
-            SystemSetting::where(['key' => 'account.custom_fields'])->get()->update(['value' => json_encode($account_custom_fields)]);
+            SystemSetting::where(['key' => 'account.custom_fields'])->update(['value' => json_encode($account_custom_fields)]);
             User::syncCustomFields([], $account_custom_fields);
         }
     }
