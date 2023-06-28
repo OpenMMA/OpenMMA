@@ -11,10 +11,18 @@
                 Hello, <span id="navbar-first-name">{{ Auth::user()->first_name }}</span>!
             </p>
         </div>
-        <div class="col">
+        <div class="col pe-0">
+            <a href="/profile" class="btn btn-secondary m-1" role="button">Profile</a>
+        </div>
+        @if (Auth::user()->can('access_dashboard'))
+        <div class="col p-0">
+            <a href="/dashboard" class="btn btn-secondary m-1" role="button">Dashboard</a>
+        </div>
+        @endif
+        <div class="col ps-0">
             <form method="POST" action="/logout" class="mb-0">
                 @csrf
-                <button type="submit" class="btn btn-primary">Logout</button>
+                <button type="submit" class="btn btn-primary m-1">Logout</button>
             </form>
         </div>
     @endauth
@@ -22,7 +30,6 @@
     <div>
         <a href="/register" class="btn btn-secondary m-1" role="button">Register</a>
         <a href="/login" class="btn btn-primary m-1" role="button">Login</a>
-    </div>
     @endguest
     </div>
 </nav>
