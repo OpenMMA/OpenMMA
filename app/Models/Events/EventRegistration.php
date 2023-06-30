@@ -11,6 +11,7 @@ class EventRegistration extends Model
 
     protected $fillable = [
         'user_id',
+        'external_id',
         'event_id',
         'data'
     ];
@@ -37,6 +38,8 @@ class EventRegistration extends Model
      */
     public static function userRegistrationForEvent($user_id, $event_id): ?EventRegistration
     {
+        if (!$user_id)
+            return null;
         return EventRegistration::where(['user_id' => $user_id, 'event_id' => $event_id])->first();
     }
 }

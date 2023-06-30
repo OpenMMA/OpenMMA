@@ -1,5 +1,12 @@
 @extends('layout.layout')
 
+@pushOnce('styles')
+@livewireStyles
+@endPushOnce
+@pushOnce('scripts')
+@livewireScripts
+@endPushOnce
+
 @section('content')
 <div class="d-flex flex-column h-100 overflow-hidden">
     @if (Auth::user()?->can($event->group_name.'.event.edit'))
@@ -17,6 +24,14 @@
         </form>
     </div>
     @endif
+    @if (session('alert-success'))
+    <div class="w-50 m-auto">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('alert-success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    </div>
+    @endif
     <div class="flex-grow-1 overflow-auto">
         <div class="container py-3">
             <h1>{{ $event->title }}</h1>
@@ -29,57 +44,7 @@
                     {!! $event->body !!}
                 </div>
                 <div class="col-12 col-md-12 col-lg-3 pb-3">
-                    <div class="card">
-                        @if ($event->registerable == 1)
-                        <div class="card-header">
-                            Register for this event
-                        </div>
-                        @guest
-                        <div class="card-body bg-primary-subtle text-primary">
-                            You need to be logged in to register.
-                        </div>
-                        @endguest
-                        @auth
-                        @if(\App\Models\Events\EventRegistration::userRegistrationForEvent(Auth::id(), $event->id))
-                        <div class="card-body bg-success-subtle text-success">
-                            You have registered for this event!
-                        </div>
-                        @else
-                        <div class="card-body">
-                            @if ($event->max_registrations > 0)
-                                @php
-                                    $places_left = max([0, $event->max_registrations - sizeof($event->registrations)]);
-                                @endphp
-                                <small>Max. {{ $event->max_registrations }} participants, <b>{{ $places_left }}</b> place{{ $places_left == 1 ? '' : 's' }} left</small><br>
-                            @else
-                                @php
-                                    $places_left = 1;
-                                @endphp
-                            @endif
-                            @if ($places_left > 0 || $event->queueable)
-                            <form method="POST" action="/event/{{ $event->slug }}/register">
-                                @if ($places_left == 0)
-                                    The event is full, but you can register to queue if places become available.
-                                @endif
-                                @csrf
-                                @if ($event->enable_comments)
-                                @include('components.form.form-fields.textarea', ['field' => (object)array('name' => 'comment', 'rows' => 4, 'label' => 'Please enter additional information:')])
-                                @endif
-                                <button type="submit" class="btn btn-primary">{{ $places_left > 0 ? "Register" : "Enter queue" }}</button>
-                            </form>
-                            @else
-                                The event is full. Registering is not possible unless places become available.
-                            @endif
-                        </div>
-                        @endif
-                        @endauth
-                        @else
-                        <div class="card-header">
-                            Registering for this event is not possible.
-                        </div>
-                        @endif
-                        </div>
-                    </div>
+                    @livewire('event-registration', ['event' => $event])
                 </div>
             </div>
         </div>

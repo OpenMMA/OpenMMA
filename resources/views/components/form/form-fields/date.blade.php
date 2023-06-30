@@ -10,6 +10,7 @@
            class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
            value="{{ $field->value ?? \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}"
            @if (isset($field->placeholder)) placeholder="{{ $field->placeholder }}" @endif
+           @if (isset($field->wire)) wire:model.defer="{{ $field->wire }}" @endif
            {{ $field->required ?? false ? 'required' : '' }}
            {!! $field->attributes ?? '' !!}>
 @overwrite

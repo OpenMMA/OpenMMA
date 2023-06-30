@@ -23,7 +23,8 @@ return new class extends Migration
             $table->foreignId('group')->nullable()->constrained('groups')->nullOnDelete();
             $table->foreignId('color')->nullable()->constrained('colors')->nullOnDelete();
             $table->boolean('registerable')->default(false);
-            $table->boolean('enable_comments')->default(false);
+            $table->boolean('require_additional_data')->default(false);
+            $table->json('additional_data_fields')->default('[]');
             $table->integer('max_registrations')->default(0);
             $table->boolean('queueable')->default(false);
             $table->boolean('allow_externals')->default(false);

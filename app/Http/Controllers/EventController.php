@@ -129,7 +129,13 @@ class EventController extends Controller
     {
         // TODO check if not already registered
         // TODO check if maximum number of registrations has not been reached
-        $event->register(Auth::id(), $event->enable_comments ? ['comment' => $request->comment] : []);
+        if ($event->require_additional_data) {
+            $keys = array_column($event->additional_data_fields, 'name');
+            $additional_data = array_combine($keys, array_map(fn($key) => $request->$key, $keys));
+        } else {
+            $additional_data = [];
+        }
+        $event->register(Auth::id(), $additional_data);
         return response()->redirectTo('/event/' . $event->slug)->with(['status' => 'registered']);
     }
 

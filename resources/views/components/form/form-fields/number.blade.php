@@ -10,6 +10,7 @@
            class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
            @if (isset($field->value)) value="{{ $field->value }}" @endif
            @if (isset($field->placeholder)) placeholder="{{ $field->placeholder }}" @endif
+           @if (isset($field->wire)) wire:model.defer="{{ $field->wire }}" @endif
            @if (isset($field->min)) min="{{ $field->min }}" @endif
            @if (isset($field->max)) max="{{ $field->max }}" @endif
            @if (isset($field->step)) step="{{ $field->step }}" @endif

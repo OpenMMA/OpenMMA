@@ -26,7 +26,8 @@ class Event extends Model
         'group',
         'color',
         'registerable',
-        'enable_comments',
+        'require_additional_data',
+        'additional_data_fields',
         'max_registrations',
         'queueable',
         'allow_externals',
@@ -37,7 +38,8 @@ class Event extends Model
 
     protected $casts = [
         'start' => 'datetime',
-        'end' => 'datetime'
+        'end' => 'datetime',
+        'additional_data_fields' => 'json'
     ];
 
     protected $appends = ['url'];
@@ -126,8 +128,8 @@ class Event extends Model
     {
         $registrations = EventRegistration::where(['event_id' => $this->id])->orderBy('created_at', 'asc');
         return ($this->max_registrations > 0) ?
-            $registrations->take($this->max_registrations) :
-            $registrations->all();
+            $registrations->take($this->max_registrations)->get()->all() :
+            $registrations->get()->all();
     }
 
     /**
@@ -138,7 +140,7 @@ class Event extends Model
         return ($this->max_registrations > 0) ?
             EventRegistration::where(['event_id' => $this->id])
                              ->orderBy('created_at', 'asc')
-                             ->skip($this->max_registrations)->all() :
+                             ->skip($this->max_registrations)->get()->all() :
             [];
     }
 }

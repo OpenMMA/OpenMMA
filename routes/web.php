@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExternalEmailVerificationController;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
@@ -31,6 +32,9 @@ Route::get('/event/{event:slug}', [EventController::class, 'show']);
 Route::prefix('user')->group(function() {
     Route::post('{user:id}/verify', [UserController::class, 'verify']);
 });
+
+// Route::get('/external/email/verify');
+Route::get('/external/email/verify/{id}/{hash}', [ExternalEmailVerificationController::class, '__invoke'])->name('external-verification.verify');
 
 Route::middleware('verified')->group(function() {
     // TODO not sure if this route was used anywhere, probably not. Remove later.

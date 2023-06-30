@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('event_registrations', function (Blueprint $table) {
             $table->id(); // Not required for data, but required for eloquent
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('external_id')->nullable()->constrained('externals')->cascadeOnDelete();
             $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
             $table->json('data');
             $table->timestamps();
-            $table->unique(['user_id', 'event_id']);
+            $table->unique(['user_id', 'external_id', 'event_id']);
         });
     }
 
