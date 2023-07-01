@@ -1,7 +1,7 @@
 <div class="card">
     @if ($event->registerable)
         <div class="card-header">
-            Register for this event {{ $event->allow_externals ? 'as external' : '' }}
+            Register for this event {{-- $event->allow_externals ? 'as external' : '' --}}
         </div>
         @guest
         @if (!$event->allow_externals)
@@ -22,11 +22,11 @@
             @else
                 <div class="card-body">
                     <form wire:submit.prevent="register">
-                        @if (!Auth::check())
+                        {{-- @if (!Auth::check())
                             <div class="mb-2">
                                 <small>If you are a member, please <a href="/login">log in</a> to register.</small>
                             </div>
-                        @endif
+                        @endif --}}
                         @if ($event->max_registrations > 0)
                             @php
                                 $places_left = max([0, $event->max_registrations - sizeof($event->registrations)]);
@@ -52,10 +52,10 @@
                                         <label class="form-label" for="external_email">Email address</label>
                                         <input wire:model.defer="external.email" class="form-control" type="email" id="external_email" required>
                                     </div>
-                                    <div class="mb-3">
+                                    {{-- <div class="mb-3">
                                         <label class="form-label" for="external_affiliation">Affiliation (optional)</label>
                                         <input wire:model.defer="external.affiliation" class="form-control" type="text" id="external_affiliation">
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <hr>
                             @endif
