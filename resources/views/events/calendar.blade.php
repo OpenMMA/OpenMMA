@@ -18,7 +18,7 @@
 </div>
 @endguest
 @auth
-@if (!Auth::user()?->verified)
+@if (!Auth::user()?->user_verified)
 <div class=" my-2">
     <div class="alert alert-warning alert-dismissible fade show w-50 m-auto" role="alert">
         Your account has not yet been approved! Functionality may be limited.
