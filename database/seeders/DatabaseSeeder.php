@@ -66,6 +66,7 @@ class DatabaseSeeder extends Seeder
         Role::create(['name' => 'alumni.', 'title' => 'Alumnus', 'isBaseRole' => true, 'group' => $group_alumni->id]);
         $group_board = Group::create(['label' => 'Board', 'color' => 2]);
         Permission::createPermissionsForGroup('board');
+        Role::create(['name' => 'board.', 'title' => 'Board member', 'isBaseRole' => true, 'group' => $group_board->id]);
 
 
         // !!!
@@ -77,7 +78,6 @@ class DatabaseSeeder extends Seeder
             GroupCategory::create(['label' => 'Societies']);
 
             // Groups & roles
-            Role::create(['name' => 'board.', 'title' => 'Board member', 'isBaseRole' => true, 'group' => $group_board->id]);
             Role::create(['name' => 'board.chair', 'title' => 'Chair', 'isBaseRole' => false, 'group' => $group_board->id]);
             Role::create(['name' => 'board.secretary', 'title' => 'Secretary', 'isBaseRole' => false, 'group' => $group_board->id]);
             Role::create(['name' => 'board.treasurer', 'title' => 'Treasurer', 'isBaseRole' => false, 'group' => $group_board->id]);
