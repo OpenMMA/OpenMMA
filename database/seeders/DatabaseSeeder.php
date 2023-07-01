@@ -57,6 +57,16 @@ class DatabaseSeeder extends Seeder
         $admin_role->givePermissionTo('give_global_permissions');
         $admin_role->givePermissionTo('access_dashboard');
 
+        // Create default groups
+        $group_members = Group::create(['label' => 'Members', 'color' => 6]);
+        Permission::createPermissionsForGroup('member');
+        Role::create(['name' => 'members.', 'title' => 'Member', 'isBaseRole' => true, 'group' => $group_members->id]);
+        $group_alumni = Group::create(['label' => 'Alumni', 'color' => 1]);
+        Permission::createPermissionsForGroup('alumni');
+        Role::create(['name' => 'alumni.', 'title' => 'Alumnus', 'isBaseRole' => true, 'group' => $group_alumni->id]);
+        $group_board = Group::create(['label' => 'Board', 'color' => 2]);
+        Permission::createPermissionsForGroup('board');
+
 
         // !!!
         // Only run this in development, not in production!
@@ -67,14 +77,6 @@ class DatabaseSeeder extends Seeder
             GroupCategory::create(['label' => 'Societies']);
 
             // Groups & roles
-            $group_members = Group::create(['label' => 'Members', 'color' => 6]);
-            Permission::createPermissionsForGroup('member');
-            Role::create(['name' => 'members.', 'title' => 'Member', 'isBaseRole' => true, 'group' => $group_members->id]);
-            $group_alumni = Group::create(['label' => 'Alumni', 'color' => 1]);
-            Permission::createPermissionsForGroup('alumni');
-            Role::create(['name' => 'alumni.', 'title' => 'Alumnus', 'isBaseRole' => true, 'group' => $group_alumni->id]);
-            $group_board = Group::create(['label' => 'Board', 'color' => 2]);
-            Permission::createPermissionsForGroup('board');
             Role::create(['name' => 'board.', 'title' => 'Board member', 'isBaseRole' => true, 'group' => $group_board->id]);
             Role::create(['name' => 'board.chair', 'title' => 'Chair', 'isBaseRole' => false, 'group' => $group_board->id]);
             Role::create(['name' => 'board.secretary', 'title' => 'Secretary', 'isBaseRole' => false, 'group' => $group_board->id]);
