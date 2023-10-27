@@ -28,8 +28,8 @@
     @endauth
     @guest
     <div>
-        {{-- <a href="/register" class="btn btn-secondary m-1" role="button">Register</a>
-        <a href="/login" class="btn btn-primary m-1" role="button">Login</a> --}}
+        <a href="/register" class="btn btn-secondary m-1" role="button">Register</a>
+        <a href="/login" class="btn btn-primary m-1" role="button">Login</a>
     @endguest
     </div>
 </nav>
