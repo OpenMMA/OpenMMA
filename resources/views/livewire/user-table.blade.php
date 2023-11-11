@@ -7,9 +7,12 @@
         $roles = \App\Models\Groups\Role::getGroupRoles($filters['group'])->mapWithKeys(fn($n) => [$n->id => $n]);
     }
 
+    $user_can_view = Auth::user()->can('user.view');
+    $user_can_assign = Auth::user()->can('user.assign');
 @endphp
 <div>
-    <input wire:model="query" class="form-control" type="text" placeholder="Search...">
+    @if ($user_can_view || $group != null)  {{-- Make sure group members can view who is in their group --}}
+    <input wire:model.live="query" class="form-control" type="text" placeholder="Search...">
     <div class="table-responsive">
         <table class="table table-striped lw_table" id="user_table">
             <thead>
@@ -21,16 +24,16 @@
                             @if ($col_opts[$col]['sortable'])
                             <button wire:click="sortTable('{{ $col }}')" class="btn px-1 py-0">
                                 @switch($attrs['sort_direction'])
-                                    @case('asc')
-                                        <i class="fa-solid fa-sort-up align-end"></i>
-                                        @break
-                                    @case('desc')
-                                        <i class="fa-solid fa-sort-down align-end"></i>
-                                        @break
+                                @case('asc')
+                                <i class="fa-solid fa-sort-up align-end"></i>
+                                @break
+                                @case('desc')
+                                <i class="fa-solid fa-sort-down align-end"></i>
+                                @break
                                     @default
-                                        <i class="fa-solid fa-sort align-end"></i>
-                                @endswitch
-                            </button>
+                                    <i class="fa-solid fa-sort align-end"></i>
+                                    @endswitch
+                                </button>
                             @endif
                         </div>
                     </th>
@@ -45,28 +48,28 @@
                         @switch($col_opts[$col]['display'])
                             @case('check')
                                 @if($user->$col)
-                                    <i class="fa-solid fa-check text-success"></i>
-                                    @else
-                                    <i class="fa-solid fa-xmark text-danger"></i>
-                                    @endif
+                                <i class="fa-solid fa-check text-success"></i>
+                                @else
+                                <i class="fa-solid fa-xmark text-danger"></i>
+                                @endif
                                 @break
                             @case('date')
                                 {{ Carbon::parse($user->$col)->format("d-m-Y") }}
                                 @break
                             @case('groups')
                                 @foreach ($user->$col as $group)
-                                    <span class="badge rounded-pill" style="background-color: {{ Color::find($groups->firstWhere('id', $group->group)->color)->primary }}">
-                                        {{ $group->title }}
-                                    </span><br>
+                                <span class="badge rounded-pill" style="background-color: {{ Color::find($groups->firstWhere('id', $group->group)->color)->primary }}">
+                                    {{ $group->title }}
+                                </span><br>
                                 @endforeach
                                 @break
                             @case('roles')
                                 @foreach ($user->role_ids as $role_id)
-                                    @if ($roles->has($role_id))
-                                    <span class="badge rounded-pill" style="background-color: #ed036f">
-                                        {{ $roles[$role_id]->title }}
-                                    </span><br>
-                                    @endif
+                                @if ($roles->has($role_id))
+                                <span class="badge rounded-pill" style="background-color: #ed036f">
+                                    {{ $roles[$role_id]->title }}
+                                </span><br>
+                                @endif
                                 @endforeach
                                 @break;
                             @case('verify')
@@ -77,20 +80,19 @@
                                 {{ $user->$col }}
                         @endswitch
                     @endforeach
-                    @if ($add_view_button || $add_add_button || $add_remove_button)
+                    @if (($add_view_button || $add_add_button || $add_remove_button) && $user_can_view)
                     <td class="hide text-nowrap">
                         @if ($add_view_button)
                         <a href="{{ url("/dashboard/user/$user->id") }}"><i class="fa-solid fa-pencil pe-3"></i></a>
                         @endif
-                        @if ($add_add_button)
+                        @if ($add_add_button && $user_can_assign)
                         @livewire('user-group-modifier', ['user' => $user, 'group' => $group, 'render_add' => true], key($user->id))
                         @endif
-                        @if ($add_remove_button)
+                        @if ($add_remove_button && $user_can_assign)
                         @livewire('user-group-modifier', ['user' => $user, 'group' => $group, 'render_remove' => true], key($user->id))
                         @endif
                     </td>
                     @endif
-                    <td class="hide"><a href="{{ url("/dashboard/user/$user->id") }}" class="btn btn-primary px-1 py-0">View</a></td>
                 </tr>
                 @endforeach
             </tbody>
@@ -113,7 +115,7 @@
                 Items per page:
             </div>
             <div class="d-inline-block me-2 mb-3">
-                <select wire:model="entries_per_page" class="form-select form-select-sm">
+                <select wire:model.live="entries_per_page" class="form-select form-select-sm">
                     <option value="10">10</option>
                     <option value="25">25</option>
                     <option value="100">100</option>
@@ -125,4 +127,5 @@
             </div>
         </div>
     </div>
+    @endif
 </div>

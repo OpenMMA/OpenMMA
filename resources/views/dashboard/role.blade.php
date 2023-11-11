@@ -17,5 +17,5 @@ use App\Models\Groups\Permission;
 <h5 class="mb-0 text-muted">Role</h5>
 <h2>{{ $role->title }}</h2>
 <hr class="border-secondary">
-@livewire('role-permissions', ['role' => $role], key($user->id))
+@livewire('role-permissions', ['role' => $role], key(Auth::user()->id))
 @endsection

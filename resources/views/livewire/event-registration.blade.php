@@ -15,7 +15,31 @@
             @if ($registered || \App\Models\Events\EventRegistration::userRegistrationForEvent(Auth::id(), $event->id))
                 <div class="card-body bg-success-subtle text-success">
                     You have registered for this event!
-                    @if (!Auth::check())
+                    @if (Auth::check())
+                        @if (!$event->start->isPast()) 
+                            <button type="button" class="btn btn-warning mt-2" data-bs-toggle="modal" data-bs-target="#confirm-unreg-{{ $event->slug }}">
+                                Unregister
+                            </button>
+                            <div class="modal fade text-body" id="confirm-unreg-{{ $event->slug }}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5">Confirm unregister</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to unregister for this event?
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <button wire:click="unregister" type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </form>
+                        @endif
+                    @else
                         You will receive a verification link to complete your registration.
                     @endif
                 </div>
@@ -46,15 +70,15 @@
                                 <div>
                                     <div class="mb-3">
                                         <label class="form-label" for="external_name">Full name</label>
-                                        <input wire:model.defer="external.name" class="form-control" type="text" id="external_name" required>
+                                        <input wire:model="external.name" class="form-control" type="text" id="external_name" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="external_email">Email address</label>
-                                        <input wire:model.defer="external.email" class="form-control" type="email" id="external_email" required>
+                                        <input wire:model="external.email" class="form-control" type="email" id="external_email" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="external_affiliation">Affiliation (optional)</label>
-                                        <input wire:model.defer="external.affiliation" class="form-control" type="text" id="external_affiliation">
+                                        <input wire:model="external.affiliation" class="form-control" type="text" id="external_affiliation">
                                     </div>
                                 </div>
                                 <hr>

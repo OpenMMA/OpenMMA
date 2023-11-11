@@ -10,7 +10,7 @@ class Role extends \Spatie\Permission\Models\Role
     use HasFactory;
 
     protected $fillable = [
-        'label',
+        'title',
         'isBaseRole',
         'group'
     ];

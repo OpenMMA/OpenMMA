@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Events\Event;
 use App\Models\Events\EventRegistration;
+use App\Models\Groups\Group;
 use App\Models\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
@@ -53,28 +54,6 @@ class EventController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
-    {
-        return response()->view('events.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        $event = Event::create([
-            'title'       => $request->title,
-            'description' => "",
-            'body'        => ""
-        ]);
-
-        return response()->redirectTo('/event/' . $event->slug . '/edit');
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Event $event): Response
@@ -93,8 +72,11 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event, String $action): RedirectResponse
+    public function update(Request $request, Event $event, String $action): RedirectResponse|Response
     {
+        if (!Auth::user()->can(Group::find($event->group)->name.'.event.edit'))
+            return response("Not allowed.", 403);
+
         switch ($action) {
             case 'body':
                 $event->update([
@@ -139,11 +121,20 @@ class EventController extends Controller
         return response()->redirectTo('/event/' . $event->slug)->with(['status' => 'registered']);
     }
 
+    public function unregister(Request $request, Event $event): RedirectResponse
+    {
+        $event->unregister(Auth::id());
+        return back();
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event): RedirectResponse
+    public function destroy(Event $event): RedirectResponse|Response
     {
+        if (!Auth::user()->can(Group::find($event->group)->name.'.event.delete'))
+            return response("Not allowed.", 403);
+
         $event->delete();
         return response()->redirectTo('/events');
     }

@@ -28,6 +28,31 @@
                             </div>
                             <div class="align-self-center flex-shrink-0">
                                 <a href="/event/{{ $event->slug }}" class="btn btn-primary mx-2">View event</a>
+                                @if (!$event->start->isPast()) 
+                                <form action="/event/{{ $event->slug }}/unregister" method="post">
+                                    @csrf
+                                    <button type="button" class="btn btn-warning mx-2 mt-2" data-bs-toggle="modal" data-bs-target="#confirm-unreg-{{ $event->slug }}">
+                                        Unregister
+                                    </button>
+                                    <div class="modal fade" id="confirm-unreg-{{ $event->slug }}" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">Confirm unregister</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to unregister for the event:<br><b>{{ $event->title }}</b>
+                                                    </div>
+                                                    <div class="modal-footer d-flex justify-content-center">
+                                                        <button type="submit" class="btn btn-danger">Yes</button>
+                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div> 
+                                </form>
+                                @endif
                             </div>
                         </div>
                         <div class="card-footer text-muted small">

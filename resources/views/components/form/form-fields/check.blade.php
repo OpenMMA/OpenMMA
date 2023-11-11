@@ -10,7 +10,7 @@
            id="{{ $field->name }}"
            class="form-check-input{{ isset($field->class) ? ' ' . $field->class : '' }}"
            {{ $field->value ?? false ? 'checked' : '' }}
-           @if (isset($field->wire)) wire:model.defer="{{ $field->wire }}" @endif
+           @if (isset($field->wire)) wire:model="{{ $field->wire }}" @endif
            {{ $field->required ?? false ? 'required' : '' }}
            {!! $field->attributes ?? '' !!}>
 @overwrite

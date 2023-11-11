@@ -17,13 +17,14 @@ use App\Models\Groups\GroupCategory;
                 <thead>
                     <tr>
                         <th scope="col" width="">Group</th>
-                        {{-- <th scope="col" width="1%"></th> --}}
+                        <th scope="col" width="1%"></th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
                     @foreach (Group::where('category', $category->id)->get() as $group)
                     <tr>
                         <td>{{ $group->label }}</td>
+                        <td class="hide"><a href="{{ url("/dashboard/group/$group->name") }}" class="btn btn-primary px-1 py-0">Edit</a></td>
                     </tr>
                     @endforeach
                 </tbody>

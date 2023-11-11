@@ -9,7 +9,7 @@
            id="{{ $field->name }}"
            class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
            @if (isset($field->placeholder)) placeholder="{{ $field->placeholder }}" @endif
-           @if (isset($field->wire)) wire:model.defer="{{ $field->wire }}" @endif
+           @if (isset($field->wire)) wire:model="{{ $field->wire }}" @endif
            {{ $field->required ?? false ? 'required' : '' }}
            {!! $field->attributes ?? '' !!}>
 @overwrite

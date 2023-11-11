@@ -42,13 +42,14 @@ class UserController extends Controller
         return response()->json(['verified' => 'verified']);
     }
 
-    public function search(Request $request): JsonResponse
-    {
-        $q = $request->input('q');
-        return response()->json(User::whereRaw('CONCAT(first_name, \' \', last_name) LIKE ?', ["%$q%"])
-                                    ->orWhere('email', 'LIKE', "%$q%")
-                                    ->get());
-    }
+    // TODO not used, remove later?
+    // public function search(Request $request): JsonResponse
+    // {
+    //     $q = $request->input('q');
+    //     return response()->json(User::whereRaw('CONCAT(first_name, \' \', last_name) LIKE ?', ["%$q%"])
+    //                                 ->orWhere('email', 'LIKE', "%$q%")
+    //                                 ->get());
+    // }
 
     /**
      * Show the form for creating a new resource.

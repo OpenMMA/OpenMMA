@@ -9,27 +9,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory;
 
     protected $fillable = [
+        'name',
         'label',
         'category',
         'color'
     ];
 
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
-    public function sluggable(): array
-    {
-        return [
-            'name' => [
-                'source' => 'label'
-            ]
-        ];
-    }
+    // Disable automatic sluggable for now, as name is also used for roles, and we want to prevent possible 'role injections'. 
+    //
+    // /**
+    //  * Return the sluggable configuration array for this model.
+    //  *
+    //  * @return array
+    //  */
+    // public function sluggable(): array
+    // {
+    //     return [
+    //         'name' => [
+    //             'source' => 'label'
+    //         ]
+    //     ];
+    // }
 
     static function inCategory(?string $category_name): Collection
     {

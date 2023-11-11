@@ -23,7 +23,7 @@
                 id="{{ $field->name }}"
                 class="form-select form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
                 {{ $field->multiple ?? false ? 'multiple' : '' }}
-                @if (isset($field->wire)) wire:model.defer="{{ $field->wire }}" @endif
+                @if (isset($field->wire)) wire:model="{{ $field->wire }}" @endif
                 {{ $field->required ?? false ? 'required' : '' }}
                 {!! $field->attributes ?? ''!!}>
             <option value="">{{ $field->placeholder ?? 'Please select one' . ($field->multiple ?? false ? ' or more...' : '...') }}</option>

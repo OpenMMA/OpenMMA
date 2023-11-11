@@ -10,7 +10,7 @@
            class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
            @if (isset($field->value)) value="{{ $field->value }}" @endif
            @if (isset($field->placeholder)) placeholder="{{ $field->placeholder }}" @endif
-           @if (isset($field->wire)) wire:model.defer="{{ $field->wire }}" @endif
+           @if (isset($field->wire)) wire:model="{{ $field->wire }}" @endif
            @if (isset($field->pattern)) pattern="{{ $field->pattern }}" @endif
            {{ $field->required ?? false ? 'required' : '' }}
            {!! $field->attributes ?? '' !!}>

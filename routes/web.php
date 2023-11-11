@@ -41,13 +41,12 @@ Route::middleware('verified')->group(function() {
     // Route::get('/users/search', [UserController::class, 'search']);
 
     Route::prefix('event')->group(function() {
-        Route::get('/create',  [EventController::class, 'create']);
-        Route::post('/create', [EventController::class, 'store']);
-        Route::get('/{event:slug}/edit',           [EventController::class, 'edit']);
-        Route::put('/{event:slug}/edit/{action}',  [EventController::class, 'update'])->whereIn('action', ['body']);
-        Route::post('/{event:slug}/edit/{action}', [EventController::class, 'update'])->whereIn('action', ['banner', 'max_registrations', 'tags']);
+        Route::get('/{event:slug}/edit',           [EventController::class, 'edit'])->middleware(['can.group:.event.edit']);
+        Route::put('/{event:slug}/edit/{action}',  [EventController::class, 'update'])->whereIn('action', ['body'])->middleware(['can.group:.event.edit']);;
+        Route::post('/{event:slug}/edit/{action}', [EventController::class, 'update'])->whereIn('action', ['banner', 'max_registrations', 'tags'])->middleware(['can.group:.event.edit']);;
         Route::post('/{event:slug}/register', [EventController::class, 'register']);
-        Route::delete('/{event:slug}', [EventController::class, 'destroy']);
+        Route::post('/{event:slug}/unregister', [EventController::class, 'unregister']);
+        Route::delete('/{event:slug}', [EventController::class, 'destroy'])->middleware(['can.group:.event.delete']);;
     });
 
     Route::prefix('dashboard')->middleware('can:access_dashboard')->group(function() {
@@ -68,6 +67,12 @@ Route::middleware('verified')->group(function() {
 
         Route::get('/system-settings', [SystemSettingController::class, 'index']);
         Route::post('/system-settings', [SystemSettingController::class, 'update']);
+
+        Route::get('/group-settings', [GroupController::class, 'index']);
+        Route::post('/group-settings/add/group', [GroupController::class, 'store']);
+        Route::post('/group-settings/add/category', [GroupCategoryController::class, 'store']);
+
+        Route::get('/temp', function() { return view('components.form-wysiwyg'); });
     });
 
     Route::prefix('profile')->group(function() {

@@ -76,6 +76,11 @@ class Event extends Model
         ]);
     }
 
+    public function unregister($user_id)
+    {
+        EventRegistration::where(['user_id' =>$user_id, 'event_id' => $this->id])->delete();
+    }
+
     public function getUrlAttribute()
     {
         return url("/event/{$this->slug}");

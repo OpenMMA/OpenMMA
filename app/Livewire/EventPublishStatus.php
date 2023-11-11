@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Events\Event;
+use App\Models\Groups\Group;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class EventPublishStatus extends Component
@@ -19,6 +21,9 @@ class EventPublishStatus extends Component
 
     public function updatingStatus($status)
     {
+        if (!Auth::user()->can(Group::find($this->event->group)->name.'.event.publish'))
+            return response("Not allowed.", 403);
+
         if (!in_array($this->status, ['draft', 'published', 'unlisted'])) {
             $this->status = $this->event->status;
             return;

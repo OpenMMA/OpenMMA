@@ -1,23 +1,27 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Groups\Group;
 use App\Models\Groups\Permission;
 use App\Models\Groups\Role;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class RolePermissions extends Component
 {
     use AuthorizesRequests;
 
+    #[Locked]
     public Role $role; // TODO protect against user tampering
+    #[Locked]
     public Group $group; // TODO protect against user tampering
     public array $group_permissions;
     public array $global_permissions;
     public bool $global_permissions_enabled;
+    #[Locked]
     public array $group_permission_defenition = [
         0 => [
             'label' => 'events',
@@ -52,6 +56,7 @@ class RolePermissions extends Component
             ]
         ]
     ];
+    #[Locked]
     public array $global_permission_defenition = [
         0 => [
             'label' => 'Events',
@@ -106,6 +111,7 @@ class RolePermissions extends Component
 
     ];
 
+    // TODO is this still used?
     protected $rules = [
         'permissions.*' => 'bool'
     ];
@@ -113,14 +119,29 @@ class RolePermissions extends Component
     private static function flatten(array $array): array
     {
         // NOTE only works with 2-dimensional arrays!!!
+        $out = [];
         foreach ($array as $key => $val) {
-            if (is_array($val)) {
+            if (is_array($val))
                 foreach ($val as $subkey => $subval)
-                    $array[$key.'.'.$subkey] = $subval;
-                unset($array[$key]);
-            }
+                    $out[$key.'.'.$subkey] = $subval;
+            else
+                $out[$key] = $val;
         }
-        return $array;
+        return $out;
+    }
+
+    private static function unflatten(array $array): array
+    {
+        // NOTE only works with 2-dimensional arrays!!!
+        $out = [];
+        foreach ($array as $key => $value) {
+            $idxs = explode('.', $key, 2);
+            if (count($idxs) > 1)
+                $out[$idxs[0]][$idxs[1]] = $value;
+            else 
+                $out[$idxs[0]] = $value;
+        }
+        return $out;
     }
 
     public function mount()
@@ -129,8 +150,8 @@ class RolePermissions extends Component
         $group_permissions = array_merge(...array_map(fn($n) => $n['elements'], $this->group_permission_defenition));
         $global_permissions = array_merge(...array_map(fn($n) => $n['elements'], $this->global_permission_defenition));
         $this->group = Group::where('name', $group)->first();
-        $this->group_permissions = array_combine($group_permissions, array_map(fn($n) => $this->role->hasPermissionTo($group.'.'.$n), $group_permissions));
-        $this->global_permissions = array_combine($global_permissions, array_map(fn($n) => $this->role->hasPermissionTo((array_key_exists($n, Permission::$global_permissions) ? '' : '*.').$n), $global_permissions));
+        $this->group_permissions = $this::unflatten(array_combine($group_permissions, array_map(fn($n) => $this->role->hasPermissionTo($group.'.'.$n), $group_permissions)));
+        $this->global_permissions = $this::unflatten(array_combine($global_permissions, array_map(fn($n) => $this->role->hasPermissionTo((array_key_exists($n, Permission::$global_permissions) ? '' : '*.').$n), $global_permissions)));
         $this->global_permissions_enabled = false;
     }
 
@@ -141,8 +162,8 @@ class RolePermissions extends Component
         if (!Auth::user()->can($group.'.role.edit'))
             return; // TODO error message?
 
-        $this->group_permissions = $this::flatten($this->group_permissions);
-        foreach ($this->group_permissions as $permission => $has_permission) {
+        $group_permissions = $this::flatten($this->group_permissions);
+        foreach ($group_permissions as $permission => $has_permission) {
             if ($has_permission)
                 $this->role->givePermissionTo($group.'.'.$permission);
             else
@@ -150,7 +171,7 @@ class RolePermissions extends Component
         }
 
         // Make sure access to the dashboard is granted when access is required
-        if (in_array(true, $this->group_permissions) || in_array(true, $this->global_permissions))
+        if (in_array(true, $group_permissions) || in_array(true, $this::flatten($this->global_permissions)))
             $this->role->givePermissionTo('access_dashboard');
         else
             $this->role->revokePermissionTo('access_dashboard');
@@ -160,12 +181,11 @@ class RolePermissions extends Component
     {
         $group = explode('.', $this->role->name, 2)[0];
         // TODO Should we use $this->authorize()?
-        if (!Auth::user()->can($group.'.role.edit') && !Auth::user()->can('give_global_permissions'))
+        if (!Auth::user()->can($group.'.role.edit') || !Auth::user()->can('give_global_permissions'))
             return; // TODO error message?
 
-
-        $this->global_permissions = $this::flatten($this->global_permissions);
-        foreach ($this->global_permissions as $permission => $has_permission) {
+        $global_permissions = $this::flatten($this->global_permissions);
+        foreach ($global_permissions as $permission => $has_permission) {
             $prefix = array_key_exists($permission, Permission::$global_permissions) ? '' : '*.';
             if ($has_permission)
                 $this->role->givePermissionTo($prefix.$permission);
@@ -174,7 +194,7 @@ class RolePermissions extends Component
         }
 
         // Make sure access to the dashboard is granted when access is required
-        if (in_array(true, $this->group_permissions) || in_array(true, $this->global_permissions))
+        if (in_array(true, $this::flatten($this->group_permissions)) || in_array(true, $global_permissions))
             $this->role->givePermissionTo('access_dashboard');
         else
             $this->role->revokePermissionTo('access_dashboard');
@@ -182,6 +202,7 @@ class RolePermissions extends Component
 
     public function enableGlobalPermissions()
     {
+        // Purely visual, no security check required.
         $this->global_permissions_enabled = true;
     }
 

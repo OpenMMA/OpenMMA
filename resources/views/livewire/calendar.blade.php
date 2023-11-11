@@ -14,6 +14,7 @@
 <div>
     <style>
         @foreach ($colors as $color)
+        
             .event-c{{$color->id}} {
                 border-color: {{$color->primary}};
                 background-color: {{$color->secondary}}80;

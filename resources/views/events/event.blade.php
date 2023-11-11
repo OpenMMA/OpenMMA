@@ -18,10 +18,12 @@
         </div>
         <a href="/event/{{ $event->slug }}/edit" class="btn btn-primary rounded-0 flex-shrink-0 h-100">Edit event</a>
         {{-- TODO: Fix --}}
+        @if (Auth::user()?->can($event->group_name.'.event.delete'))
         <form method="DELETE" action="/event/{{ $event->slug }}">
             @csrf
             <button type="submit" class="btn btn-danger rounded-0 flex-shrink-0 h-100">Delete event</button>
         </form>
+        @endif
     </div>
     @endif
     @if (session('alert-success'))

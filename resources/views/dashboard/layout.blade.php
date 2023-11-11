@@ -58,6 +58,12 @@
                     System settings
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="/dashboard/group-settings" class="nav-link {{ Request::capture()->path() == 'dashboard/group-settings' ? 'active' : '' }}">
+                    <i class="fa fa-fw fa-users-rectangle me-1"></i>
+                    Group settings
+                </a>
+            </li>
         </ul>
     </div>
     <div class="flex-grow-1 overflow-auto p-3">

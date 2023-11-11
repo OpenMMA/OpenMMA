@@ -10,7 +10,7 @@
         class="form-control{{ isset($field->class) ? ' ' . $field->class : '' }}"
         rows="{{ $field->rows ?? 10 }}"
         @if (isset($field->placeholder)) placeholder="{{ $field->placeholder }}" @endif
-        @if (isset($field->wire)) wire:model.defer="{{ $field->wire }}" @endif
+        @if (isset($field->wire)) wire:model="{{ $field->wire }}" @endif
         {{ $field->required ?? false ? 'required' : '' }}
         {!! $field->attributes ?? '' !!}>
 {{ $field->value ?? '' }}</textarea>

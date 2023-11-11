@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Events\Event;
 use App\Models\Groups\Group;
+use Auth;
 use Carbon\Carbon;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,7 +15,8 @@ class EventTable extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    public Group $group; // TODO protect against user tampering
+    #[Locked]
+    public Group $group;
     public bool $upcoming = true;
     public array $entries_per_page = [10, 10];
     public array $cols; // Format col_name => [label, type, display, sort_direction, sort_idx, table_idx]
@@ -44,6 +47,9 @@ class EventTable extends Component
 
     public function newEvent()
     {
+        if (!Auth::user()->can($this->group->name.'.group.create'))
+            return; // TODO error msg
+        
         $new_event = Event::create(['title' => $this->new_event_data['title'],
                                     'start' => $this->new_event_data['start'],
                                     'end' => $this->new_event_data['end'],

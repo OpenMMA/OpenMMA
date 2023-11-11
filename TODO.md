@@ -1,0 +1,5 @@
+- Event visibility system
+- Add locked attribute to all LiveWire model values that should not be tampered with
+- Event status and delete through table on group page
+- View registrations
+- Edit registration as member

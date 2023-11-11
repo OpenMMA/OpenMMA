@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Mail\ExternalVerify;
 use App\Models\Events\Event;
@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class EventRegistration extends Component
 {
+    #[Locked]
     public Event $event;
     public array $additional_data = [];
     public array $external = [];
@@ -56,10 +58,15 @@ class EventRegistration extends Component
             );
             Mail::to($external->email)->send(new ExternalVerify($external, $this->event, $link));
         } else {
-            \App\Models\Events\EventRegistration::create(['user_id' => Auth::user()->id, 'event_id' => $this->event->id, 'data' => json_encode($data)]);
+            \App\Models\Events\EventRegistration::create(['user_id' => Auth::id(), 'event_id' => $this->event->id, 'data' => json_encode($data)]);
         }
         $this->registered = true;
-
+    }
+    
+    public function unregister()
+    {
+        $this->event->unregister(Auth::id());
+        $this->registered = false;
     }
 
     public function render()

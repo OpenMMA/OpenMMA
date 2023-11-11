@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Groups\Group;
+use App\Models\Groups\GroupCategory;
 use App\Models\Groups\Permission;
 use App\Models\Groups\Role;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +18,8 @@ class GroupController extends Controller
     public function index(): Response
     {
         $groups = Group::all();
-        return response()->view('dashboard.groups', ['groups' => $groups]);
+        $categories = GroupCategory::all();
+        return response()->view('dashboard.group-settings', ['groups' => $groups, 'categories' => $categories]);
     }
 
     /**
@@ -28,7 +30,7 @@ class GroupController extends Controller
         //
     }
 
-    private function simplify($str) {
+    private static function simplify($str) {
         return preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtolower(trim($str))));
     }
 
@@ -39,13 +41,16 @@ class GroupController extends Controller
     {
         $name = GroupController::simplify($request->group_name);
         if (Group::where('name', '=', $name)->exists()) {
-            return response()->redirectTo('/dashboard/groups')->with(array('status' => 'exists'));
+            return response()->redirectTo('/dashboard/group-settings')->with(array('status' => 'exists', 'obj' => 'group'));
         }
-        
-        $group = Group::create(['name' => $name, 'title' => $request->group_name]);
+
+        $group = Group::create(['name' => $name, 'label' => $request->group_name, 'color' => 1]);
+        if (!$group) {
+            return response()->redirectTo('/dashboard/group-settings')->with(array('status' => 'exists', 'obj' => 'group'));
+        }
         Permission::createPermissionsForGroup($group->name);
-        Role::create(['name' => $group->name . '.', 'title' => '']);
-        return response()->redirectTo('/dashboard/group/' . $group->name)->with(array('status' => 'success'));
+        Role::create(['name' => $group->name . '.', 'title' => '', 'isBaseRole' => true, 'group' => $group->id]);
+        return response()->redirectTo('/dashboard/group-settings')->with(array('status' => 'success', 'obj' => 'group'));
     }
 
     /**

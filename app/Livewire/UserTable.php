@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Groups\Group;
 use App\Models\Groups\Role;
 use App\Models\User;
 use Illuminate\Database\Query\Builder;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -25,7 +26,8 @@ class UserTable extends Component
     public array $col_opts;
     public array $filters = [];
     public string $query = '';
-    public Group $group; // TODO protect against user tampering
+    #[Locked]
+    public Group $group;
 
     protected $listeners = ['refreshUserTable' => 'render'];
 

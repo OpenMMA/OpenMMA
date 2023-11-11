@@ -22,6 +22,7 @@ use App\Models\Groups\Role;
         <div class="col-8">
             <div class="d-flex">
                 <h4 class="flex-grow-1">Members</h4>
+                @if (Auth::user()->can(['user.view', 'user.assign']))  
                 <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#add_user_to_group">+ Add members</button>
                 <div class="modal fade" id="add_user_to_group" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
                     <div class="modal-dialog">
@@ -38,6 +39,7 @@ use App\Models\Groups\Role;
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
             <div>
                 @livewire('user-table', ['cols' => ['first_name', 'last_name', 'roles'], 'group' => $group, 'add_remove_button' => true, 'filters' => ['group' => $group->name]])
@@ -47,7 +49,18 @@ use App\Models\Groups\Role;
                 @livewire('event-table', ['group' => $group, 'cols' => ['title', 'start', 'end', 'status']])
             </div>
             <h4>Roles</h4>
-            <div>
+            <div class="pb-3">
+                <div class="pb-3 container-fluid">
+                    <form action="/dashboard/group/{{ $group->name }}/add/role" method="post" class="d-flex">
+                        @csrf
+                        <div class="col-3">
+                        <label class="form-label" for="role_name">Create new role</label>
+
+                            <input type="text" class="form-control" name="role_name" id="role_name" placeholder="Role name...">
+                            <button type="submit" class="btn btn-primary text-nowrap ms-2">+ Add role</button>
+                        </div>
+                    </form>
+                </div>
                 @livewire('role-table', ['group' => $group])
             </div>
         </div>

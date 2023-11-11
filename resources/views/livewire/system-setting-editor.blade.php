@@ -3,20 +3,20 @@
         <label class="form-label" for="{{ $key }}">{{ $label }}</label>
         @switch($setting->type)
             @case('text')
-                <input wire:model.defer="value" type="text" name="{{ $key }}" class="form-control">
+                <input wire:model="value" type="text" name="{{ $key }}" class="form-control">
                 @break
             @case('json')
-                <textarea wire:model.defer="value" name="{{ $key }}" class="form-control font-monospace" cols="30" rows="10"></textarea>
+                <textarea wire:model="value" name="{{ $key }}" class="form-control font-monospace" cols="30" rows="10"></textarea>
                 @break
             @case('num')
-                <input wire:model.defer="value" type="number" name="{{ $key }}" class="form-control">
+                <input wire:model="value" type="number" name="{{ $key }}" class="form-control">
                 @break
             @case('image')
                 <img src="{{ $image ? $image->temporaryUrl() : '/img/'.$value.'?'.rand() /* Force refresh */ }}" class="img-thumbnail d-block mb-2" style="max-height: 200px; max-width: 200px;" alt="preview">
                 @error('image')
                     <small class="text-danger">Image must be a png</small>
                 @enderror
-                <input wire:model="image" type="file" class="form-control">
+                <input wire:model.live="image" type="file" class="form-control">
                 @break
 
         @endswitch

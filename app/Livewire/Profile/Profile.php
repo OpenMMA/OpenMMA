@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Profile;
+namespace App\Livewire\Profile;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +27,7 @@ class Profile extends Component
         $custom_fields = setting('account.custom_fields');
         $custom_fields = array_map(fn($v) => (object)$v, $custom_fields);
         $custom_fields = array_map(fn($v) => (object)array_merge((array)$v, [
-            'attributes' => "wire:model.defer=\"custom_data.$v->name\"",
+            'attributes' => "wire:model=\"custom_data.$v->name\"",
         ]), $custom_fields);
 
         return view('livewire.profile.profile', [
