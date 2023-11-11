@@ -54,7 +54,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public static function create(array $attributes = [])
     {
         $model = static::query()->create($attributes);
-        $custom_data = json_decode($model->custom_data);
+
+        $custom_data = $model->custom_data;            
+        if (is_string($custom_data))
+            $custom_data = json_decode($custom_data);
+        if (is_array($custom_data))
+            $custom_data = (object)$custom_data;
 
         $fields = setting('account.custom_fields');
         foreach ($fields as $field) {

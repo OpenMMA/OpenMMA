@@ -26,6 +26,9 @@
         </div>
         <div class="tab-pane fade" id="registration-tab-pane" role="tabpanel" aria-labelledby="registration-tab" tabindex="0">
             @livewire('system-setting-editor', ['label' => 'Account custom fields', 'key' => 'account.custom_fields'], key('account.custom_fields'))
+            <hr>
+            <h4>Import users</h4>
+            @livewire('import-users')
         </div>
     </div>
 </div>
