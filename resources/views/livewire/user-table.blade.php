@@ -8,11 +8,16 @@
     }
 
     $user_can_view = Auth::user()->can('user.view');
+    $user_can_manage = Auth::user()->can('user.manage');
     $user_can_assign = Auth::user()->can('user.assign');
 @endphp
 <div>
     @if ($user_can_view || $group != null)  {{-- Make sure group members can view who is in their group --}}
     <input wire:model.live="query" class="form-control" type="text" placeholder="Search...">
+    {{-- <div> --}}
+        {{-- <input wire:model="query" class="form-control" type="text" placeholder="Search..."> --}}
+        {{-- <button wire:click="search" class="btn btn-primary">Search</button> --}}
+    {{-- </div> --}}
     <div class="table-responsive">
         <table class="table table-striped lw_table" id="user_table">
             <thead>
@@ -73,7 +78,17 @@
                                 @endforeach
                                 @break;
                             @case('verify')
-                                @livewire('verify-user', ['user' => $user], key($user->id))
+                                <div>
+                                @if($user->user_verified_at)
+                                    <i class="fa-solid fa-check text-success"></i>
+                                @else
+                                    @if ($user_can_manage)
+                                        <button wire:click="verifyUser({{$user->id}})" class="btn btn-warning px-1 py-0">Verify</button>
+                                    @else
+                                        <i class="fa-solid fa-xmark text-danger"></i>
+                                    @endif
+                                @endif
+                                </div>
                                 @break
                             @case('val')
                             @default
@@ -86,10 +101,10 @@
                         <a href="{{ url("/dashboard/user/$user->id") }}"><i class="fa-solid fa-pencil pe-3"></i></a>
                         @endif
                         @if ($add_add_button && $user_can_assign)
-                        @livewire('user-group-modifier', ['user' => $user, 'group' => $group, 'render_add' => true], key($user->id))
+                            <a href="#" wire:click="addUserToGroup({{$user->id}})"><i class="fa-solid fa-user-plus pe-3"></i></a>
                         @endif
                         @if ($add_remove_button && $user_can_assign)
-                        @livewire('user-group-modifier', ['user' => $user, 'group' => $group, 'render_remove' => true], key($user->id))
+                            <a href="#" wire:click="removeUserFromGroup({{$user->id}})"><i class="fa-solid fa-user-minus pe-3"></i></a>
                         @endif
                     </td>
                     @endif

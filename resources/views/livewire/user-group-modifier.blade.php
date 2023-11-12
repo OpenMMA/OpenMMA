@@ -1,4 +1,5 @@
 <div class="d-inline">
+    {{Auth::user()->id}}
     @if (Auth::user()->can('user.assign'))
         @if ($render_add)
         <a href="#" wire:click="add"><i class="fa-solid fa-user-plus pe-3"></i></a>

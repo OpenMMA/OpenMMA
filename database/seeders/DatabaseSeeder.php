@@ -56,7 +56,6 @@ class DatabaseSeeder extends Seeder
         $admin_role->givePermissionTo('*.role.*');
         $admin_role->givePermissionTo('group.*');
         $admin_role->givePermissionTo('user.*');
-        $admin_role->givePermissionTo('group.*');
         $admin_role->givePermissionTo('give_global_permissions');
         $admin_role->givePermissionTo('access_dashboard');
 

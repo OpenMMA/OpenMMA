@@ -5,7 +5,9 @@ namespace App\Livewire;
 use App\Models\Groups\Group;
 use App\Models\Groups\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -42,14 +44,53 @@ class UserTable extends Component
             'email' =>             ['label' => 'Email address',     'sortable' => true,  'type' => 'email',    'display' => 'val'],
             'email_verified_at' => ['label' => 'Email verified',    'sortable' => true,  'type' => 'datetime', 'display' => 'check'],
             'created_at' =>        ['label' => 'Registered',        'sortable' => true,  'type' => 'datetime', 'display' => 'date'],
-            'groups' =>            ['label' => 'Groups',            'sortable' => true,  'type' => null,       'display' => 'groups'],
-            'roles' =>             ['label' => 'Roles',             'sortable' => true,  'type' => null,       'display' => 'roles'],
+            'groups' =>            ['label' => 'Groups',            'sortable' => false,  'type' => null,       'display' => 'groups'],
+            'roles' =>             ['label' => 'Roles',             'sortable' => false,  'type' => null,       'display' => 'roles'],
             'user_verified_at' =>  ['label' => 'Verified',          'sortable' => true,  'type' => 'datetime', 'display' => 'verify'],
         ];
         foreach (setting('account.custom_fields') as $custom_col) {
             // TODO determine appropriate 'display'-type?
             $this->col_opts[$custom_col->name] = ['label' => $custom_col->label, 'type' => $custom_col->type, 'display' => 'val'];
         }
+    }
+
+    public function verifyUser($user_id)
+    {
+        if (!Auth::user()->can('user.manage') || $this->group == null)
+            return;
+
+        $user = User::find($user_id);
+        if (!$user || $user->user_verified_at)
+            return
+        
+        $user->update(['user_verified_at' => Carbon::now()]);
+    }
+
+    public function addUserToGroup($user_id)
+    {
+        if (!Auth::user()->can('user.assign') || $this->group == null)
+            return;
+
+        $user = User::find($user_id);
+        if (!$user)
+            return;
+
+        $user->assignRole($this->group->name.'.');
+        $this->dispatch('refreshUserTable');
+    }
+
+    public function removeUserFromGroup($user_id)
+    {
+        if (!Auth::user()->can('user.assign') || $this->group == null)
+            return;
+
+        $user = User::find($user_id);
+        if (!$user)
+            return;
+        
+        foreach (Role::where('name', 'LIKE', $this->group->name.'.%')->get() as $role)
+            $user->removeRole($role);
+        $this->dispatch('refreshUserTable');
     }
 
     public function sortTable($col)
@@ -82,10 +123,12 @@ class UserTable extends Component
                     $user_query->where($col, $filters);
             }
         }
-        // dd($user_query->toSql(), $user_query->get(), $this->filters);
+        //dd($user_query->toSql(), $user_query->get(), $this->filters);
         if ($this->query != '')
-            $user_query = $user_query->whereRaw('CONCAT(first_name, \' \', last_name) LIKE ?', ["%$this->query%"])
-                                     ->orWhere('email', 'LIKE', "%$this->query%");
+            $user_query->where(function ($query) {
+                $query->whereRaw('CONCAT(first_name, \' \', last_name) LIKE ?', ["%$this->query%"])
+                      ->orWhere('email', 'LIKE', "%$this->query%");
+            });
 
         // Sort columns by table sorting priority
         uasort($this->cols, fn($x, $y) => $x['sort_idx'] < $y['sort_idx']);

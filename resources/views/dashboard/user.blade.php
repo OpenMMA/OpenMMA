@@ -12,7 +12,7 @@
             <p>{{ $data_fields->label }}:
             @if ($data_fields->multiple)
                 @foreach($user->custom_data[$data_fields->name] as $di)
-                    {{ $data_fields->options->$di }}
+                    {{ $data_fields->options->$di ?? $di }}
                     @if (!$loop->last)
                         ,
                     @endif

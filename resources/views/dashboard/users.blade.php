@@ -13,6 +13,6 @@
 <h2>Users</h2>
 <hr class="border-secondary">
 <div class="pt-3 px-3">
-    @livewire('user-table', ['add_view_button' => true, 'cols' => ['first_name', 'last_name', 'email', 'email_verified_at', 'created_at', 'groups', 'user_verified_at']])
+    @livewire('user-table', ['add_view_button' => true, 'cols' => ['first_name', 'last_name', 'email', 'email_verified_at', 'created_at', 'groups', 'user_verified_at']], key('ut'))
 </div>
 @endsection

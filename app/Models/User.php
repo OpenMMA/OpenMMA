@@ -67,6 +67,9 @@ class User extends Authenticatable implements MustVerifyEmail
             if (!isset($custom_data->$name)) {
                 $custom_data[$name] = $field->default ?? null;
             }
+            if (isset($field->multiple) && $field->multiple && !is_array($custom_data->$name)) {
+                $custom_data->$name = [$custom_data->$name];
+            }
         }
         $model->update(['custom_data' => $custom_data]);
 
