@@ -58,7 +58,8 @@ class GroupController extends Controller
      */
     public function show(Group $group): Response
     {
-        return response()->view('dashboard.group', ['group' => $group]);
+        $roles = Role::where(['group' => $group->id])->get();
+        return response()->view('dashboard.group', ['group' => $group, 'roles' => $roles]);
     }
 
     /**

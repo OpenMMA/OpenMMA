@@ -6,5 +6,5 @@
             });
         });
     </script>
-    <button wire:click="delete" wire:confirm="Are you sure you want to delete '{{$model->label}}'?" role="button" class="btn btn-danger px-1 py-0">Delete</button>
+    <button wire:click="delete" wire:confirm="Are you sure you want to delete '{{$model->label ?? $model->title}}'?" role="button" class="btn btn-danger px-1 py-0">Delete</button>
 </div>

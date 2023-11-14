@@ -12,7 +12,15 @@ class Role extends \Spatie\Permission\Models\Role
     // TODO should 'name' be fillable?
     protected $guarded = [];
 
-    public static function getGroupRoles($group)
+    public function delete()
+    {
+        foreach ($this->users()->get() as $user) {
+            $user->removeRole($this->name);
+        }
+        parent::delete();
+    }
+
+    public static function getGroupRoles($group) // TODO obselete?
     {
         return Role::where('name', 'LIKE', "$group._%")->get();
     }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Groups\Group;
 use App\Models\Groups\Role;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
@@ -25,18 +27,32 @@ class RoleController extends Controller
         //
     }
 
+    private static function simplify($str) {
+        return preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtolower(trim($str))));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request): RedirectResponse
     {
-        // $name = RoleController::simplify($request->group_name);
-        // if (Role::where('name', '=', $name)->exists()) {
-        //     return response()->redirectTo('/dashboard/groups')->with(array('status' => 'exists'));
-        // }
+        $group = Group::where(['name' => $request->route("group")])->first();
+        if (!$group)
+            return response()->redirectTo('/dashboard/groups')->with(array('status' => 'unknown_group'));
+    
+        if (!Auth::user()->can($group->name.'.role.create'))
+            return response()->redirectTo('/dashboard/group/'.$group->name)->with(array('status' => 'permission_denied'));
+    
+        $role_name = RoleController::simplify($request->role_name);
+        if ($role_name == '')
+            return response()->redirectTo('/dashboard/group/'.$group->name)->with(array('status' => 'exists'));
+
+        $role_name_full = $group->name.'.'.$role_name;
+        if (Role::where('name', '=', $role_name_full)->exists())
+            return response()->redirectTo('/dashboard/group/'.$group->name)->with(array('status' => 'exists'));
         
-        // $role = Role::create(['name' => $name, 'title' => $request->group_name]);
-        // return response()->redirectTo('/dashboard/group/' . $role->id)->with(array('status' => 'success'));
+        $role = Role::create(['name' => $role_name_full, 'title' => $request->role_name, 'isBaseRole' => false, 'group' => $group->id]);
+        return response()->redirectTo('/dashboard/group/'.$group->name.'/role/'.explode('.', $role->name, 2)[1])->with(array('status' => 'success'));
     }
 
     /**

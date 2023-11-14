@@ -53,15 +53,39 @@ use App\Models\Groups\Role;
                 <div class="pb-3 container-fluid">
                     <form action="/dashboard/group/{{ $group->name }}/add/role" method="post" class="d-flex">
                         @csrf
-                        <div class="col-3">
-                        <label class="form-label" for="role_name">Create new role</label>
-
-                            <input type="text" class="form-control" name="role_name" id="role_name" placeholder="Role name...">
-                            <button type="submit" class="btn btn-primary text-nowrap ms-2">+ Add role</button>
+                        <div class="col-4">
+                            <label class="form-label" for="role_name">Create new role</label>
+                            <div class="d-flex">
+                                <input type="text" class="form-control" name="role_name" id="role_name" placeholder="Role name...">
+                                <button type="submit" class="btn btn-primary text-nowrap ms-2">+ Add role</button>
+                            </div>
                         </div>
                     </form>
                 </div>
-                @livewire('role-table', ['group' => $group])
+                <div>
+                    <table class="table table-striped" id="user_table">
+                        <thead>
+                            <tr>
+                                <th scope="col" width="">Role name</th>
+                                <th scope="col" width="1%"></th>
+                                <th scope="col" width="1%"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            @foreach ($roles as $role)
+                            <tr>
+                                <td>{{ $role->title }}</td>
+                                <td class="hide"><a class="btn btn-primary px-1 py-0" href="/dashboard/group/{{ $group->name }}/role/{{ explode('.', $role->name, 2)[1] }}">Edit</a></td>
+                                <td class="hide">
+                                    @if (!$role->isBaseRole)
+                                    @livewire('delete-model', ['model' => $role])
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="col-4">

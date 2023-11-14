@@ -57,8 +57,9 @@ Route::middleware('verified')->group(function() {
 
         Route::get('/groups', [GroupController::class, 'index']);
         Route::post('/groups/create', [GroupController::class, 'store']);
-        Route::get('/group/{group:name}', [GroupController::class, 'show']);
 
+        Route::get('/group/{group:name}', [GroupController::class, 'show']);
+        Route::post('/group/{group}/add/role', [RoleController::class, 'store']);
         Route::get('/group/{group}/role/{role}', [RoleController::class, 'show']);
 
         Route::get('/category/{category:name}', [GroupCategoryController::class, 'show']);
