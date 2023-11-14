@@ -9,11 +9,8 @@ class Role extends \Spatie\Permission\Models\Role
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'isBaseRole',
-        'group'
-    ];
+    // TODO should 'name' be fillable?
+    protected $guarded = [];
 
     public static function getGroupRoles($group)
     {
