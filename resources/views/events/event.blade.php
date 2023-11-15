@@ -1,12 +1,5 @@
 @extends('layout.layout')
 
-@pushOnce('styles')
-@livewireStyles
-@endPushOnce
-@pushOnce('scripts')
-@livewireScripts
-@endPushOnce
-
 @section('content')
 <div class="d-flex flex-column h-100 overflow-hidden">
     @if (Auth::user()?->can($event->group_name.'.event.edit'))

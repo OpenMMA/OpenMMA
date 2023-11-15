@@ -1,5 +1,3 @@
-@livewireScripts
-
 @extends('profile.layout')
 
 @section('profile.content')

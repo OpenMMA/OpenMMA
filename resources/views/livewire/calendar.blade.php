@@ -2,13 +2,8 @@
     use Carbon\Carbon;
 @endphp
 
-@pushOnce('scripts')
-@livewireScripts
-@endPushOnce
-
 @pushOnce('styles')
 <link href="{{ asset('/css/calendar.css') }}" rel="stylesheet">
-@livewireStyles
 @endPushOnce
 
 <div>

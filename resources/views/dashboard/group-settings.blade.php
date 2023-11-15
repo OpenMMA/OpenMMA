@@ -1,12 +1,5 @@
 @extends('dashboard.layout')
 
-@pushOnce('styles')
-@livewireStyles
-@endPushOnce
-@pushOnce('scripts')
-@livewireScripts
-@endPushOnce
-
 @section('dashboard.content')
 <h2>Group Settings</h2>
 @if (Auth::user()->can('group.create') || Auth::user()->can('group.edit') || Auth::user()->can('group.delete'))

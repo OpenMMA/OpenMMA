@@ -6,11 +6,9 @@ use App\Models\Groups\Permission;
 
 @pushOnce('scripts')
 <script src="{{ asset('/js/dashboard/users.js') }}"></script>
-@livewireStyles
 @endPushOnce
 @pushOnce('styles')
 <link rel="stylesheet" href="{{ asset('/css/dashboard/table.css') }}">
-@livewireScripts
 @endPushOnce
 
 @section('dashboard.content')

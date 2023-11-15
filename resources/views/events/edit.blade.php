@@ -5,13 +5,6 @@ use \App\Models\Image;
 
 @extends('layout.layout')
 
-@pushOnce('styles')
-@livewireStyles
-@endPushOnce
-@pushOnce('scripts')
-@livewireScripts
-@endPushOnce
-
 @section('content')
 
 <div class="container">

@@ -1,12 +1,5 @@
 @extends('dashboard.layout')
 
-@pushOnce('styles')
-@livewireStyles
-@endPushOnce
-@pushOnce('scripts')
-@livewireScripts
-@endPushOnce
-
 @section('dashboard.content')
 <h2>System Settings</h2>
 <hr class="border-secondary">
