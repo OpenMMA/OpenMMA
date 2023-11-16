@@ -37,6 +37,7 @@ class ImportUsers extends Component
                                    'password'    => Hash::make(bin2hex(random_bytes(32)))]);
             $duser->markEmailAsVerified();
             DB::table('users')->where(['id' => $duser->id, 'email' => $duser->email])->update(['created_at' => Carbon::parse($user[$keys['Datum toegevoegd']])]);
+            $duser->assignRole('members.');
         }
     }
 
