@@ -56,19 +56,19 @@ class UserTable extends Component
 
     public function verifyUser($user_id)
     {
-        if (!Auth::user()->can('user.manage') || $this->group == null)
+        if (!Auth::user()->can('user.manage'))
             return;
 
         $user = User::find($user_id);
         if (!$user || $user->user_verified_at)
-            return
+            return;
         
         $user->update(['user_verified_at' => Carbon::now()]);
     }
 
     public function addUserToGroup($user_id)
     {
-        if (!Auth::user()->can('user.assign') || $this->group == null)
+        if (!Auth::user()->can('user.assign') || !isset($this->group))
             return;
 
         $user = User::find($user_id);
@@ -81,7 +81,7 @@ class UserTable extends Component
 
     public function removeUserFromGroup($user_id)
     {
-        if (!Auth::user()->can('user.assign') || $this->group == null)
+        if (!Auth::user()->can('user.assign') || !isset($this->group))
             return;
 
         $user = User::find($user_id);

@@ -19,6 +19,9 @@ class ImportUsers extends Component
 
     public function save()
     {
+        if (!isset($this->user_file))
+            return;
+
         $data = array_map(fn($n) => str_getcsv($n, ';'), file($this->user_file->path()));
         $keys = array_flip(array_shift($data));
         $field_idx = array_map(fn($f) => $keys[$f], ['firstname', 'infix', 'lastname', 'email']);
@@ -34,11 +37,14 @@ class ImportUsers extends Component
                                    'last_name'   => ($user[$keys['infix']] != '') ? $user[$keys['infix']] . ' ' . $user[$keys['lastname']] : $user[$keys['lastname']],
                                    'email'       => $user[$keys['email']],
                                    'custom_data' => $custom_data,
-                                   'password'    => Hash::make(bin2hex(random_bytes(32)))]);
+                                   'password'    => Hash::make(bin2hex(random_bytes(32))),
+                                   'user_verified_at' => Carbon::now()]);
             $duser->markEmailAsVerified();
             DB::table('users')->where(['id' => $duser->id, 'email' => $duser->email])->update(['created_at' => Carbon::parse($user[$keys['Datum toegevoegd']])]);
             $duser->assignRole('members.');
         }
+
+        session()->flash('status', 'Non-existing users imported!');
     }
 
     public function render()
