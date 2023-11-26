@@ -47,7 +47,7 @@ class EventTable extends Component
 
     public function newEvent()
     {
-        if (!Auth::user()->can($this->group->name.'.group.create'))
+        if (!Auth::user()->can($this->group->name.'.event.create'))
             return; // TODO error msg
         
         $new_event = Event::create(['title' => $this->new_event_data['title'],
