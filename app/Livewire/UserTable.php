@@ -93,6 +93,24 @@ class UserTable extends Component
         $this->dispatch('refreshUserTable');
     }
 
+    public function updateRoles($user_id, $roles)
+    {
+        if (!Auth::user()->can($this->group->name.'.role.assign'))
+            return;
+
+        $roles = json_decode($roles);
+        $user = User::find($user_id);
+        $role_opts = array_map(fn($r) => $r['name'], Role::select('name')->where('name', 'LIKE', $this->group->name."._%")->get()->toArray());
+
+        foreach ($role_opts as $role) {
+            if (in_array($role, $roles) && !$user->hasRole($role)) {  // add
+                $user->assignRole($role);
+            } else if (!in_array($role, $roles) && $user->hasRole($role)) {  //remove
+                $user->removeRole($role);
+            }
+        }
+    }
+
     public function sortTable($col)
     {
         if (!array_key_exists($col, $this->cols))

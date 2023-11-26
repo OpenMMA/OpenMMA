@@ -4,12 +4,15 @@
 
     $groups = \App\Models\Groups\Group::all();
     if (array_key_exists('group', $filters)) {
-        $roles = \App\Models\Groups\Role::getGroupRoles($filters['group'])->mapWithKeys(fn($n) => [$n->id => $n]);
-    }
+        $roles = \App\Models\Groups\Role::getGroupRoles($filters['group'])->mapWithKeys(fn($n) => [$n->id => $n]);  // TODO does this what I expect?
+        $roles_for_select = array_combine(array_map(fn($r) => $r->name, $roles->all()), array_map(fn($r) => $r->title, $roles->all()));
 
+    }
+    
     $user_can_view = Auth::user()->can('user.view');
     $user_can_manage = Auth::user()->can('user.manage');
     $user_can_assign = Auth::user()->can('user.assign');
+    $user_can_set_role = $group != null && Auth::user()->can($group->name.'.role.assign');
 @endphp
 <div>
     @if ($user_can_view || $group != null)  {{-- Make sure group members can view who is in their group --}}
@@ -69,13 +72,31 @@
                                 @endforeach
                                 @break
                             @case('roles')
-                                @foreach ($user->role_ids as $role_id)
-                                @if ($roles->has($role_id))
-                                <span class="badge rounded-pill" style="background-color: #ed036f">
-                                    {{ $roles[$role_id]->title }}
-                                </span><br>
-                                @endif
-                                @endforeach
+                                <div class="d-flex">
+                                    <div id="roles" class="flex-grow-1">
+                                        @foreach ($user->role_ids as $role_id)
+                                            @if ($roles->has($role_id))
+                                            <span class="badge rounded-pill" style="background-color: #ed036f">
+                                                {{ $roles[$role_id]->title }}
+                                            </span><br>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    @if ($user_can_set_role)
+                                        <div id="roles_select" class="d-none flex-grow-1">
+                                            @include('components.form.form-fields.select-multiple', ['field' => (object)['name' => "roles",
+                                                                                                                         'wrapper_classes' => '',
+                                                                                                                         'options' => $roles_for_select, 
+                                                                                                                         'value' => array_values(array_map(fn($rid) => $roles[$rid]->name, array_filter($user->role_ids->all(), fn($rid) => $roles->has($rid))))]])
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <a onclick="$(this).parent().siblings('#roles').toggleClass('d-none'); $(this).parent().siblings('#roles_select').toggleClass('d-none'); $(this).children().toggleClass('d-none');" class="btn btn-primary ms-1 px-1 py-0" href="#">
+                                                <span>Edit roles</span>
+                                                <span class="d-none" onclick="@this.call('updateRoles', {{$user->id}}, $(this).parent().parent().siblings('#roles_select').find('input[name=\'roles\']').val());">Update</span>
+                                            </a>
+                                        </div>
+                                    @endif
+                                </div>
                                 @break;
                             @case('verify')
                                 <div>
