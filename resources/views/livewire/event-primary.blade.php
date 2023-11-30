@@ -12,27 +12,28 @@
     <form wire:submit.prevent="submit">
         {{-- @include('components.form.form-fields.text', ['field' => (object)array('name' => 'title', 'required' => true, 'value' => $event->title)]) --}}
         <div class="mb-3">
-            <input class="form-control" type="text" wire:model.live="title">
+            <label class="form-label" for="title">Title</label>
+            <input class="form-control" type="text" wire:model.live="title" id="title">
         </div>
         <div class="row">
             <div class="col-6">
                 <div class="mb-3">
                     <label class="form-label" for="start">Start time</label>
-                    <input class="form-control" type="datetime-local" wire:model.live="start" name="start">
+                    <input class="form-control" type="datetime-local" wire:model.live="start" id="start">
                 </div>
                 {{-- @include('components.form.form-fields.date', ['field' => (object)array('name' => 'start', 'required' => true, 'label' => 'Start time', 'value' => Carbon::parse($event->start)->format('Y-m-d\TH:i'))]) --}}
             </div>
             <div class="col-6">
                 <div class="mb-3">
                     <label class="form-label" for="end">End time</label>
-                    <input class="form-control" type="datetime-local" wire:model.live="end" name="end">
+                    <input class="form-control" type="datetime-local" wire:model.live="end" id="end">
                 </div>
                 {{-- @include('components.form.form-fields.date', ['field' => (object)array('name' => 'end', 'required' => true, 'label' => 'End time', 'value' => Carbon::parse($event->end)->format('Y-m-d\TH:i'))]) --}}
             </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="description">Description (short)</label>
-            <textarea class="form-control" rows="5" wire:model.live="description" name="description"></textarea>
+            <textarea class="form-control" rows="5" wire:model.live="description" id="description"></textarea>
         </div>
         <div class="mb-3" wire:ignore>
             <textarea class="form-control" rows="5" wire:model.live="body" id="event-body"></textarea>

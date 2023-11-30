@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Events\Event;
 use Livewire\Component;
 
+// TODO secchecks
 class EventRegistrationSettings extends Component
 {
     public Event $event; // TODO protect against user tampering

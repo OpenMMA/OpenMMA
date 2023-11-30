@@ -4,6 +4,7 @@ namespace App\Models\Events;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class EventRegistration extends Model
 {
@@ -14,6 +15,9 @@ class EventRegistration extends Model
         'external_id',
         'event_id',
         'data'
+    ];
+    protected $casts = [
+        'data' => 'json'
     ];
 
     /**
@@ -41,5 +45,14 @@ class EventRegistration extends Model
         if (!$user_id)
             return null;
         return EventRegistration::where(['user_id' => $user_id, 'event_id' => $event_id])->first();
+    }
+
+    public function scopeInternal(Builder $query): void
+    {
+        $query->where('user_id', '!=', 'null');
+    }
+    public function scopeExternal(Builder $query): void
+    {
+        $query->where('external_id', '!=', 'null');
     }
 }

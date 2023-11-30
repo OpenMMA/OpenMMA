@@ -7,7 +7,8 @@ use \App\Models\Image;
 
 @section('content')
 
-<div class="container">
+<div class="container mb-5">
+    <h2 class="mt-4">Content</h2>
     <div class="row">
         <div class="col-8 mt-3">
             @livewire('event-primary', ['event' => $event], key($event->id))
@@ -38,5 +39,12 @@ use \App\Models\Image;
             </div>
         </div>
     </div>
+    @if (Auth::user()->can(App\Models\Groups\Group::find($event->group)->name.'.registration.view'))
+    <hr class="my-4">
+    <h2 class="my-4">Registrations</h2>
+    <div class="row">
+        @livewire('event-registrations', ['event' => $event])
+    </div>
+    @endif
 </div>
 @endsection

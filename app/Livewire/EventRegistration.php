@@ -47,7 +47,7 @@ class EventRegistration extends Component
             $external = External::create(['name' => $this->external['name'],
                                           'email' => $this->external['email'],
                                           'affiliation' => $this->external['affiliation'] ?? null]);
-            \App\Models\Events\EventRegistration::create(['external_id' => $external->id, 'event_id' => $this->event->id, 'data' => json_encode($data)]);
+            \App\Models\Events\EventRegistration::create(['external_id' => $external->id, 'event_id' => $this->event->id, 'data' => $data]);
             $link = URL::temporarySignedRoute(
                 'external-verification.verify',
                 Carbon::now()->addMinutes(60*24),
@@ -58,7 +58,7 @@ class EventRegistration extends Component
             );
             Mail::to($external->email)->send(new ExternalVerify($external, $this->event, $link));
         } else {
-            \App\Models\Events\EventRegistration::create(['user_id' => Auth::id(), 'event_id' => $this->event->id, 'data' => json_encode($data)]);
+            \App\Models\Events\EventRegistration::create(['user_id' => Auth::id(), 'event_id' => $this->event->id, 'data' => $data]);
         }
         $this->registered = true;
     }
