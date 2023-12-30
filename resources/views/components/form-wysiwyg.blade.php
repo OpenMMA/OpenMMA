@@ -6,7 +6,7 @@
     <input type="hidden" name="form-content" value='[]'>
     <div>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form-wysiwyg-modal" onclick="form_load(this)">Edit this form</button>      
-        <button type="button" class="btn btn-secondary">Edit form JSON (advanced)</button>          
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#form-jsoneditor-modal" onclick="jsoneditor_load(this)">Edit form JSON (advanced)</button>          
     </div>
     <div class="modal fade" id="form-wysiwyg-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog">
@@ -189,5 +189,21 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="form-jsoneditor-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="fw-semibold">Form JSON editor</h4>
+                </div>
+                <div class="modal-body" id="editor-container" class="row gy-2">
+                    <textarea wire:model="value" name="account.custom_fields" class="form-control font-monospace" rows="24"></textarea>
+                </div>
+                <div class="modal-footer border-top" class="row gy-2">
+                    <button class="btn btn-success w-100" type="button" onclick="jsoneditor_save(this)">Save form</button>
+                    <div class="invalid-feedback mb-2">Your input contains invalid data! Unable to save.</div>
+                    <button class="btn btn-secondary w-100" type="button" data-bs-dismiss="modal">Exit without saving (discard changes)</button>
+                </div>
+            </div>
+        </div>
+    </div>  
 </div>

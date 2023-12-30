@@ -6,7 +6,7 @@ $(document).ready(function() {
 });
 
 /**
- * Loading / saving
+ * Loading / saving WYSIWYG editor
  */
 function form_load(elem) {
     let json = $(elem).parent().siblings('input[name=form-content]').val();
@@ -188,4 +188,27 @@ function options_extract(elem) {
     options = {};
     $.map($(elem).children(), (e) => options[$(e).children('input[name=key]').val()] = $(e).children('input[name=label]').val());
     return options;
+}
+
+
+/**
+ * Loading / saving JSON editor
+ */
+function jsoneditor_load(elem) {
+    let json = $(elem).parent().siblings('input[name=form-content]').val();
+    let container = $(elem).parent().siblings('#form-jsoneditor-modal').find('#editor-container');
+    container.find('textarea').val(JSON.stringify(JSON.parse(json), null, 2));
+}
+
+function jsoneditor_save(elem) {
+    let data = $(elem).parent().siblings('#editor-container').find('textarea').val();
+    try {
+        data = JSON.parse(data);
+    } catch (e) {
+        $(elem).siblings('.invalid-feedback').show();
+        return;
+    }
+    $(elem).parents(':eq(3)').siblings('input[name=form-content]').val(JSON.stringify(data));
+    $(elem).siblings('.invalid-feedback').hide();
+    $(elem).parents(':eq(3)').modal('hide')
 }
