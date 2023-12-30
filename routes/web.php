@@ -72,8 +72,6 @@ Route::middleware('verified')->group(function() {
         Route::get('/group-settings', [GroupController::class, 'index']);
         Route::post('/group-settings/add/group', [GroupController::class, 'store']);
         Route::post('/group-settings/add/category', [GroupCategoryController::class, 'store']);
-
-        Route::get('/temp', function() { return view('components.form-wysiwyg'); });
     });
 
     Route::prefix('profile')->group(function() {
