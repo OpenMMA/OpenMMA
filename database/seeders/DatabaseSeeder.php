@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         // System settings
         SystemSetting::create(['key' => 'site.name', 'value' => 'OpenMMA', 'type' => 'text']);
         SystemSetting::create(['key' => 'site.logo', 'value' => 'logo.png', 'type' => 'image']);
-        SystemSetting::create(['key' => 'account.custom_fields', 'value' => json_encode([]), 'type' => 'json']);
+        SystemSetting::create(['key' => 'account.custom_fields', 'value' => json_encode([]), 'type' => 'form']);
 
         // Create super-admin role
         $admin_role = Role::create(['name' => ':admin', 'title' => 'Admin', 'group' => null]);
@@ -58,6 +58,7 @@ class DatabaseSeeder extends Seeder
         $admin_role->givePermissionTo('user.*');
         $admin_role->givePermissionTo('give_global_permissions');
         $admin_role->givePermissionTo('access_dashboard');
+        $admin_role->givePermissionTo('global_setting.*');
 
         // Create default groups
         $group_members = Group::create(['name' => 'members', 'label' => 'Members', 'color' => 6]);

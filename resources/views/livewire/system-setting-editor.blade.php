@@ -18,6 +18,9 @@
                 @enderror
                 <input wire:model.live="image" type="file" class="form-control">
                 @break
+            @case('form')
+                @include('components.form-wysiwyg', ['value' => null, 'wire' => 'value'])
+                @break
 
         @endswitch
     </div>
@@ -25,6 +28,7 @@
         @if ($setting->type == 'image')
             <button class="btn btn-secondary {{ $image ? 'd-none' : '' }}" disabled>Save</button>
             <button wire:click="save" class="btn btn-primary {{ $image ? '' : 'd-none' }}">Save</button>
+        @elseif ($setting->type == 'form')
         @else
             <button wire:target="value" wire:dirty.class="d-none" class="btn btn-secondary" disabled>Save</button>
             <button wire:target="value" wire:dirty.class.remove="d-none" wire:click="save" class="btn btn-primary d-none">Save</button>

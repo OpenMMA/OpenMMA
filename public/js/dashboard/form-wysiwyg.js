@@ -78,8 +78,8 @@ function form_save(elem) {
         }
         return field_data;
     });
-    console.log(data)
     $(elem).parents(':eq(3)').siblings('input[name=form-content]').val(JSON.stringify(data));
+    $(elem).parents(':eq(3)').siblings('input[name=form-content]').trigger("change");
 }
 
 
@@ -210,5 +210,6 @@ function jsoneditor_save(elem) {
     }
     $(elem).parents(':eq(3)').siblings('input[name=form-content]').val(JSON.stringify(data));
     $(elem).siblings('.invalid-feedback').hide();
-    $(elem).parents(':eq(3)').modal('hide')
+    $(elem).parents(':eq(3)').modal('hide');
+    $(elem).parents(':eq(3)').siblings('input[name=form-content]').trigger("change");
 }

@@ -3,7 +3,7 @@
 @endPushOnce
 
 <div>
-    <input type="hidden" name="form-content" value='[]'>
+    <input type="hidden" name="form-content" value='{{ $value ?? '[]' }}' @if (isset($wire)) wire:model.live="{{ $wire }}" onchange="@this.set('{{ $wire }}', $(this).val()); @this.dispatchSelf('{{ $update_signal ?? 'updated' }}'); @this.$refresh;" @endif>
     <div>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form-wysiwyg-modal" onclick="form_load(this)">Edit this form</button>      
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#form-jsoneditor-modal" onclick="jsoneditor_load(this)">Edit form JSON (advanced)</button>          

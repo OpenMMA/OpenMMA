@@ -22,6 +22,7 @@ class SystemSettingServiceProvider extends ServiceProvider
                             case 'text':
                                 return $setting['value'];
                             case 'json':
+                            case 'form':
                                 return json_decode($setting['value']);
                             case 'num':
                                 return intval($setting['value']);
