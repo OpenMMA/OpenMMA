@@ -65,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
         foreach ($fields as $field) {
             $name = $field->name;
             if (!isset($custom_data->$name)) {
-                $custom_data[$name] = $field->default ?? null;
+                $custom_data->$name = $field->default ?? null;
             }
             if (isset($field->multiple) && $field->multiple && !is_array($custom_data->$name)) {
                 $custom_data->$name = [$custom_data->$name];
