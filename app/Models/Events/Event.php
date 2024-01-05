@@ -88,7 +88,7 @@ class Event extends Model
 
     public function getBannerUrlAttribute()
     {
-        return Image::find($this->banner)->url;
+        return Image::find($this->banner)?->url ?? '';
     }
 
     public function getRelativeWhenAttribute()
