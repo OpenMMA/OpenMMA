@@ -1,19 +1,5 @@
 @extends('components.form.form-field')
 
-@pushOnce('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
-@endPushOnce
-
-@pushOnce('styles')
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
-    <script>
-        new TomSelect('#{{ $field->name }}', {
-            create: {{ $field->create ?? false ? 'true' : 'false' }}
-        });
-    </script>
-@endPushOnce
-
-
 @section('field-parent-classes')
 @overwrite
 

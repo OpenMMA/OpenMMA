@@ -15,7 +15,7 @@
             return;
         $(t).children(`[value='${v}']`).prop('disabled', true);
         $(t).val('');
-        $(t).siblings('#selected_items').append(`<span value="${v}" class="my-1 me-1 badge rounded-pill text-bg-primary">${l} <button class="m-0 p-0 ms-1 border-0 bg-transparent text-reset" role="button" onclick="selectorInputRemove(this, window.Livewire.find('${wire.$id}'))"><span class="fa-solid fa-xmark"></span></button></span>`);
+        $(t).siblings('#selected_items').append(`<span value="${v}" class="my-1 me-1 badge rounded-pill text-bg-primary">${l} <button class="m-0 p-0 ms-1 border-0 bg-transparent text-reset" role="button" onclick="selectorInputRemove(this, @if ($field?->wire ?? false) window.Livewire.find('${wire.$id}') @else false @endif)"><span class="fa-solid fa-xmark"></span></button></span>`);
         selectorInputUpdateList($(t).siblings('#selected_items'), wire);
     }
     function selectorInputRemove(t, wire) {
@@ -47,7 +47,7 @@
             <input name="{{ $field->name }}" type="hidden" @if (isset($field->wire)) wire:model="{{ $field->wire }}" @endif value="{{ isset($field->value) ? (is_string($field->value) ?  $field->value : json_encode($field->value)) : '[]' }}">
             @foreach($field->options as $key => $value)
                 @if (in_array($key, $vals))            
-                <span value="{{ $key }}" class="my-1 me-1 badge rounded-pill text-bg-primary" {{ is_array($value) ? "style='background-color:".$value['color'].";'" : '' }}>{{ is_array($value) ? $value['label'] : $value }} <button class="m-0 p-0 ms-1 border-0 bg-transparent text-reset" role="button" onclick="selectorInputRemove(this, @if (isset($field->wire)) @this @else false @endif)"><span class="fa-solid fa-xmark"></span></button></span>
+                <span value="{{ $key }}" class="my-1 me-1 badge rounded-pill text-bg-primary" {{ is_array($value) ? "style='background-color:".$value['color'].";'" : '' }}>{{ is_array($value) ? $value['label'] : $value }} <button class="m-0 p-0 ms-1 border-0 bg-transparent text-reset" role="button" onclick="selectorInputRemove(this, @if ($field?->wire ?? false) @this @else false @endif)"><span class="fa-solid fa-xmark"></span></button></span>
                 @endif
             @endforeach
         </div>
