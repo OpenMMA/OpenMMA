@@ -18,7 +18,7 @@
                     @endif
                 @endforeach
             @else
-                {{ $data_field->options->{$user->custom_data[$data_field->name]} }}
+                {{ $data_field->options->{$user->custom_data[$data_field->name]} : $user->custom_data[$data_field->name] }}
             @endif
 
             </p>
