@@ -9,7 +9,7 @@
 <h4>Other data</h4>
     @foreach(setting('account.custom_fields') as $data_field)
         @if ($data_field->type == 'select')
-            <p><b>{{ $data_field->label }}</b>:
+            <p><b>{{ $data_field->label }}:</b>
             @if ($data_field->multiple)
                 @foreach($user->custom_data[$data_field->name] as $di)
                     {{ $data_field->options->$di ?? $di }}
@@ -23,7 +23,7 @@
 
             </p>
         @else
-            <p>{{ $data_field->label }}: {{ $user->custom_data[$data_field->name] }}</p>
+            <p><b>{{ $data_field->label }}:</b> {{ $user->custom_data[$data_field->name] }}</p>
         @endif
     @endforeach
 <h4>Groups</h4>
