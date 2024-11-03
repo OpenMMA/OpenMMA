@@ -27,7 +27,7 @@
                     </a>
                 </li>
             @endforeach
-            <p class="small text-muted m-0 px-2 pt-3 pb-2">Categories</p>
+            <p class="small text-muted m-0 px-2 pt-3 pb-2">Group categories</p>
             @foreach (\App\Models\Groups\GroupCategory::get() as $category)
                 <li class="nav-item">
                     <a href="/dashboard/category/{{ $category->name }}" class="nav-link {{ Request::capture()->path() == 'dashboard/category/'.$category->name  ? 'active' : '' }}">
