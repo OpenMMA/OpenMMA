@@ -18,12 +18,12 @@
                     @endif
                 @endforeach
             @else
-                {{ $data_field->options->{$user->custom_data[$data_field->name]} ?? $user->custom_data[$data_field->name] }}
+                {{ isset($user->custom_data[$data_field->name]) ? ($data_field->options->{$user->custom_data[$data_field->name]} ?? $user->custom_data[$data_field->name]) : '(not set)' }}
             @endif
 
             </p>
         @else
-            <p><b>{{ $data_field->label }}:</b> {{ $user->custom_data[$data_field->name] }}</p>
+            <p><b>{{ $data_field->label }}:</b> {{ $user->custom_data[$data_field->name] ?? '(not set)'}}</p>
         @endif
     @endforeach
 <h4>Groups</h4>
